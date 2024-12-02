@@ -13,7 +13,7 @@ IsomiRs are miRNAs that vary slightly in sequence, which result from variations 
 
 There are many tools designed for isomiR detection, however the majority are web application where user can not control the analysis. The two main command tools for isomiRs mapping are SeqBuster and sRNAbench (Guillermo et al. 2014). isomiRs. package is designed to analyze the output of SeqBuster tool or any other tool after converting to the desire format.
 
-## 1. Installation 
+## 1. Installation
 
 ```{r, message=F, echo=FALSE}
 #if (!require("BiocManager", quietly = TRUE))
@@ -48,7 +48,7 @@ library("DESeq2")
 library("kableExtra")
 library("ggpubr")
 library("compareGroups")
-
+library("tidyr")
 library("org.Mm.eg.db")
 library("clusterProfiler")
 
@@ -57,7 +57,8 @@ library("multiMiR")
 
 ## 3. Import Data
 
-Obtain the names of the samples 
+Obtain the names of the samples
+
 ```{bash}
 cd /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export
 ls /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export > samples_mirna.txt
@@ -83,6 +84,7 @@ patients <- paste0(patients, collapse = ", ")
 # Mostrar el resultado
 cat(patients)
 ```
+
 ### 3.1. Obtain the metadata Matrix
 
 ```{r}
@@ -155,8 +157,6 @@ countdata_complete[is.na(countdata_complete)] <- 0
 write.csv(countdata_complete, file = "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv", row.names = FALSE)
 ```
 
-
-
 ## 4. Create a IsomirDataSeq object
 
 ```{r}
@@ -175,43 +175,8 @@ save(mirna_data_steatosis, file="/home/joshoacr13/Documentos/TFM/mirna_analysis/
 ```
 
 ## 5. Filtration of isomirs less expressed
+
 `isoCounts` This function collapses isomiRs into different groups. It is a similar concept than how to work with gene isoforms. With this function, different changes can be put together into a single miRNA variant. For instance all sequences with variants at 3' end can be considered as different elements in the table or analysis having the following naming hsa-miR-124a-5p.iso.t3:AAA.
-
-```{r}
-# Filtrar isomiRs poco expresados (crudos)
-load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata")
-
-# Cuentas con los miRNA de referencia
-ids_counts_ref <- isoCounts(mirna_data_steatosis, ref= TRUE, minc = 20, mins = 40)
-
-  # Obtener conteos crudos
-raw_counts_ref <- counts(ids_counts_ref)
-dim(raw_counts_ref)
-
-  # Table with kable
-raw_counts_ref |>
-  kable(format = "html") |>
-  kable_styling("striped")
-
-
-# Filtrar isomiRs con un conteo acumulado >= 50
-total_counts <- rowSums(raw_counts_ref)
-keep_isomiRs <- total_counts >= 50
-filtered_ids <- ids_counts_ref[keep_isomiRs, ]
-
-  # Obtener conteos 
-filter_raw_counts_ref <- counts(filtered_ids)
-dim(filter_raw_counts_ref)
-  
-# Table with kable
-filter_raw_counts_ref |>
-  kable(format = "html") |>
-  kable_styling("striped")
-
-# Plot
-isoPlot(filtered_ids,type="all")
-
-```
 
 ```{r}
 # Filtrar isomiRs poco expresados (crudos) con el resumen de los isomirs 
@@ -229,11 +194,12 @@ raw_counts |>
   kable(format = "html") |>
   kable_styling("striped")
 
+################################################################
 
 # Filtrar isomiRs con un conteo acumulado >= 50
 total_counts <- rowSums(raw_counts)
 keep_isomiRs <- total_counts >= 50
-filtered_ids <- ids_counts_ref[keep_isomiRs, ]
+filtered_ids <- ids_counts[keep_isomiRs, ]
 
   # Obtener conteos 
 filter_raw_counts <- counts(filtered_ids)
@@ -248,8 +214,6 @@ filter_raw_counts |>
 isoPlot(ids_counts,type="all")
 
 ```
-
-
 
 ```{r}
 # Cuentas para los demas 
@@ -266,6 +230,8 @@ raw_counts_all <- counts(ids_counts_all)
 dim(raw_counts_all)
 dim(raw_counts_iso5)
 dim(raw_counts_ref)
+
+
 
 # Sin filtro de referencoa
 ids_counts <- isoCounts(mirna_data_steatosis,minc = 20, mins = 40)
@@ -289,7 +255,9 @@ couts_all <- counts((ids_counts_all))
 ```
 
 ## 6. Normalization of isomirs less expressed
+
 ```{r}
+# Tres categorias de ESTEATOSIS
 # Normalización (por ejemplo, usando RLE)
 normalized_ids <-isoNorm(ids_counts, formula = ~ sexo + steatosis_3cat)
 
@@ -334,7 +302,7 @@ results |>
   kable_styling("striped")
 ```
 
-## 9. Filtration of the significance 
+## 9. Filtration of the significance
 
 ```{r}
 # Filtrar por significancia
@@ -348,90 +316,223 @@ significant_isomiRs |>
 ```
 
 
-################################################################################
 
-##8. Diferential expression analysis
+
+
+## 8. Diferential expression analysis
+### Steatosis 3 categorias
+
+`steatosis_3cat` Si el valor de Esteatosis es 3, lo convierte en 2. De lo contrario, mantiene el valor original.
+
+```         
+Entonces tengo ESteatosis: 0, 1, 2 (tres categorias)
+```
 ```{r}
 # Ajustar el Modelo Completo
-dds <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
+dds_3cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
                               colData = colData(ids_counts),
                               design = ~ sexo + steatosis_3cat)
 
 # Ajustar modelo reducido (sin 'steatosis')
-dds <- DESeq(dds, test = "LRT", reduced = ~ sexo)
+dds_3cat <- DESeq(dds_3cat, test = "LRT", reduced = ~ sexo)
 
 # Obtener los Resultados
-resultsLRT <- results(dds, tidy=T)
-
+resultsLRT_3cat <- results(dds_3cat, tidy=T)
 
 # Filtrar resultados significativos
 
-significant_isomiRs_estrict <- resultsLRT[resultsLRT$padj < 0.05 & abs(resultsLRT$log2FoldChange) > 1, ]  # Estricto
+significant_isomiRs_estrict <- resultsLRT_3cat[resultsLRT_3cat$padj < 0.05 & abs(resultsLRT_3cat$log2FoldChange) > 1, ]  # Estricto
 
-significant_isomiRs_relajado <- resultsLRT[resultsLRT$padj < 0.1 & abs(resultsLRT$log2FoldChange) > 0.05, ]  # Relajado
+significant_isomiRs_relajado <- resultsLRT_3cat[resultsLRT_3cat$padj < 0.1 & abs(resultsLRT_3cat$log2FoldChange) > 0.05, ]  # Relajado
 
-significant_isomiRs_masrelajado <- resultsLRT[resultsLRT$padj < 0.1, ]  # Mas Relajado
+significant_isomiRs_masrelajado <- resultsLRT_3cat[resultsLRT_3cat$padj < 0.1, ]  # Mas Relajado
 
 
 # Visualizar resultados
-plot(resultsLRT$log2FoldChange, -log10(resultsLRT$pvalue), 
-     col = ifelse(resultsLRT$padj < 0.05, "red", "black"),
+plot(resultsLRT_3cat$log2FoldChange, -log10(resultsLRT_3cat$pvalue), 
+     col = ifelse(resultsLRT_3cat$padj < 0.05, "red", "black"),
      pch = 20, xlab = "Log2 Fold Change", ylab = "-Log10 p-value")
 
 
 ```
 
 ```{r}
-plotDispEsts(dds)
-
-
+plotDispEsts(dds_3cat)
 ```
 
 ```{r}
-table(colData(dds)$steatosis_3cat)
-hist(resultsLRT$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
+table(colData(dds_3cat)$steatosis_3cat)
+hist(resultsLRT_3cat$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
 
 ```
 
 
 ```{r}
-normalized_counts <- counts(dds, normalized = TRUE)
-boxplot(normalized_counts["nombre_isomiR", ] ~ colData(dds)$steatosis, 
-        main = "Expresión de un isomiR específico")
+# TOP
+top_3cat <- resultsLRT_3cat |> 
+  filter(padj < 0.4) |>
+  pull(row)
+
+resultsLRT_3cat |> 
+  arrange(padj) |>
+  head() |>
+  kbl(digits = 4) |>
+  kable_styling("striped")
+```
+
+```{r}
+gg_decor <- function(){list(
+  geom_boxplot(width=0.6),
+  labs(x="Steatosis", y="Normalized counts (log2)"),
+  theme_minimal(),
+  theme(axis.title = element_text(size = 13),
+        strip.text = element_text(size = 14)),
+  facet_wrap(~ name, scales = "free_y")
+)}
+```
+
+```{r}
+cuentas0 <- counts(normalized_ids, norm=T) |>
+  t() |> as.data.frame()
+
+cuentas <- dplyr::select(cuentas0, any_of(top_3cat)) |>
+  bind_cols(colData(normalized_ids) |> as.data.frame()) |>
+  pivot_longer(1:length(top_3cat))
+
+ggplot(cuentas, aes(x=steatosis_3cat, y=value)) + gg_decor()
+```
+
+### Steatosis 4 categorias
+```{r}
+# Ajustar el Modelo Completo
+dds_4cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
+                              colData = colData(ids_counts),
+                              design = ~ sexo + Esteatosis)
+
+# Ajustar modelo reducido (sin 'steatosis')
+dds_4cat <- DESeq(dds_4cat, test = "LRT", reduced = ~ sexo)
+
+# Obtener los Resultados
+resultsLRT_4cat <- results(dds_4cat, tidy=T)
+
+
+# Filtrar resultados significativos
+
+significant_isomiRs_estrict_4cat <- resultsLRT[resultsLRT$padj < 0.05 & abs(resultsLRT$log2FoldChange) > 1, ]  # Estricto
+
+significant_isomiRs_relajado_4cat <- resultsLRT[resultsLRT$padj < 0.1 & abs(resultsLRT$log2FoldChange) > 0.05, ]  # Relajado
+
+significant_isomiRs_masrelajado_4cat <- resultsLRT[resultsLRT$padj < 0.1, ]  # Mas Relajado
+
+
+# Visualizar resultados
+plot(resultsLRT_4cat$log2FoldChange, -log10(resultsLRT_4cat$pvalue), 
+     col = ifelse(resultsLRT_4cat$padj < 0.05, "red", "black"),
+     pch = 20, xlab = "Log2 Fold Change", ylab = "-Log10 p-value")
 
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-##### Count Data
-
-`steatosis_3cat` Si el valor de Esteatosis es 3, lo convierte en 2. De lo contrario, mantiene el valor original.
-
-    Entonces tengo ESteatosis: 0, 1, 2 (tres categorias)
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "sexo + steatosis_3cat"
-ids_steatosis = isoNorm(ids_counts_ref, formula = ~ sexo + steatosis_3cat)
-p_steatosis <-pheatmap(counts(ids_steatosis, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_steatosis)[,c("sexo","steatosis_3cat"),drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_3cat.png",
-         width = 12, 
-         height = 20)
+```{r}
+plotDispEsts(dds_4cat)
 ```
+
+```{r}
+table(colData(dds_4cat)$steatosis_3cat)
+hist(resultsLRT_4cat$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
+
+```
+
+```{r}
+# TOP
+top_4cat <- resultsLRT_4cat |> 
+  filter(padj < 0.1) |>
+  pull(row)
+
+resultsLRT_4cat |> 
+  arrange(padj) |>
+  head() |>
+  kbl(digits = 4) |>
+  kable_styling("striped")
+```
+
+```{r}
+cuentas0 <- counts(normalized_ids, norm=T) |>
+  t() |> as.data.frame()
+
+cuentas_4cat <- dplyr::select(cuentas0, any_of(top_4cat)) |>
+  bind_cols(colData(normalized_ids) |> as.data.frame()) |>
+  pivot_longer(1:length(top_4cat))
+
+ggplot(cuentas_4cat, aes(x=Esteatosis, y=value)) + gg_decor()
+```
+
+### Steatosis 2 categoria
+```{r}
+# Ajustar el Modelo Completo
+dds_2cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
+                              colData = colData(ids_counts),
+                              design = ~ sexo + steatosis_01)
+
+# Ajustar modelo reducido (sin 'steatosis')
+dds_2cat <- DESeq(dds_2cat, test = "LRT", reduced = ~ sexo)
+
+# Obtener los Resultados
+resultsLRT_2cat <- results(dds_2cat, tidy=T)
+
+
+# Filtrar resultados significativos
+
+significant_isomiRs_estrict_2cat <- resultsLRT_2cat[resultsLRT_2cat$padj < 0.05 & abs(resultsLRT_2cat$log2FoldChange) > 1, ]  # Estricto
+
+significant_isomiRs_relajado_2cat <- resultsLRT_2cat[resultsLRT_2cat$padj < 0.1 & abs(resultsLRT_2cat$log2FoldChange) > 0.05, ]  # Relajado
+
+significant_isomiRs_masrelajado_2cat <- resultsLRT_2cat[resultsLRT_2cat$padj < 0.1, ]  # Mas Relajado
+
+
+# Visualizar resultados
+plot(resultsLRT_2cat$log2FoldChange, -log10(resultsLRT_2cat$pvalue), 
+     col = ifelse(resultsLRT_2cat$padj < 0.05, "red", "black"),
+     pch = 20, xlab = "Log2 Fold Change", ylab = "-Log10 p-value")
+
+
+```
+
+```{r}
+plotDispEsts(dds_2cat)
+```
+
+```{r}
+table(colData(dds_2cat)$steatosis_2cat)
+hist(resultsLRT_2cat$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
+
+```
+
+```{r}
+# TOP
+top_2cat <- resultsLRT_2cat |> 
+  filter(padj < 0.3) |>
+  pull(row)
+
+resultsLRT_2cat |> 
+  arrange(padj) |>
+  head() |>
+  kbl(digits = 4) |>
+  kable_styling("striped")
+```
+
+```{r}
+cuentas0 <- counts(normalized_ids, norm=T) |>
+  t() |> as.data.frame()
+
+cuentas_2cat <- dplyr::select(cuentas0, any_of(top_2cat)) |>
+  bind_cols(colData(normalized_ids) |> as.data.frame()) |>
+  pivot_longer(1:length(top_2cat))
+
+ggplot(cuentas_2cat, aes(x=steatosis_01, y=value)) + gg_decor()
+```
+
+
 
 ##### Annotation
 
@@ -447,73 +548,8 @@ annotate_ref <- isoAnnotate(ids_counts_ref)
 save(annotate_ref, file="/home/joshoacr13/Documentos/TFM/mirna_analysis/input/annotate_references.Rdata")
 ```
 
-#### Differential expresion analysis
-
-##### steatosis_3cat
-
-```{r}
-dds <- isoDE(ids_steatosis, formula= ~ sexo + steatosis_3cat,  ref=TRUE)
-plotMA(dds)
-```
-
-```{r}
-ref <- results(dds, tidy = TRUE)
-
-top <- ref |> 
-  filter(padj<0.7845) |>
-  pull(row)
-
-ref |> 
-  arrange(padj) |>
-  head() |>
-  kbl(digits = 4) |>
-  kable_styling("striped")
-
-```
-
-##### DESeq with LRT
-
-```{r}
-dds_lrt <- DESeq(dds, test="LRT", reduced = ~ sexo)
-plotMA(dds_lrt)
-
-resultsNames(dds_lrt)
-```
-
-```{r}
-# Extract results
-res_LRT_1 <- results(dds_lrt, tidy = T, name="steatosis_3cat_1_vs_0")
-res_LRT_2 <- results(dds_lrt, tidy = T, name="steatosis_3cat_2_vs_0")
 
 
-# TOP
-top_1 <- res_LRT_1 |> 
-  filter(padj<0.2) |>
-  pull(row)
-
-top_2 <- res_LRT_2 |> 
-  filter(padj<0.2) |>
-  pull(row)
-
-top_1 == top_2
-
-
-res_LRT_1 |> 
-  arrange(padj) |>
-  head() |>
-  kbl(digits = 4) |>
-  kable_styling("striped")
-
-```
-
-```{r}
-res_LRT_2 |> 
-  arrange(padj) |>
-  head() |>
-  kbl(digits = 4) |>
-  kable_styling("striped")
-
-```
 
 ```{r}
 
@@ -546,233 +582,3 @@ entrez_ids <- mapIds(org.Hs.eg.db,
 
 ```
 
-```{r,fig.height=10, fig.width=6}
-# Metadata "edad"
-ids_edad = isoNorm(ids_counts, formula = ~ edad)
-p_edad <-pheatmap(counts(ids_edad, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_edad)[,"edad",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_edad.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "imc"
-ids_imc = isoNorm(ids_counts, formula = ~ imc)
-p_imc <-pheatmap(counts(ids_imc, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_imc)[,"imc",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_imc.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "Esteatosis"
-ids_Esteatosis = isoNorm(ids_counts, formula = ~ Esteatosis)
-p_Esteatosis <-pheatmap(counts(ids_Esteatosis, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Esteatosis)[,"Esteatosis",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Esteatosis.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "nash"
-ids_nash = isoNorm(ids_counts, formula = ~ nash)
-p_nash <-pheatmap(counts(ids_nash, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_nash)[,"nash",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_nash.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "Diabetes"
-ids_Diabetes = isoNorm(ids_counts, formula = ~ Diabetes)
-p_Diabetes <-pheatmap(counts(ids_Diabetes, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Diabetes)[,"Diabetes",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Diabetes.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "Steatosis"
-ids_Steatosis = isoNorm(ids_counts, formula = ~ Steatosis)
-p_Diabetes <-pheatmap(counts(ids_Steatosis, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Steatosis)[,"Steatosis",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Steatosis.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "Balonización.Hepatocitaria"
-ids_Balonización.Hepatocitaria = isoNorm(ids_counts, formula = ~ Balonización.Hepatocitaria)
-p_Balonización.Hepatocitaria <-pheatmap(counts(ids_Balonización.Hepatocitaria, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Balonización.Hepatocitaria)[,"Balonización.Hepatocitaria",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Balonización.Hepatocitaria.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "nas"
-ids_nas = isoNorm(ids_counts, formula = ~ nas)
-p_nas <-pheatmap(counts(ids_nas, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_nas)[,"nas",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_nas.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "Inflamación.lobular"
-ids_Inflamación.lobular = isoNorm(ids_counts, formula = ~ Inflamación.lobular)
-p_Inflamación.lobular <-pheatmap(counts(ids_Inflamación.lobular, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Inflamación.lobular)[,"Inflamación.lobular",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Inflamación.lobular.png",
-         width = 12, 
-         height = 20)
-```
-
-No ha funcinado con firbosis
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "fibrosis"
-ids_Diabetes = isoNorm(ids_counts, formula = ~ Diabetes)
-p_Diabetes <-pheatmap(counts(ids_Diabetes, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_Diabetes)[,"Diabetes",drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Diabetes.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "sexo + edad"
-ids_sd = isoNorm(ids_counts, formula = ~ sexo + edad)
-p_sd <-pheatmap(counts(ids_sd, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_sd)[,c("sexo","edad"),drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sd.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "sexo + edad"
-ids_sd = isoNorm(ids_counts, formula = ~ sexo + edad)
-p_sd <-pheatmap(counts(ids_sd, norm=TRUE)[1:100,], 
-         annotation_col = data.frame(colData(ids_sd)[,c("sexo","edad"),drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sd.png",
-         width = 12, 
-         height = 20)
-```
-
-```{r,fig.height=10, fig.width=6}
-# Metadata "sexo + edad + nash"
-ids_sdn = isoNorm(ids_counts, formula = ~ sexo + edad +nash)
-p_sdn <-pheatmap(counts(ids_sdn, norm=TRUE)[1:1000,], 
-         annotation_col = data.frame(colData(ids_sdn)[,c("sexo","edad","nash"),drop=FALSE]),
-         show_rownames = FALSE, 
-         scale="row",
-         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sdn.png",
-         width = 12, 
-         height = 20)
-```
-
-sexo edad imc diabetes nash y/o esteatosis
-
-#### Annotation
-
-```{r}
-head(isoAnnotate(ids_sdn))
-```
-
-```{r}
-# Load libraries
-library(affy)
-library(affyPLM)
-library(limma)
-library(affycomp)
-library(AgilentQC)
-
-
-# Set working directory to where CEL files are located
-setwd("E://miRNA/GSE66752_RAW/GSM1631463_179_NS.txt/")
-
-data_files - list.files(pattern = "*.txt")
-data - read.maimages(files = data_files, source = "agilent", green.only = TRUE)
-normalized_data - normalizeBetweenArrays(data)
-conditions_data - read.csv("meta.csv", header = TRUE)
-
-# Inspect the conditions data
-head(conditions_data)
-
-# Assume the file has a column named 'Condition' with group labels
-# Adjust if your column name or structure is different
-conditions - factor(conditions_data$condition)
-
-
-design - model.matrix(~ conditions)
-fit - lmFit(normalized_data, design)
-fit - eBayes(fit)
-results - topTable(fit, adjust="fdr", number=Inf)
-head(results)
-write.csv(results, "DEGS_new.csv")
-# Display top differentially expressed miRNAs
-
-```
-
-```{r}
-gg_decor <- function(){list(
-  geom_boxplot(width=0.6),
-  labs(x="Steatosis", y="Normalized counts (log2)"),
-  theme_classic(),
-  theme(axis.title = element_text(size = 13),
-        strip.text = element_text(size = 14)),
-  facet_wrap(~ name, scales = "free_y")
-)}
-
-```
-
-```{r}
-cuentas <- counts(ids_steatosis, norm=T) |>
-  t() |> as.data.frame()
-
-cuentas_o <- cuentas|> 
-  select(any_of(top))|>
-  bind_cols(colData(ids_steatosis) |> as.data.frame()) |>
-  pivot_longer(1:length(top))
-
-cuentas_o <- cuentas |>
-  select(any_of(top)) |>  # Selecciona solo las columnas listadas en 'top'
-  bind_cols(colData(ids_steatosis) |> as.data.frame()) |>
-  pivot_longer(cols = 1:length(top), names_to = "variable", values_to = "value")
-
-
-ggplot(cuentas_o, aes(x=steatosis_3cat, y=value)) + gg_decor()
-```
