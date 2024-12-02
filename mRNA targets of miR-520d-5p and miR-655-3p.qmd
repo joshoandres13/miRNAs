@@ -1,0 +1,133 @@
+---
+title: "Identification of molecular and metabolic pathways regulated by miR-520d-5p and miR-655-3p"
+author: "J. Andres Castillo-Rivas"
+format: html
+editor: visual
+---
+
+# Methodology 
+## 2.Filtra los datos por miRNAs específicos:
+### miR-520d-5p
+#### TargetScan
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_520d_5p")
+# miR_520d_5p_targetscan_targets <- read.delim("selected_miRNAs_miR_520d_5p.txt", header = TRUE, sep = "\t")                    No hay informacion de esto!!!
+```
+Para esta seleccion no se encontro targets para el miR-520d-5p
+#### mirDB
+
+miRDB is an online database for miRNA target prediction and functional annotations. All the targets in miRDB were predicted by a bioinformatics tool, MirTarget, which was developed by analyzing thousands of miRNA-target interactions from high-throughput sequencing experiments. Common features associated with miRNA binding and target downregulation have been identified and used to predict miRNA targets with machine learning methods. miRDB hosts predicted miRNA targets in five species: human, mouse, rat, dog and chicken.
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p")
+miR_520d_5p_mirdb_targets <- read.csv("selected_miRNAs_miR_520d_5p.txt", header = TRUE)
+head(miR_520d_5p_mirdb_targets)
+```
+
+*Columns information:*
+
+
+
+#### miRWalk
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/miRWalk/selection/miR_520d_5p/")
+miR_520d_5p_mirwalk_targets <- read.csv("miRWalk_miRNA_Targets_miR_520d_5p.csv", header = TRUE)
+head(miR_520d_5p_mirwalk_targets)
+str(miR_520d_5p_mirwalk_targets)
+```
+
+#### mirtarbase
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p")
+miR_520d_5p_mirtarbase_targets <- read.csv("selected_miRNAs_miR_520d_5p.txt", header = TRUE)
+head(miR_520d_5p_mirtarbase_targets)
+str(miR_520d_5p_mirtarbase_targets)
+```
+
+### miR-655-3p
+#### TargetScan
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_655_3p")
+miR_655_3p_targetscan_targets <- read.delim("selected_miRNAs_miR_655_3p.txt", header = TRUE, sep = "\t")
+head(miR_655_3p_targetscan_targets)
+str(miR_655_3p_targetscan_targets)
+```
+
+Para esta seleccion se encontro 956 targets para el miR-655-3p
+
+#### mirDB
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/selection/miR_655_3p")
+miR_655_3p_mirdb_targets <- read.delim("selected_miRNAs_miR_655_3p.txt", header = TRUE, sep = "\t")
+head(miR_655_3p_mirdb_targets)
+```
+
+#### miRWalk
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/miRWalk/selection/miR_655_3p/")
+miR_655_3p_mirwalk_targets <- read.csv("miRWalk_miRNA_Targets_miR_655_3p.csv", header = TRUE)
+head(miR_655_3p_mirwalk_targets)
+str(miR_655_3p_mirwalk_targets)
+```
+
+#### mirtarbase
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_655_3p")
+miR_655_3p_mirtarbase_targets <- read.csv("selected_miRNAs_miR_655_3p.txt", header = TRUE)
+head(miR_655_3p_mirtarbase_targets)
+str(miR_655_3p_mirtarbase_targets)
+```
+
+
+
+
+## 3.Selecciona los mRNAs con los puntajes más altos.
+*Informacion relevante*:
+
+En las columnas tenemos diferentes metricas,una de las mas importantes: - Seed match: Indica el tipo de coincidencia entre el miRNA y su mRNA diana. Una coincidencia más fuerte en la región de "seed" del miRNA (el área que determina su capacidad de unión a un mRNA específico) es un indicador importante.
+
+-   PCT (Probabilistic Conservation Score): Si tu archivo incluye esta columna, es una medida probabilística de conservación que sugiere cuán confiable es la predicción de que el miRNA interactúe con el mRNA en una función biológica conservada. Un valor más alto de PCT indica una interacción más confiable y relevante.
+
+Metodos:
+
+1.  Prioricemos aquellos mRNAs con el tipo de Seed match más fuerte.
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected
+sort -k10,10 selected_miRNAs_miR_655_3p.txt | head -n 40 > top_miRNAs_miR_655_3p_targets.txt
+```
+
+2.  Prioricemos aquellos mRNAs con el tipo de Seed match más fuerte. Luego, dentro de cada categoría de Seed match, ordenamos según el valor de PCT en orden descendente, para asegurar que los mRNAs con las predicciones más confiables estén en los primeros lugares.
+
+```{bash}
+#cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected
+
+#grep -v 'NULL' selected_miRNAs_miR_655_3p.txt | sort -k10,10 -k11,11nr | head -n 40 > top_miRNA_targets_filteredNULLS.txt
+```
+
+ELiminar los NULLS, y selecionar seed match and PCT, pero se eliminan todos los miRNAs ;(
+
+# 3. Análisis Bibliográfico de mRNAs para Clasificación Metabólica
+
+```{bash}
+export PATH=$PATH:$HOME/edirect
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected
+
+for gene in $(cut -f2 top_miRNAs_miR_655_3p_targets.txt | sort | uniq); do
+    esearch -db pubmed -query "$gene AND metabolism" | efetch -format abstract >> metabolism_related_genes.txt
+done
+
+
+```
+
+# 4. Enrichment
+
+```{r}
+# Instalar y cargar gprofiler2 si aún no está instalado 
+# install.packages("gprofiler2") 
+library(gprofiler2)
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected")
+genes <- read.table("top_miRNAs_miR_655_3p_targets.txt", header=FALSE)$V3 
+enrichment_results <- gost(genes, organism = "hsapiens") 
+enrichment_results
+```

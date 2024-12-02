@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<style>body{background-color:white;}</style>
+<script src="lib/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="lib/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="lib/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="lib/kePrint-0.0.1/kePrint.js"></script>
+<link href="lib/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+</head>
+<body>
+<table class="table table-striped" style="color: black; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;"> database </th>
+   <th style="text-align:left;"> mature_mirna_acc </th>
+   <th style="text-align:left;"> mature_mirna_id </th>
+   <th style="text-align:left;"> target_symbol </th>
+   <th style="text-align:left;"> target_entrez </th>
+   <th style="text-align:left;"> target_ensembl </th>
+   <th style="text-align:left;"> score </th>
+   <th style="text-align:left;"> DB.link </th>
+   <th style="text-align:left;"> type </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> ADM </td>
+   <td style="text-align:left;"> 133 </td>
+   <td style="text-align:left;"> ENSG00000148926 </td>
+   <td style="text-align:left;"> -0.366 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=ADM&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> GTF2F2 </td>
+   <td style="text-align:left;"> 2963 </td>
+   <td style="text-align:left;"> ENSG00000188342 </td>
+   <td style="text-align:left;"> -0.367 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=GTF2F2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> C2orf76 </td>
+   <td style="text-align:left;"> 130355 </td>
+   <td style="text-align:left;"> ENSG00000186132 </td>
+   <td style="text-align:left;"> -0.375 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=C2orf76&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> TAF13 </td>
+   <td style="text-align:left;"> 6884 </td>
+   <td style="text-align:left;"> ENSG00000197780 </td>
+   <td style="text-align:left;"> -0.375 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=TAF13&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> TSPAN7 </td>
+   <td style="text-align:left;"> 7102 </td>
+   <td style="text-align:left;"> ENSG00000156298 </td>
+   <td style="text-align:left;"> -0.388 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=TSPAN7&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RPL38 </td>
+   <td style="text-align:left;"> 6169 </td>
+   <td style="text-align:left;"> ENSG00000172809 </td>
+   <td style="text-align:left;"> -0.39 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RPL38&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> BRAT1 </td>
+   <td style="text-align:left;"> 221927 </td>
+   <td style="text-align:left;"> ENSG00000106009 </td>
+   <td style="text-align:left;"> -0.394 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=BRAT1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RBM24 </td>
+   <td style="text-align:left;"> 221662 </td>
+   <td style="text-align:left;"> ENSG00000112183 </td>
+   <td style="text-align:left;"> -0.396 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RBM24&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> PRRX2 </td>
+   <td style="text-align:left;"> 51450 </td>
+   <td style="text-align:left;"> ENSG00000167157 </td>
+   <td style="text-align:left;"> -0.403 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=PRRX2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RGS1 </td>
+   <td style="text-align:left;"> 5996 </td>
+   <td style="text-align:left;"> ENSG00000090104 </td>
+   <td style="text-align:left;"> -0.403 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RGS1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> SNRNP40 </td>
+   <td style="text-align:left;"> 9410 </td>
+   <td style="text-align:left;"> ENSG00000060688 </td>
+   <td style="text-align:left;"> -0.407 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=SNRNP40&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> ING2 </td>
+   <td style="text-align:left;"> 3622 </td>
+   <td style="text-align:left;"> ENSG00000168556 </td>
+   <td style="text-align:left;"> -0.41 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=ING2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> SRSF5 </td>
+   <td style="text-align:left;"> 6430 </td>
+   <td style="text-align:left;"> ENSG00000100650 </td>
+   <td style="text-align:left;"> -0.417 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=SRSF5&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> SRSF7 </td>
+   <td style="text-align:left;"> 6432 </td>
+   <td style="text-align:left;"> ENSG00000115875 </td>
+   <td style="text-align:left;"> -0.418 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=SRSF7&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> C11orf58 </td>
+   <td style="text-align:left;"> 10944 </td>
+   <td style="text-align:left;"> ENSG00000110696 </td>
+   <td style="text-align:left;"> -0.419 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=C11orf58&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> NOA1 </td>
+   <td style="text-align:left;"> 84273 </td>
+   <td style="text-align:left;"> ENSG00000084092 </td>
+   <td style="text-align:left;"> -0.433 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=NOA1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> KHDRBS2 </td>
+   <td style="text-align:left;"> 202559 </td>
+   <td style="text-align:left;"> ENSG00000112232 </td>
+   <td style="text-align:left;"> -0.44 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=KHDRBS2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> KCTD1 </td>
+   <td style="text-align:left;"> 284252 </td>
+   <td style="text-align:left;"> ENSG00000134504 </td>
+   <td style="text-align:left;"> -0.443 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=KCTD1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RILPL2 </td>
+   <td style="text-align:left;"> 196383 </td>
+   <td style="text-align:left;"> ENSG00000150977 </td>
+   <td style="text-align:left;"> -0.446 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RILPL2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> GPR162 </td>
+   <td style="text-align:left;"> 27239 </td>
+   <td style="text-align:left;"> ENSG00000250510 </td>
+   <td style="text-align:left;"> -0.447 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=GPR162&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> C18orf32 </td>
+   <td style="text-align:left;"> 497661 </td>
+   <td style="text-align:left;"> ENSG00000177576 </td>
+   <td style="text-align:left;"> -0.451 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=C18orf32&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> IFNW1 </td>
+   <td style="text-align:left;"> 3467 </td>
+   <td style="text-align:left;"> ENSG00000177047 </td>
+   <td style="text-align:left;"> -0.463 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=IFNW1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RRP9 </td>
+   <td style="text-align:left;"> 9136 </td>
+   <td style="text-align:left;"> ENSG00000114767 </td>
+   <td style="text-align:left;"> -0.469 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RRP9&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> PTX3 </td>
+   <td style="text-align:left;"> 5806 </td>
+   <td style="text-align:left;"> ENSG00000163661 </td>
+   <td style="text-align:left;"> -0.469 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=PTX3&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> RNF130 </td>
+   <td style="text-align:left;"> 55819 </td>
+   <td style="text-align:left;"> ENSG00000113269 </td>
+   <td style="text-align:left;"> -0.471 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=RNF130&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> EIF1B </td>
+   <td style="text-align:left;"> 10289 </td>
+   <td style="text-align:left;"> ENSG00000114784 </td>
+   <td style="text-align:left;"> -0.481 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=EIF1B&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> KCNJ13 </td>
+   <td style="text-align:left;"> 3769 </td>
+   <td style="text-align:left;"> ENSG00000115474 </td>
+   <td style="text-align:left;"> -0.482 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=KCNJ13&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> PPBP </td>
+   <td style="text-align:left;"> 5473 </td>
+   <td style="text-align:left;"> ENSG00000163736 </td>
+   <td style="text-align:left;"> -0.488 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=PPBP&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> TOB1 </td>
+   <td style="text-align:left;"> 10140 </td>
+   <td style="text-align:left;"> ENSG00000141232 </td>
+   <td style="text-align:left;"> -0.496 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=TOB1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> AGO2 </td>
+   <td style="text-align:left;"> 27161 </td>
+   <td style="text-align:left;"> ENSG00000123908 </td>
+   <td style="text-align:left;"> -0.551 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=AGO2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> CAMTA1 </td>
+   <td style="text-align:left;"> 23261 </td>
+   <td style="text-align:left;"> ENSG00000171735 </td>
+   <td style="text-align:left;"> -0.574 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=CAMTA1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> ATP5MC2 </td>
+   <td style="text-align:left;"> 517 </td>
+   <td style="text-align:left;"> ENSG00000135390 </td>
+   <td style="text-align:left;"> -0.631 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=ATP5MC2&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> CORT </td>
+   <td style="text-align:left;"> 1325 </td>
+   <td style="text-align:left;"> ENSG00000241563 </td>
+   <td style="text-align:left;"> -0.639 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=CORT&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> targetscan </td>
+   <td style="text-align:left;"> MIMAT0003331 </td>
+   <td style="text-align:left;"> hsa-miR-655-3p </td>
+   <td style="text-align:left;"> PTTG1 </td>
+   <td style="text-align:left;"> 9232 </td>
+   <td style="text-align:left;"> ENSG00000164611 </td>
+   <td style="text-align:left;"> -0.716 </td>
+   <td style="text-align:left;"> http://www.targetscan.org/cgi-bin/targetscan/vert_61/targetscan.cgi?species=Human&amp;gid=PTTG1&amp;mirg=hsa-miR-655 </td>
+   <td style="text-align:left;"> predicted </td>
+  </tr>
+</tbody>
+</table> <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [["$","$"]]}})</script><script async src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

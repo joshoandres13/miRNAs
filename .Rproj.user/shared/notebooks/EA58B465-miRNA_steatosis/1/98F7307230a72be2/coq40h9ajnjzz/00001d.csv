@@ -1,0 +1,5 @@
+"0",""
+"0"," # Table"
+"0","results |>"
+"0","  kable(format = ""html"") |>"
+"0","  kable_styling(""striped"")"

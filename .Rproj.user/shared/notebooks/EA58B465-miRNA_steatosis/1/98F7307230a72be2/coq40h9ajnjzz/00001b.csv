@@ -1,0 +1,9 @@
+"0","# Realizar el análisis"
+"0","dds <- isoDE(normalized_ids_ref, formula = ~ sexo + steatosis_3cat)"
+"2","converting counts to integer mode
+"
+"2","Aviso: some variables in design formula are characters, converting to factors"
+"0","# Obtener los resultados"
+"0","results <- DESeq2::results(dds)"
+"0",""
+"0","plotMA(dds)"

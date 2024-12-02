@@ -1,0 +1,2 @@
+"0","ids <- isoCounts(mirData)"
+"0","isoPlot(ids, type=""all"")"

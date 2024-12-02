@@ -1,0 +1,6 @@
+"0","normalized_counts <- counts(dds, normalized = TRUE)"
+"0","boxplot(normalized_counts[""nombre_isomiR"", ] ~ colData(dds)$steatosis, "
+"0","        main = ""Expresión de un isomiR específico"")"
+"2","Error en normalized_counts[""nombre_isomiR"", ]: 
+  subíndice fuera de  los límites
+"

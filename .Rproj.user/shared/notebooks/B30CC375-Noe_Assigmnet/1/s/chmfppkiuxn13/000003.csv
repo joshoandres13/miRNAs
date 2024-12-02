@@ -1,0 +1,8 @@
+"0","# Densidad para TotalSleep
+ggplot(data, aes(x = TotalSleep)) + 
+  geom_density(fill = ""green"", alpha = 0.5) +
+  labs(title = ""Densidad de TotalSleep"", x = ""Horas de Sueño Total"", y = ""Densidad"")
+```
+"
+"2","Error: se intenta usar un nombre de varible de longitud cero
+"

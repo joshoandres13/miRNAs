@@ -1,0 +1,26 @@
+"0","if (!require(""BiocManager"", quietly = TRUE))"
+"0","    install.packages(""BiocManager"")"
+"0",""
+"0","BiocManager::install(""BiocStyle"")"
+"2","'getOption(""repos"")' replaces Bioconductor standard repositories, see
+'help(""repositories"", package = ""BiocManager"")' for details.
+Replacement repositories:
+    CRAN: https://cloud.r-project.org
+"
+"2","Bioconductor version 3.19 (BiocManager 1.30.25), R 4.4.1 (2024-06-14)
+"
+"2","Aviso: package(s) not installed when version(s) same as or greater than current; use
+  `force = TRUE` to re-install: 'BiocStyle'"
+"2","Installation paths not writeable, unable to update packages
+  path: /usr/lib/R/library
+  packages:
+    boot, codetools, foreign, lattice, MASS, Matrix, nlme
+  path: /usr/lib/R/site-library
+  packages:
+    pkgKitten, Rcpp
+"
+"0","library(BiocStyle)"
+"0","knitr::opts_chunk$set(tidy=FALSE, cache=FALSE,"
+"0","                      dev=""png"","
+"0","                      message=FALSE, error=FALSE,"
+"0","                      warning=TRUE)"

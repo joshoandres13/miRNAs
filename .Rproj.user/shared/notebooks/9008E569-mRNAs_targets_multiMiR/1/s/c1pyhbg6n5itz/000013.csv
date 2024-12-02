@@ -1,0 +1,5 @@
+"0",""
+"0","# Table with kable"
+"0","validated_hsa_miR_520d_5p_shared |>"
+"0","  kable(format = ""html"") |> "
+"0","  kable_styling(""striped"")"

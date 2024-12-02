@@ -1,0 +1,523 @@
+---
+title: "Characterization of miRNA"
+author: "J. Andrés Castillo"
+format: html
+editor: visual
+---
+
+## Introduction
+
+miRNAs are small RNA fragments (18-23 nt long) that influence gene expression during development and cell stability. Morin et al (Morin et al. 2008), discovered isomiRs first time after sequencing human stem cells.
+
+IsomiRs are miRNAs that vary slightly in sequence, which result from variations in the cleavage site during miRNA biogenesis (5’-trimming and 3’-trimming variants), nucleotide additions to the 3’-end of the mature miRNA (3’-addition variants) and nucleotide modifications (substitution variants)(Martı́ et al. 2010).
+
+There are many tools designed for isomiR detection, however the majority are web application where user can not control the analysis. The two main command tools for isomiRs mapping are SeqBuster and sRNAbench (Guillermo et al. 2014). isomiRs. package is designed to analyze the output of SeqBuster tool or any other tool after converting to the desire format.
+
+## Installation
+
+```{r, message=F, echo=FALSE}
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+#BiocManager::install("isomiRs")
+
+#install.packages("pheatmap")
+
+```
+
+## Load Packages
+
+```{r, message=FALSE, echo=FALSE}
+library("isomiRs")
+library("readr")
+library("tibble")
+library("pheatmap")
+library("dplyr")
+library("ggplot2")
+library("DESeq2")
+library("kableExtra")
+```
+
+## Running Code
+
+### Manipulation
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export
+ls /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export > samples_mirna.txt
+mv samples_mirna.txt /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/
+
+# cut -d$',' -f1 test1.csv
+# awk -F',' '{print $1}' test1.csv > nombres.txt
+```
+
+```{r}
+# Read the file
+patients <- readLines("/home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/samples_mirna.txt")
+patients <- patients[c(-1,-26)]
+#  Delete
+patients <- gsub("\\.tsv$", "", patients)
+patients <- gsub("_mirtop_rawData", "", patients)  # Eliminar '_mirtop_rawData'
+# Agregar comillas a cada nombre
+patients <- paste0('"', patients, '"')
+# Save the files
+writeLines(patients, "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/samples_mirna.txt")
+
+# Read lines of the modified file
+patients <- readLines("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/samples_mirna.txt")
+
+# Convert to vector a string with the format c("nombre1", "nombre2", ...)
+patients <- paste0(patients, collapse = ", ")
+# Mostrar el resultado
+cat(patients)
+```
+
+#### Reading input
+
+##### Metadata Matrix
+
+```{r}
+# Load data
+metadata_JM <- read_csv("~/Documentos/TFM/mirna_analysis/input/20240813_metadata.csv")
+# Delete the columns that not correspond with the samples 
+metadata_JM <- metadata_JM[-c(1:79),]
+
+```
+
+```{r}
+# Check if we have the same names in columns 
+# Create the vector with the names
+data_nfcore <- c(
+  "SC_284", "SC_286", "SC_287", "SC_288", "SC_290", "SC_292", "SC_293", "SC_294", "SC_296", "SC_298", "SC_301", "SC_303", "SC_307", "SC_309", "SC_312", "SC_313", "SC_314", "SC_315", "SC_318", "SC_319", "SC_321", "SC_325", "SC_330", "SC_331", "SC_334", "SC_337", "SC_340", "SC_343", "SC_344", "SC_345", "SC_346", "SC_350", "SC_359", "SC_360", "SC_363", "SC_366", "SC_371", "SC_372", "SC_373", "SC_375", "SC_380", "SC_387", "SC_390", "SC_394", "SC_398", "SC_400", "SC_403", "SC_408", "SC_409", "SC_410", "SC_413", "SC_414", "SC_417", "SC_421", "SC_428", "SC_429", "SC_433", "SC_439", "SC_443", "SC_457", "SC_458", "SC_459", "SC_460", "SC_461", "SC_471", "SC_472", "SC_473", "SC_479", "SC_484", "SC_485", "SC_486", "SC_487", "SC_488", "SC_491", "SC_492", "SC_496", "SC_497", "SC_498")
+class(data_nfcore)
+# Lenght of the patiens 
+
+data_JM <- c(metadata_JM$prefix)
+
+elementos_unicos_en_vector1  <- setdiff(data_nfcore, data_JM)
+elementos_unicos_en_vector2  <- setdiff(data_JM, data_nfcore)
+
+elementos_unicos_en_vector1
+elementos_unicos_en_vector2
+```
+
+```{r}
+################################################################################
+# Todas las variables
+################################################################################
+# Metadata Complete
+mdata_raw_all <- read_csv("~/Documentos/TFM/mirna_analysis/input/20241104-metadata4JAndres.csv") |>
+  mutate(prefix = paste0("SC_",muestra),.before = 1) |>
+  column_to_rownames("prefix")
+
+mdata_raw <- mdata_raw[,-1]
+# Seleccionar filas en la tabla donde la columna Muestra coincide con el vector samples
+
+data_nfcore <- c(
+  "SC_284", "SC_286", "SC_287", "SC_288", "SC_290", "SC_292", "SC_293", "SC_294", "SC_296", "SC_298", "SC_301", "SC_303", "SC_307", "SC_309", "SC_312", "SC_313", "SC_314", "SC_315", "SC_318", "SC_319", "SC_321", "SC_325", "SC_330", "SC_331", "SC_334", "SC_337", "SC_340", "SC_343", "SC_344", "SC_345", "SC_346", "SC_350", "SC_359", "SC_360", "SC_363", "SC_366", "SC_371", "SC_372", "SC_373", "SC_375", "SC_380", "SC_387", "SC_390", "SC_394", "SC_398", "SC_400", "SC_403", "SC_408", "SC_409", "SC_410", "SC_413", "SC_414", "SC_417", "SC_421", "SC_428", "SC_429", "SC_433", "SC_439", "SC_443", "SC_457", "SC_458", "SC_459", "SC_460", "SC_461", "SC_471", "SC_472", "SC_473", "SC_479", "SC_484", "SC_485", "SC_486", "SC_487", "SC_488", "SC_491", "SC_492", "SC_496", "SC_497", "SC_498")
+
+mdata_raw_all <- mdata_raw_all[rownames(mdata_raw_all) %in% data_nfcore, ]
+
+# Export
+write.csv(mdata_raw_all, file = "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105_metadataAll.csv", row.names = TRUE)
+
+
+```
+
+
+```{r}
+################################################################################
+# Categorizada en Esteatosis 
+################################################################################
+mdata_steatosis <- read_csv("~/Documentos/TFM/mirna_analysis/input/20241104-metadata4JAndres.csv") |>
+  mutate(prefix = paste0("SC_",muestra),.before = 1) |>
+  mutate(steatosis_3cat = ifelse(Esteatosis == 3, 2, Esteatosis) |> as.factor(),
+         steatosis_01 = ifelse(Esteatosis  == 0, 0, 1) |> as.factor(),
+         Esteatosis = Esteatosis |> as.factor()) |>
+  select(prefix,sexo,Esteatosis, steatosis_3cat, steatosis_01) |>
+#  filter(prefix%in%names(mir0)) |>
+  arrange(prefix) |>
+  column_to_rownames("prefix")
+
+mdata_steatosis <- mdata_steatosis[rownames(mdata_steatosis) %in% data_nfcore, ]
+
+
+# Transform to data frame
+mdata_steatosis <- as.data.frame(mdata_steatosis)
+class(mdata_steatosis)
+
+print(mdata_steatosis)
+str(mdata_steatosis)
+
+save(mdata_steatosis, file = "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105_metadata_steatosis.Rdata")
+```
+
+##### Count Matrix
+
+```{r}
+# Directorio que contiene los archivos .tsv de cada muestra
+path <- "/home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export/"
+# Crear la lista de archivos en el directorio especificado
+file_list <- list.files(path, pattern = "*.tsv", full.names = TRUE)
+print(file_list)
+```
+
+```{r}
+# Read and combine all the file in a data.frame
+all_samples <- lapply(file_list, function(file) {
+  # Leer el archivo de muestra
+  sample_data <- read.delim(file, sep = "\t")
+  
+  # Obtener el nombre de la muestra a partir del nombre del archivo
+  sample_name <- gsub("_mirtop_rawData.tsv", "", basename(file))
+  
+  # Renombrar la columna de expresión con el nombre de la muestra
+  colnames(sample_data)[ncol(sample_data)] <- sample_name
+  
+  return(sample_data)
+})
+
+# Unir todos los archivos por las columnas compartidas (seq, mir, mism, add, t5, t3)
+countdata_complete <- Reduce(function(x, y) merge(x, y, by = c("seq", "mir", "mism", "add", "t5", "t3"), all = TRUE), all_samples)
+
+# Reemplazar NA por 0 (en caso de muestras sin expresión en ciertos isomiRs)
+countdata_complete[is.na(countdata_complete)] <- 0
+
+# Export
+write.csv(countdata_complete, file = "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv", row.names = FALSE)
+```
+
+##### IsomirDataSeq object
+
+```{r}
+# Usar IsomirDataSeqFromMirtop
+  # All metadata
+countdata_complete <- read_csv("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv")
+
+mirna_data <- IsomirDataSeqFromMirtop(mirtop = countdata_complete, coldata = mdata_raw_all)
+save(mirna_data, file="/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data.Rdata")
+  # Visualizar el resultado
+print(mirna_data)
+```
+
+```{R}
+ # Steatosis 
+countdata_complete <- read_csv("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv")
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105_metadata_steatosis.Rdata")
+
+mirna_data_steatosis <- IsomirDataSeqFromMirtop(mirtop = countdata_complete, coldata = mdata_steatosis)
+save(mirna_data_steatosis, file="/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata")
+```
+
+#### Manipulation
+
+##### Descriptive Analysis
+
+`isoCounts` 
+This function collapses isomiRs into different groups. It is a similar concept than how to work with gene isoforms. With this function, different changes can be put together into a single miRNA variant. For instance all sequences with variants at 3' end can be considered as different elements in the table or analysis having the following naming hsa-miR-124a-5p.iso.t3:AAA.
+
+```{r}
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata")
+# Cuentas con los miRNA de refrencia
+ids_counts_ref <- isoCounts(mirna_data_steatosis, ref= TRUE, minc = 20, mins = 40)
+
+# Cuentas para los demas 
+ids_counts_iso5 <- isoCounts(mirna_data_steatosis, iso5 = TRUE, minc = 20, mins = 40)
+ids_counts_iso3 <- isoCounts(mirna_data_steatosis, iso3 = TRUE, minc = 20, mins = 40)
+ids_counts_add <- isoCounts(mirna_data_steatosis, add= TRUE, minc = 20, mins = 40)
+ids_counts_snv <- isoCounts(mirna_data_steatosis, snv= TRUE, minc = 20, mins = 40)
+
+
+# Plot
+
+isoPlot(ids_counts_ref,type="all")
+
+#isoPlot(ids_counts, type="all", column="Ballooning")
+#isoPlot(ids_counts, type="iso5")
+#isoPlot(ids_counts, type="iso3")
+#isoPlot(ids, type="snv")
+#isoPlot(ids, type="add")
+#isoPlot(ids, type="subs")
+```
+
+##### Count data
+
+```{r}
+head(counts(ids_counts_ref))
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "sexo + steatosis_3cat"
+ids_steatosis = isoNorm(ids_counts_ref, formula = ~ sexo + steatosis_3cat)
+p_steatosis <-pheatmap(counts(ids_steatosis, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_steatosis)[,c("sexo","steatosis_3cat"),drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_st_3cat.png",
+         width = 12, 
+         height = 20)
+```
+
+##### Annotation
+
+To get a detail description for each isomiR, the function
+`isoAnnotate` can return the naming, sequence and
+importance value for each sample and isomiR. The importance
+is calculated by:
+
+$$importance = \frac{isomiR\_reads}{miRNA\_reads}$$
+```{r}
+head(isoAnnotate(ids_counts_ref))
+```
+
+#### Clasification
+
+```{r}
+dds <- isoDE(ids_counts_ref, formula= ~ sexo + steatosis_3cat)
+plotMA(dds)
+```
+
+```{r}
+head(results(dds, format="DataFrame"))
+
+ref <- results(dds, tidy = TRUE)
+
+top <- ref |> 
+  filter(padj<0.2) |>
+  pull(row)
+
+
+ref |> 
+  arrange(padj) |>
+  head() |>
+  kbl(digits = 4) |>
+  kable_styling("striped")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "edad"
+ids_edad = isoNorm(ids_counts, formula = ~ edad)
+p_edad <-pheatmap(counts(ids_edad, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_edad)[,"edad",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_edad.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "imc"
+ids_imc = isoNorm(ids_counts, formula = ~ imc)
+p_imc <-pheatmap(counts(ids_imc, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_imc)[,"imc",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_imc.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "Esteatosis"
+ids_Esteatosis = isoNorm(ids_counts, formula = ~ Esteatosis)
+p_Esteatosis <-pheatmap(counts(ids_Esteatosis, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Esteatosis)[,"Esteatosis",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Esteatosis.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "nash"
+ids_nash = isoNorm(ids_counts, formula = ~ nash)
+p_nash <-pheatmap(counts(ids_nash, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_nash)[,"nash",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_nash.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "Diabetes"
+ids_Diabetes = isoNorm(ids_counts, formula = ~ Diabetes)
+p_Diabetes <-pheatmap(counts(ids_Diabetes, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Diabetes)[,"Diabetes",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Diabetes.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "Steatosis"
+ids_Steatosis = isoNorm(ids_counts, formula = ~ Steatosis)
+p_Diabetes <-pheatmap(counts(ids_Steatosis, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Steatosis)[,"Steatosis",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Steatosis.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "Balonización.Hepatocitaria"
+ids_Balonización.Hepatocitaria = isoNorm(ids_counts, formula = ~ Balonización.Hepatocitaria)
+p_Balonización.Hepatocitaria <-pheatmap(counts(ids_Balonización.Hepatocitaria, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Balonización.Hepatocitaria)[,"Balonización.Hepatocitaria",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Balonización.Hepatocitaria.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "nas"
+ids_nas = isoNorm(ids_counts, formula = ~ nas)
+p_nas <-pheatmap(counts(ids_nas, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_nas)[,"nas",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_nas.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "Inflamación.lobular"
+ids_Inflamación.lobular = isoNorm(ids_counts, formula = ~ Inflamación.lobular)
+p_Inflamación.lobular <-pheatmap(counts(ids_Inflamación.lobular, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Inflamación.lobular)[,"Inflamación.lobular",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Inflamación.lobular.png",
+         width = 12, 
+         height = 20)
+```
+
+No ha funcinado con firbosis
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "fibrosis"
+ids_Diabetes = isoNorm(ids_counts, formula = ~ Diabetes)
+p_Diabetes <-pheatmap(counts(ids_Diabetes, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_Diabetes)[,"Diabetes",drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_Diabetes.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "sexo + edad"
+ids_sd = isoNorm(ids_counts, formula = ~ sexo + edad)
+p_sd <-pheatmap(counts(ids_sd, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_sd)[,c("sexo","edad"),drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sd.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "sexo + edad"
+ids_sd = isoNorm(ids_counts, formula = ~ sexo + edad)
+p_sd <-pheatmap(counts(ids_sd, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids_sd)[,c("sexo","edad"),drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sd.png",
+         width = 12, 
+         height = 20)
+```
+
+```{r,fig.height=10, fig.width=6}
+# Metadata "sexo + edad + nash"
+ids_sdn = isoNorm(ids_counts, formula = ~ sexo + edad +nash)
+p_sdn <-pheatmap(counts(ids_sdn, norm=TRUE)[1:1000,], 
+         annotation_col = data.frame(colData(ids_sdn)[,c("sexo","edad","nash"),drop=FALSE]),
+         show_rownames = FALSE, 
+         scale="row",
+         filename = "/home/joshoacr13/Documentos/TFM/mirna_analysis/output/graphs/ids_sdn.png",
+         width = 12, 
+         height = 20)
+```
+
+sexo edad imc diabetes nash y/o esteatosis 
+
+#### Annotation
+
+```{r}
+head(isoAnnotate(ids_sdn))
+```
+
+
+
+```{r}
+# Load libraries
+library(affy)
+library(affyPLM)
+library(limma)
+library(affycomp)
+library(AgilentQC)
+
+
+# Set working directory to where CEL files are located
+setwd("E://miRNA/GSE66752_RAW/GSM1631463_179_NS.txt/")
+
+data_files - list.files(pattern = "*.txt")
+data - read.maimages(files = data_files, source = "agilent", green.only = TRUE)
+normalized_data - normalizeBetweenArrays(data)
+conditions_data - read.csv("meta.csv", header = TRUE)
+
+# Inspect the conditions data
+head(conditions_data)
+
+# Assume the file has a column named 'Condition' with group labels
+# Adjust if your column name or structure is different
+conditions - factor(conditions_data$condition)
+
+
+design - model.matrix(~ conditions)
+fit - lmFit(normalized_data, design)
+fit - eBayes(fit)
+results - topTable(fit, adjust="fdr", number=Inf)
+head(results)
+write.csv(results, "DEGS_new.csv")
+# Display top differentially expressed miRNAs
+
+```

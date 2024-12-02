@@ -1,0 +1,13 @@
+"0","# Usar IsomirDataSeqFromMirtop
+ # Steatosis 
+    # Count matrix
+    countdata_complete <- read_csv(""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv"")
+"
+"2","[1mRows: [22m[34m274865[39m [1mColumns: [22m[34m84[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m──────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (6): seq, mir, mism, add, t5, t3
+[32mdbl[39m (78): SC_284, SC_286, SC_287, SC_288, SC_2..."
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

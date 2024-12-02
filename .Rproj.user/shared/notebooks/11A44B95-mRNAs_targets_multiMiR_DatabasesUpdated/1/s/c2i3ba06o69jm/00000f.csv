@@ -1,0 +1,6 @@
+"0","combined_targets <- validated_targets_both %>%"
+"0","  mutate(type = ""validated"") %>%"
+"0","  bind_rows("
+"0","    predicted_targets_both %>% mutate(type = ""predicted"") # Agregar etiquetas de origen"
+"0","  ) %>%"
+"0","  distinct()"

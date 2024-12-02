@@ -1,0 +1,1 @@
+{"frames":[{"func":"setwd(\"/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected\")","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Error en setwd(\"/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected\"): \n  no es posible cambiar el directorio de trabajo\n"}

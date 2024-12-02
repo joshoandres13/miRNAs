@@ -1,0 +1,10 @@
+"0","load(""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata"")"
+"2","Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2
+"
+"0","# Cuentas con los miRNA de refrencia"
+"0","ids_counts_ref <- isoCounts(mirna_data_steatosis, ref= TRUE, minc = 20, mins = 40)"
+"2","Error en isoCounts(mirna_data_steatosis, ref = TRUE, minc = 20, mins = 40): 
+  no se pudo encontrar la función ""isoCounts""
+"

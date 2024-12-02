@@ -1,0 +1,6 @@
+"0","combined_targets_miR_520d_5p <- hsa_miR_520d_5p_validated_df %>%"
+"0","  mutate(type = ""validated"") %>%"
+"0","  bind_rows("
+"0","    hsa_miR_520d_5p_predicted_conserved_df %>% mutate(type = ""predicted"") # Agregar etiquetas de origen"
+"0","  ) %>%"
+"0","  distinct()"

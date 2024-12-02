@@ -1,0 +1,8 @@
+"0","#if (!require(""BiocManager"", quietly = TRUE))"
+"0","#    install.packages(""BiocManager"")"
+"0",""
+"0","#BiocManager::install(""multiMiR"")"
+"0","#browseVignettes(""multiMiR"")"
+"0",""
+"0","#install.packages(""rentrez"")"
+"0",""

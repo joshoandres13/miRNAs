@@ -1,0 +1,2 @@
+"0","dds = isoDE(ids, formula=~condition, ref=TRUE, iso5=TRUE)"
+"0","head(results(dds, tidy=TRUE))"

@@ -1,0 +1,6 @@
+"0","combined_targets_miR_655_3p <- filter_val_hsa_miR_655_3p %>%"
+"0","  mutate(type = ""validated"") %>%"
+"0","  bind_rows("
+"0","    filter_pre_hsa_miR_655_3p %>% mutate(type = ""predicted"") # Agregar etiquetas de origen"
+"0","  ) %>%"
+"0","  distinct()"

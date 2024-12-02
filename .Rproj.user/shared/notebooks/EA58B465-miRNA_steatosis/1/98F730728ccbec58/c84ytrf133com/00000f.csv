@@ -1,0 +1,5 @@
+"0","dds <- isoDE(ids_steatosis, formula= ~ sexo + steatosis_3cat,  ref=TRUE)"
+"2","converting counts to integer mode
+"
+"2","Aviso: some variables in design formula are characters, converting to factors"
+"0","plotMA(dds)"

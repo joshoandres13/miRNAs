@@ -1,0 +1,241 @@
+---
+title: "Obtain predicted targets of databases (TargetScan, mirDB, miRWalk, mirtarbase) of miR-520d-5p and miR-655-3p"
+author: "J. Andres Castillo-Rivas"
+format: html
+editor: visual
+---
+
+# **Context**
+### **¿Qué son los miRNAs y los mRNAs Diana?**
+1. **miRNAs (microRNAs)**:
+   - Son pequeños ARN no codificantes (~22 nucleótidos) que regulan la expresión génica.
+   - Lo hacen uniéndose a secuencias específicas de los mRNAs, generalmente en la región 3'UTR (untranslated region), inhibiendo su traducción o promoviendo su degradación.
+
+2. **mRNAs Diana (Targets)**:
+   - Los mRNAs diana son aquellos que contienen secuencias complementarias al miRNA.
+   - Cuando el miRNA se une a un mRNA diana, puede silenciar su expresión, afectando la producción de proteínas y, por ende, funciones biológicas.
+
+El objetivo es **identificar cuáles mRNAs son regulados** por los miRNAs **miR-520d-5p** y **miR-655-3p**, y seleccionar aquellos que estén implicados en procesos metabólicos.
+
+---
+
+### **¿Qué se hace en este análisis?**
+
+El análisis tiene dos etapas principales:
+
+1. **Predicción de mRNAs Diana**:
+   - Se usan herramientas bioinformáticas y bases de datos para encontrar mRNAs que tienen regiones complementarias a los miRNAs objetivo.
+   - Estas predicciones se basan en:
+     - La coincidencia entre la secuencia del miRNA y la del mRNA.
+     - Conservación evolutiva de la interacción (la interacción existe en diferentes especies).
+     - Factores biofísicos, como la energía de enlace entre el miRNA y el mRNA.
+
+2. **Filtrado y Clasificación**:
+   - Entre los posibles mRNAs diana, se seleccionan aquellos con mayores probabilidades de interacción, según las puntuaciones calculadas por las herramientas.
+   - Luego, se filtran y clasifican en función de su posible papel en el metabolismo.
+
+---
+
+### **¿Cómo Funciona?**
+
+#### **Paso 1: Selección de Bases de Datos y Herramientas**
+Se usan herramientas como:
+- **TargetScan**: Predice mRNAs diana en función de la coincidencia *seed* y conservación evolutiva.
+- **miRDB**: Usa aprendizaje automático para predecir interacciones basadas en datos experimentales.
+- **miRTarBase**: Proporciona datos validados experimentalmente de interacciones miRNA-mRNA.
+
+#### **Paso 2: Predicción de mRNAs Diana**
+Por ejemplo, usando **TargetScan**:
+1. El software analiza la secuencia de los miRNAs (miR-520d-5p y miR-655-3p).
+2. Busca mRNAs que contengan regiones complementarias a las secuencias *seed* de estos miRNAs.
+3. Calcula puntuaciones, como el **Context++ Score**, para priorizar interacciones más probables.
+
+#### **Paso 3: Construcción de una Lista de Candidatos**
+- Se seleccionan los mRNAs con puntuaciones más altas (ejemplo: mejores 35-40 mRNAs).
+- Se recopilan los datos de cada mRNA, como:
+  - Nombre del gen.
+  - Transcritos asociados.
+  - Puntuaciones obtenidas.
+
+#### **Paso 4: Clasificación según Función Biológica**
+- Se realiza un análisis bibliográfico para determinar si estos mRNAs están involucrados en funciones metabólicas (como la regulación de glucosa, lípidos, etc.).
+- Los mRNAs relacionados con el metabolismo se priorizan para estudios futuros.
+
+#### **Paso 5: Análisis de Ontología de Genes (GO)**
+- Herramientas como **GeneCodis** o **gProfiler** analizan las funciones biológicas de los mRNAs seleccionados.
+- Esto ayuda a identificar procesos biológicos, rutas metabólicas y funciones moleculares en las que están implicados.
+
+---
+
+### **¿Qué Resultados se Obtienen?**
+
+1. **Lista Refinada de Interacciones miRNA-mRNA**:
+   - Una lista de 10-15 mRNAs que tienen interacciones predichas confiables con los miRNAs (miR-520d-5p y miR-655-3p).
+   - Prioridad en aquellos implicados en el metabolismo.
+
+2. **Análisis Funcional**:
+   - Funciones metabólicas específicas asociadas a estos mRNAs (ejemplo: regulación de insulina, metabolismo lipídico).
+   - Identificación de posibles blancos terapéuticos o biomarcadores.
+
+---
+
+# **Objective** 
+La idea es identificar y seleccionar mRNA diana (objetivos) de dos miRNAs específicos, miR-520d-5p y miR-655-3p, utilizando bases de datos y herramientas bioinformáticas públicas. Esto permitirá construir una lista de genes mRNA con alta probabilidad de interacción con estos miRNAs, y luego seleccionar aquellos que podrían tener funciones en el metabolismo.
+
+# **Methodology** 
+## 1. Buscar mRNA Diana para miRNAs con Herramientas de Línea de Comandos
+### Descarga y Procesamiento de Datos
+#### 1.Descarga el archivo de predicciones desde TargetScan (predicted miRNA Targets)
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/data
+
+# Obtain database
+wget -q http://www.targetscan.org/vert_72/vert_72_data_download/Predicted_Targets_Info.default_predictions.txt.zip -O targetscan_data.zip
+
+# Path of the unzip file
+unzip targetscan_data.zip
+
+```
+
+#### 2. Descarga el archivo de predicciones desde miRDB (predicted miRNA Targets)
+
+```{bash, echo=FALSE}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/data
+
+# Descargar la base de datos de miRDB
+curl -o miRDB_predictions.txt.gz https://mirdb.org/download/miRDB_v6.0_prediction_result.txt.gz
+
+# Path of the unzip file
+gunzip miRDB_predictions.txt.gz
+
+```
+
+#### 3. Descarga el archivo de predicciones desde miRTarBase (validated miRNA Targets)
+
+```{bash, echo=FALSE}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/data
+
+# Descargar la base de datos de miRDB
+wget -q -O miRTarBase_MTI.xlsx "https://mirtarbase.cuhk.edu.cn/~miRTarBase/miRTarBase_2019/cache/download/8.0/miRTarBase_MTI.xlsx"
+
+```
+
+#### 4. Descarga el archivo de predicciones desde miRWalk 
+
+Download manually
+
+## 2.Filtra los datos por miRNAs específicos:
+
+### miR-520d-5p
+
+#### TargetScan
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_520d_5p
+grep -E 'miR-520d-5p' /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/data/Predicted_Targets_Info.default_predictions.txt > selected_miRNAs_miR_520d_5p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_520d_5p")
+#miR_520d_5p_targetscan_targets <- read.delim("selected_miRNAs_miR_520d_5p.txt", header = TRUE, sep = "\t") No hay informacion de esto!!!
+```
+
+Para esta seleccion no se encontro targets para el miR-520d-5p
+
+#### mirDB
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/selection/miR_520d_5p
+grep -E 'miR-520d-5p' /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/data/miRDB_predictions.txt > selected_miRNAs_miR_520d_5p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p")
+miR_520d_5p_mirdb_targets <- read.csv("selected_miRNAs_miR_520d_5p.txt", header = TRUE)
+head(miR_520d_5p_mirdb_targets)
+
+```
+
+#### miRWalk
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/miRWalk/selection/miR_520d_5p/")
+miR_520d_5p_mirwalk_targets <- read.csv("miRWalk_miRNA_Targets_miR_520d_5p.csv", header = TRUE)
+head(miR_520d_5p_mirwalk_targets)
+str(miR_520d_5p_mirwalk_targets)
+```
+
+#### mirtarbase
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p
+grep -E 'miR-520d-5p' /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/data/miRTarBase_MTI.csv  > selected_miRNAs_miR_520d_5p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p")
+miR_520d_5p_mirtarbase_targets <- read.csv("selected_miRNAs_miR_520d_5p.txt", header = TRUE)
+head(miR_520d_5p_mirtarbase_targets)
+str(miR_520d_5p_mirtarbase_targets)
+```
+
+### miR-655-3p
+
+#### TargetScan
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_655_3p
+grep -E 'miR-655-3p'  /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/data/Predicted_Targets_Info.default_predictions.txt > selected_miRNAs_miR_655_3p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targetscan/selection/miR_655_3p")
+miR_655_3p_targetscan_targets <- read.delim("selected_miRNAs_miR_655_3p.txt", header = TRUE, sep = "\t")
+head(miR_655_3p_targetscan_targets)
+str(miR_655_3p_targetscan_targets)
+```
+
+Para esta seleccion se encontro 956 targets para el miR-655-3p
+
+#### mirDB
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/selection/miR_655_3p
+grep -E 'miR-655-3p' /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/data/miRDB_predictions.txt > selected_miRNAs_miR_655_3p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/selection/miR_655_3p")
+miR_655_3p_mirdb_targets <- read.delim("selected_miRNAs_miR_655_3p.txt", header = TRUE, sep = "\t")
+head(miR_655_3p_mirdb_targets)
+```
+
+#### miRWalk
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/miRWalk/selection/miR_655_3p/")
+miR_655_3p_mirwalk_targets <- read.csv("miRWalk_miRNA_Targets_miR_655_3p.csv", header = TRUE)
+head(miR_655_3p_mirwalk_targets)
+str(miR_655_3p_mirwalk_targets)
+```
+
+#### mirtarbase
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_655_3p
+grep -E 'miR-655-3p' /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/data/miRTarBase_MTI.csv  > selected_miRNAs_miR_655_3p.txt
+pwd
+```
+
+```{r}
+setwd("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_655_3p")
+miR_655_3p_mirtarbase_targets <- read.csv("selected_miRNAs_miR_655_3p.txt", header = TRUE)
+head(miR_655_3p_mirtarbase_targets)
+str(miR_655_3p_mirtarbase_targets)
+```

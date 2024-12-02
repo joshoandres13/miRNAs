@@ -1,0 +1,4 @@
+"0",""
+"0","annotate_ref <- isoAnnotate(ids_counts_ref)"
+"0",""
+"0","save(annotate_ref, file=""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/annotate_references.Rdata"")"

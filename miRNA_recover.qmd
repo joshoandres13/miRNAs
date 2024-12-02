@@ -1,0 +1,322 @@
+---
+title: "Characterization of miRNA"
+author: "J. Andrés Castillo"
+format: html
+editor: visual
+---
+
+## Introduction
+
+miRNAs are small RNA fragments (18-23 nt long) that influence gene expression during development and cell stability. Morin et al (Morin et al. 2008), discovered isomiRs first time after sequencing human stem cells.
+
+IsomiRs are miRNAs that vary slightly in sequence, which result from variations in the cleavage site during miRNA biogenesis (5’-trimming and 3’-trimming variants), nucleotide additions to the 3’-end of the mature miRNA (3’-addition variants) and nucleotide modifications (substitution variants)(Martı́ et al. 2010).
+
+There are many tools designed for isomiR detection, however the majority are web application where user can not control the analysis. The two main command tools for isomiRs mapping are SeqBuster and sRNAbench (Guillermo et al. 2014). isomiRs. package is designed to analyze the output of SeqBuster tool or any other tool after converting to the desire format.
+
+## Installation
+
+```{r, message=F, echo=FALSE}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("isomiRs")
+
+install.packages("pheatmap")
+
+```
+
+## Load Packages
+
+```{r, message=FALSE, echo=FALSE}
+library("isomiRs")
+library("readr")
+library("tibble")
+library("pheatmap")
+library("dplyr")
+```
+
+## Running Code
+
+### Manipulation
+
+```{bash}
+cd /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export
+ls /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export > samples_mirna.txt
+mv samples_mirna.txt /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/
+
+# cut -d$',' -f1 test1.csv
+# awk -F',' '{print $1}' test1.csv > nombres.txt
+```
+
+```{r}
+# Read the file
+patients <- readLines("/home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/samples_mirna.txt")
+patients <- patients[c(-1,-26)]
+#  Delete
+patients <- gsub("\\.tsv$", "", patients)
+patients <- gsub("_mirtop_rawData", "", patients)  # Eliminar '_mirtop_rawData'
+# Agregar comillas a cada nombre
+patients <- paste0('"', patients, '"')
+# Save the files
+writeLines(patients, "/home/joshoacr13/Documentos/TFM/mirna_analysis/input/samples_mirna.txt")
+
+# Read lines of the modified file
+patients <- readLines("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/samples_mirna.txt")
+
+# Convert to vector a string with the format c("nombre1", "nombre2", ...)
+patients <- paste0(patients, collapse = ", ")
+# Mostrar el resultado
+cat(patients)
+```
+
+#### Reading input
+
+##### Metadata Matrix
+
+```{r}
+# Load data
+metadata_JM <- read_csv("~/Documentos/TFM/mirna_analysis/input/20240813_metadata.csv")
+# Delete the columns that not correspond with the samples 
+metadata_JM <- metadata_JM[-c(1:79),]
+
+```
+
+```{r}
+# Check if we have the same names in columns 
+# Create the vector with the names
+data_nfcore <- c(
+  "SC_284", "SC_286", "SC_287", "SC_288", "SC_290", "SC_292", "SC_293", "SC_294", "SC_296", "SC_298", "SC_301", "SC_303", "SC_307", "SC_309", "SC_312", "SC_313", "SC_314", "SC_315", "SC_318", "SC_319", "SC_321", "SC_325", "SC_330", "SC_331", "SC_334", "SC_337", "SC_340", "SC_343", "SC_344", "SC_345", "SC_346", "SC_350", "SC_359", "SC_360", "SC_363", "SC_366", "SC_371", "SC_372", "SC_373", "SC_375", "SC_380", "SC_387", "SC_390", "SC_394", "SC_398", "SC_400", "SC_403", "SC_408", "SC_409", "SC_410", "SC_413", "SC_414", "SC_417", "SC_421", "SC_428", "SC_429", "SC_433", "SC_439", "SC_443", "SC_457", "SC_458", "SC_459", "SC_460", "SC_461", "SC_471", "SC_472", "SC_473", "SC_479", "SC_484", "SC_485", "SC_486", "SC_487", "SC_488", "SC_491", "SC_492", "SC_496", "SC_497", "SC_498")
+class(data_nfcore)
+# Lenght of the patiens 
+
+data_JM <- c(metadata_JM$prefix)
+
+elementos_unicos_en_vector1  <- setdiff(data_nfcore, data_JM)
+elementos_unicos_en_vector2  <- setdiff(data_JM, data_nfcore)
+
+elementos_unicos_en_vector1
+elementos_unicos_en_vector2
+```
+
+```{r}
+# Metadata Complete
+mdata_raw <- read_csv("~/Documentos/TFM/mirna_analysis/input/20241104-metadata4JAndres.csv")
+# Agregar la columna "prefix"
+mdata_raw$prefix <- paste("SC_",mdata_raw$muestra, sep = "")
+
+# Seleccionar filas en la tabla donde la columna Muestra coincide con el vector samples
+mdata_complete <- mdata_raw[mdata_raw$prefix %in% data_nfcore, ]
+print(resultado)
+```
+
+```{r}
+# METADATA EDIT
+metadata_edit <- metadata[-c(11,12),]
+# Convert the prefix column in the row names
+#metadata_edit <- column_to_rownames(metadata_edit, var = "prefix")
+
+# Transform to data frame
+metadata_df <- as.data.frame(metadata_edit)
+class(metadata_df)
+
+print(metadata_edit)
+str(metadata_edit)
+```
+
+```{r}
+# EDIT METADATA, because we don´t have the same number of rows 
+
+metadata_edit <- metadata[-c(11,12),]
+# Convert the prefix column in the row names
+metadata <- column_to_rownames(metadata, var = "prefix")
+
+# Transform to data frame
+metadata_df <- as.data.frame(metadata)
+class(metadata_df)
+
+print(metadata)
+str(metadata)
+
+```
+
+##### Count Matrix
+
+```{r}
+# Directorio que contiene los archivos .tsv de cada muestra
+path <- "/media/joshoacr13/EXTERNAL_USB/mirna/nfcore-smrnaseq/mirtop_AllSamples/export/"
+
+```
+
+```{r}
+########### WIth the samples that I have metadata #####################
+# Eliminar las muestras que no coinciden con la metadata
+file_list_edit <- file_list[-c(48,61,67,68)]
+
+# Read and combine all the file in a data.frame
+
+all_samples <- lapply(file_list_edit, function(file) {
+  # Leer el archivo de muestra
+  sample_data <- read.delim(file, sep = "\t")
+  
+  # Obtener el nombre de la muestra a partir del nombre del archivo
+  sample_name <- gsub("_mirtop_rawData.tsv", "", basename(file))
+  
+  # Renombrar la columna de expresión con el nombre de la muestra
+  colnames(sample_data)[ncol(sample_data)] <- sample_name
+  
+  return(sample_data)
+})
+
+# Unir todos los archivos por las columnas compartidas (seq, mir, mism, add, t5, t3)
+merged_data_edit <- Reduce(function(x, y) merge(x, y, by = c("seq", "mir", "mism", "add", "t5", "t3"), all = TRUE), all_samples)
+
+# Reemplazar NA por 0 (en caso de muestras sin expresión en ciertos isomiRs)
+merged_data_edit[is.na(merged_data_edit)] <- 0
+
+
+```
+
+```{r}
+#####################################################################
+# Crear la lista de archivos en el directorio especificado
+file_list <- list.files(path, pattern = "*.tsv", full.names = TRUE)
+print(file_list)
+
+all_samples <- lapply(file_list, function(file) {
+  # Leer el archivo de muestra
+  sample_data <- read.delim(file, sep = "\t")
+  
+  # Obtener el nombre de la muestra a partir del nombre del archivo
+  sample_name <- gsub("_mirtop_rawData.tsv", "", basename(file))
+  
+  # Renombrar la columna de expresión con el nombre de la muestra
+  colnames(sample_data)[ncol(sample_data)] <- sample_name
+  
+  return(sample_data)
+})
+
+# Unir todos los archivos por las columnas compartidas (seq, mir, mism, add, t5, t3)
+merged_data <- Reduce(function(x, y) merge(x, y, by = c("seq", "mir", "mism", "add", "t5", "t3"), all = TRUE), all_samples)
+
+# Reemplazar NA por 0 (en caso de muestras sin expresión en ciertos isomiRs)
+merged_data[is.na(merged_data)] <- 0
+```
+
+##### IsomirDataSeq object
+
+```{r}
+# Usar `IsomirDataSeqFromMirtop` EDITADO
+ids_edit <- IsomirDataSeqFromMirtop(mirtop = merged_data_edit, coldata = metadata_edit)
+
+# Visualizar el resultado
+print(ids_edit)
+```
+
+```{r}
+# Usar `IsomirDataSeqFromMirtop`  
+ids <- IsomirDataSeqFromMirtop(mirtop = merged_data, coldata = metadata_matrix)
+
+# Visualizar el resultado
+print(ids)
+```
+
+#### Manipulation
+
+##### Descriptive Analysis
+
+```{r}
+ids_counts_edit <- isoCounts(ids_edit)
+isoPlot(ids_counts_edit, type="all", column="sexo")
+isoPlot(ids_counts_edit, type="all", column="nash")
+isoPlot(ids_counts_edit, type="all", column="NAS")
+
+isoPlot(ids_counts_edit, type="all", column="Ballooning")
+
+
+isoPlot(ids_counts_edit, type="iso5")
+isoPlot(ids_counts_edit, type="iso3")
+
+
+isoPlot(ids, type="snv")
+
+isoPlot(ids, type="add")
+isoPlot(ids, type="subs")
+
+```
+
+```{r}
+ids <- isoCounts(ids)
+isoPlot(ids, type="all")
+isoPlot(ids, type="iso5")
+isoPlot(ids, type="iso3")
+
+
+isoPlot(ids, type="snv")
+
+isoPlot(ids, type="add")
+isoPlot(ids, type="subs")
+
+```
+
+##### Count data
+
+```{r}
+head(counts(ids))
+```
+
+```{r}
+# I need other group to compare 
+ids = isoNorm(ids, formula = ~ condition)
+pheatmap(counts(ids, norm=TRUE)[1:100,], 
+         annotation_col = data.frame(colData(ids)[,1,drop=FALSE]),
+         show_rownames = FALSE, scale="row")
+
+```
+
+##### Annotation
+
+```{r}
+head(isoAnnotate(ids))
+```
+
+#### Clasification
+
+```{r}
+dds <- isoDE(ids, formula=~condition)
+library(DESeq2)
+plotMA(dds)
+```
+
+```{r}
+# Load libraries
+library(affy)
+library(affyPLM)
+library(limma)
+library(affycomp)
+library(AgilentQC)
+
+
+# Set working directory to where CEL files are located
+setwd("E://miRNA/GSE66752_RAW/GSM1631463_179_NS.txt/")
+
+data_files - list.files(pattern = "*.txt")
+data - read.maimages(files = data_files, source = "agilent", green.only = TRUE)
+normalized_data - normalizeBetweenArrays(data)
+conditions_data - read.csv("meta.csv", header = TRUE)
+
+# Inspect the conditions data
+head(conditions_data)
+
+# Assume the file has a column named 'Condition' with group labels
+# Adjust if your column name or structure is different
+conditions - factor(conditions_data$condition)
+
+
+design - model.matrix(~ conditions)
+fit - lmFit(normalized_data, design)
+fit - eBayes(fit)
+results - topTable(fit, adjust="fdr", number=Inf)
+head(results)
+write.csv(results, "DEGS_new.csv")
+# Display top differentially expressed miRNAs
+
+```

@@ -1,0 +1,165 @@
+"0","library(""multiMiR"")"
+"2","Welcome to multiMiR.
+
+multiMiR database URL has been set to the 
+default value: http://multimir.org/
+
+Database Version: 2.4.0  Updated: 2024-08-28
+
+"
+"0","library(""kableExtra"")"
+"0","library(""dplyr"")"
+"2","
+Adjuntando el paquete: ‘dplyr’
+
+"
+"2","The following object is masked from ‘package:kableExtra’:
+
+    group_rows
+
+"
+"2","The following object is masked from ‘package:multiMiR’:
+
+    select
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","library(""ggplot2"") # Para visualización (opcional)"
+"0","library(""clusterProfiler"") # Para análisis funcional (opcional)"
+"2","
+"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","clusterProfiler v4.12.6 Learn more at https://yulab-smu.top/contribution-knowledge-mining/
+
+Please cite:
+
+T Wu, E Hu, S Xu, M Chen, P Guo, Z Dai, T Feng, L Zhou, W Tang, L Zhan,
+X Fu, S Liu, X Bo, and G Yu. clusterProfiler 4.0: A universal
+enrichment tool for interpreting omics data. The Innovation. 2021,
+2(3):100141
+"
+"2","
+Adjuntando el paquete: ‘clusterProfiler’
+
+"
+"2","The following object is masked from ‘package:multiMiR’:
+
+    select
+
+"
+"2","The following object is masked from ‘package:stats’:
+
+    filter
+
+"
+"0","library(""org.Hs.eg.db"") # Base de datos de genes humanos"
+"2","Cargando paquete requerido: AnnotationDbi
+"
+"2","Cargando paquete requerido: stats4
+"
+"2","Cargando paquete requerido: BiocGenerics
+"
+"2","
+Adjuntando el paquete: ‘BiocGenerics’
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    anyDuplicated, aperm, append, as.data.frame, basename, cbind,
+    colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply,
+    match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, table,
+    tapply, union, unique, unsplit, which.max, which.min
+
+"
+"2","Cargando paquete requerido: Biobase
+"
+"2","Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with
+    'browseVignettes()'. To cite Bioconductor, see
+    'citation(""Biobase"")', and for packages 'citation(""pkgname"")'.
+
+"
+"2","Cargando paquete requerido: IRanges
+"
+"2","Cargando paquete requerido: S4Vectors
+"
+"2","
+Adjuntando el paquete: ‘S4Vectors’
+
+"
+"2","The following object is masked from ‘package:clusterProfiler’:
+
+    rename
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+"
+"2","The following object is masked from ‘package:utils’:
+
+    findMatches
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+"
+"2","
+Adjuntando el paquete: ‘IRanges’
+
+"
+"2","The following object is masked from ‘package:clusterProfiler’:
+
+    slice
+
+"
+"2","The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+"
+"2","
+Adjuntando el paquete: ‘AnnotationDbi’
+
+"
+"2","The following object is masked from ‘package:clusterProfiler’:
+
+    select
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    select
+
+"
+"2","
+"
+"0","library(""rentrez"")"

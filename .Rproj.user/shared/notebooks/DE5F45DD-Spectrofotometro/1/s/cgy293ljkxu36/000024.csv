@@ -1,0 +1,7 @@
+"0",""
+"0","# Gráfico de concentración"
+"0","ggplot(datos, aes(x = condicion, y = concentracion_ug_mL, color = muestra)) +"
+"0","  geom_point() +"
+"0","  labs(title = ""Concentración por condición (Ley de Lambert-Beer)"", x = ""Condición"", y = ""Concentración (mol/L)"") +"
+"0","  theme_minimal()"
+"0",""

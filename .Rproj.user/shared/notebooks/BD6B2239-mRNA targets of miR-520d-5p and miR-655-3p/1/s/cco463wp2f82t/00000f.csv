@@ -1,0 +1,4 @@
+"0","setwd(""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p"")"
+"2","Aviso: The working directory was changed to /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirtarbase/selection/miR_520d_5p inside a notebook chunk. The working directory will be reset when the chunk is finished running. Use the knitr root.dir option in the setup chunk to change the working directory for notebook chunks."
+"0","miR_520d_5p_mirtarbase_targets <- read.csv(""selected_miRNAs_miR_520d_5p.txt"", header = TRUE)"
+"0","head(miR_520d_5p_mirtarbase_targets)"

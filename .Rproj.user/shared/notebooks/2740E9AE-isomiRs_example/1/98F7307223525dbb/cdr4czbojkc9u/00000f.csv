@@ -1,0 +1,5 @@
+"0","library(pheatmap)"
+"0","ids = isoNorm(ids, formula = ~ condition)"
+"0","pheatmap(counts(ids, norm=TRUE)[1:100,], "
+"0","         annotation_col = data.frame(colData(ids)[,1,drop=FALSE]),"
+"0","         show_rownames = FALSE, scale=""row"")"

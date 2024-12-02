@@ -1,0 +1,4 @@
+"0","# Table with kable"
+"0","#filter_pre_hsa_miR_520d_5p |>"
+"0","#  kable(format = ""html"") |> "
+"0","#  kable_styling(""striped"")"

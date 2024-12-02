@@ -1,0 +1,6 @@
+"0","multimir_switchDBVersion(db_version = ""2.4.0"")"
+"2","Now using database version: 2.4.0
+"
+"0","# curr_vers  <- vers_table[1, ""VERSION""]  # current version"
+"0","# multimir_switchDBVersion(db_version = curr_vers)"
+"0",""

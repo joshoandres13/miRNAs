@@ -1,0 +1,12 @@
+"0","cd /home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/mirdb/data
+
+# Descargar la base de datos de miRDB
+curl -o miRDB_predictions.txt.gz https://mirdb.org/download/miRDB_v6.0_prediction_result.txt.gz
+
+# Path of the unzip file
+gunzip miRDB_predictions.txt.gz
+"
+"2","  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0"
+"2","  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0"

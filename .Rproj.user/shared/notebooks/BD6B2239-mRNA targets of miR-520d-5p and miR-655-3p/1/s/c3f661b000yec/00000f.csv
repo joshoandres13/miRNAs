@@ -1,0 +1,21 @@
+"0","# Instalar y cargar gprofiler2 si aún no está instalado "
+"0","# install.packages(""gprofiler2"") "
+"0","library(gprofiler2)"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
+"2","Registered S3 methods overwritten by 'htmltools':
+  method               from         
+  print.html           tools:rstudio
+  print.shiny.tag      tools:rstudio
+  print.shiny.tag.list tools:rstudio
+"
+"2","Registered S3 method overwritten by 'htmlwidgets':
+  method           from         
+  print.htmlwidget tools:rstudio
+"
+"0","setwd(""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected"")"
+"2","Error en setwd(""/home/joshoacr13/Documentos/TFM/mirna_analysis/input/miRNA_targets/targets_selected""): 
+  no es posible cambiar el directorio de trabajo
+"

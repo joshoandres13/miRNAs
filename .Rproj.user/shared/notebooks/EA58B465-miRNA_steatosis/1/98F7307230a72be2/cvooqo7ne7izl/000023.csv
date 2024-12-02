@@ -1,0 +1,45 @@
+"0","# Ajustar el Modelo Completo"
+"0","dds <- DESeqDataSetFromMatrix(countData = counts(filtered_ids),"
+"0","                              colData = colData(filtered_ids),"
+"0","                              design = ~ sexo + steatosis_3cat)"
+"2","converting counts to integer mode
+"
+"2","Aviso: some variables in design formula are characters, converting to factors"
+"0","# Ajustar modelo reducido (sin 'steatosis')"
+"0","dds <- DESeq(dds, test = ""LRT"", reduced = ~ sexo)"
+"2","estimating size factors
+"
+"2","estimating dispersions
+"
+"2","gene-wise dispersion estimates
+"
+"2","mean-dispersion relationship
+"
+"2","final dispersion estimates
+"
+"2","fitting model and testing
+"
+"2","-- replacing outliers and refitting for 8 genes
+-- DESeq argument 'minReplicatesForReplace' = 7 
+-- original counts are preserved in counts(dds)
+"
+"2","estimating dispersions
+"
+"2","fitting model and testing
+"
+"0","# Obtener los Resultados"
+"0","resultsLRT <- results(dds)"
+"0",""
+"0",""
+"0","# Filtrar resultados significativos"
+"0",""
+"0","# significant_isomiRs <- resultsLRT[resultsLRT$padj < 0.05 & abs(resultsLRT$log2FoldChange) > 1, ]  # Estricto"
+"0",""
+"0","#significant_isomiRs <- resultsLRT[resultsLRT$padj < 0.1 & abs(resultsLRT$log2FoldChange) > 0.05, ]  # Relajado"
+"0",""
+"0","significant_isomiRs <- resultsLRT[resultsLRT$padj < 0.1, ]  # Mas Relajado"
+"0",""
+"0","# Visualizar resultados"
+"0","plot(resultsLRT$log2FoldChange, -log10(resultsLRT$pvalue), "
+"0","     col = ifelse(resultsLRT$padj < 0.05, ""red"", ""black""),"
+"0","     pch = 20, xlab = ""Log2 Fold Change"", ylab = ""-Log10 p-value"")"

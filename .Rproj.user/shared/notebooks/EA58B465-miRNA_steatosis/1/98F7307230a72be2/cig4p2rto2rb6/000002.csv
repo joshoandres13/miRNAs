@@ -1,0 +1,3 @@
+"0","cd /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export
+ls /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/export > samples_mirna.txt
+mv samples_mirna.txt /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/mirtop_AllSamples/"

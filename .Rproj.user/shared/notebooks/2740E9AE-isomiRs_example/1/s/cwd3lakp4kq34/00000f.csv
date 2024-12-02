@@ -1,0 +1,4 @@
+"0","ids <- IsomirDataSeqFromFiles(fn_list, design=de)"
+"2","Error en h(simpleError(msg, call)): 
+  error in evaluating the argument 'X' in selecting a method for function 'lapply': objeto 'fn_list' no encontrado
+"

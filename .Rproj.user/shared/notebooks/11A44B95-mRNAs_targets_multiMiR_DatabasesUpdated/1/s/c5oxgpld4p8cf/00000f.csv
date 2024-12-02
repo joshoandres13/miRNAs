@@ -1,0 +1,6 @@
+"0","db.info = multimir_dbInfo()"
+"0","db.info <- as.data.frame(db.info)"
+"0",""
+"0","db.info |>"
+"0","  kable(format = ""html"") |> "
+"0","  kable_styling(""striped"")"

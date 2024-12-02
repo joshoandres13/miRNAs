@@ -1,0 +1,938 @@
+"0","if (!require(""BiocManager"", quietly = TRUE))"
+"0","    install.packages(""BiocManager"")"
+"0",""
+"0","BiocManager::install(""BiocStyle"")"
+"2","Aviso: package(s) not installed when version(s) same as or greater than current; use
+  `force = TRUE` to re-install: 'BiocStyle'"
+"1","Update all/some/none? [a/s/n]: "
+"0","a"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/curl_6.0.0.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 932630 bytes (910 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 910 KB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/httr2_1.0.6.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 237937 bytes (232 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 232 KB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/mvtnorm_1.3-2.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 837148 bytes (817 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 817 KB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/rmarkdown_2.29.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 2194660 bytes (2.1 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 2.1 MB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/sf_1.0-19.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 3808024 bytes (3.6 MB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 3.6 MB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/spatstat.univar_3.1-1.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 67927 bytes (66 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 66 KB
+
+"
+"2","probando la URL 'https://cloud.r-project.org/src/contrib/waldo_0.6.0.tar.gz'
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 45142 bytes (44 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 44 KB
+
+"
+"2","* installing *source* package ‘curl’ ...
+"
+"2","** package ‘curl’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"1","Found pkg-config cflags and libs!
+"
+"1","Using PKG_CFLAGS=-I/usr/include/x86_64-linux-gnu
+Using PKG_LIBS=-lcurl
+"
+"1","Found recent recent version of libcurl
+"
+"2","** libs
+"
+"2","using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+"
+"1","rm -f curl.so callbacks.o curl.o download.o escape.o fetch.o findport.o form.o getdate.o handle.o ieproxy.o init.o interrupt.o multi.o nslookup.o options.o reflist.o split.o ssl.o typechecking.o urlparser.o utils.o version.o winidn.o writer.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c callbacks.c -o callbacks.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c curl.c -o curl.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c download.c -o download.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c escape.c -o escape.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c fetch.c -o fetch.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c findport.c -o findport.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c form.c -o form.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c getdate.c -o getdate.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c handle.c -o handle.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c ieproxy.c -o ieproxy.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c init.c -o init.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c interrupt.c -o interrupt.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c multi.c -o multi.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c nslookup.c -o nslookup.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c options.c -o options.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c reflist.c -o reflist.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c split.c -o split.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c ssl.c -o ssl.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c typechecking.c -o typechecking.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c urlparser.c -o urlparser.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c utils.c -o utils.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c version.c -o version.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c winidn.c -o winidn.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG -I/usr/include/x86_64-linux-gnu -DSTRICT_R_HEADERS -DR_NO_REMAP     -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c writer.c -o writer.o
+"
+"1","gcc -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -flto=auto -Wl,-z,relro -o curl.so callbacks.o curl.o download.o escape.o fetch.o findport.o form.o getdate.o handle.o ieproxy.o init.o interrupt.o multi.o nslookup.o options.o reflist.o split.o ssl.o typechecking.o urlparser.o utils.o version.o winidn.o writer.o -lcurl -L/usr/lib/R/lib -lR
+"
+"2","installing to /home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-curl/00new/curl/libs
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** checking absolute paths in shared objects and dynamic libraries
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (curl)
+"
+"2","* installing *source* package ‘mvtnorm’ ...
+"
+"2","** package ‘mvtnorm’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"2","** libs
+"
+"2","using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+"
+"2","using Fortran compiler: ‘GNU Fortran (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG      -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c C_FORTRAN_interface.c -o C_FORTRAN_interface.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG      -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c lpmvnorm.c -o lpmvnorm.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG      -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c ltMatrices.c -o ltMatrices.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG      -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c miwa.c -o miwa.o
+"
+"1","gfortran  -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong  -c mvt.f -o mvt.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG      -fvisibility=hidden -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c mvtnorm-init.c -o mvtnorm-init.o
+"
+"1","gfortran  -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong  -c tvpack.f -o tvpack.o
+"
+"1","gcc -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -flto=auto -Wl,-z,relro -o mvtnorm.so C_FORTRAN_interface.o lpmvnorm.o ltMatrices.o miwa.o mvt.o mvtnorm-init.o tvpack.o -llapack -lblas -lgfortran -lm -lquadmath -lgfortran -lm -lquadmath -L/usr/lib/R/lib -lR
+"
+"2","installing to /home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-mvtnorm/00new/mvtnorm/libs
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** checking absolute paths in shared objects and dynamic libraries
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (mvtnorm)
+"
+"2","* installing *source* package ‘rmarkdown’ ...
+"
+"2","** package ‘rmarkdown’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","*** copying figures
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (rmarkdown)
+"
+"2","* installing *source* package ‘sf’ ...
+"
+"2","** package ‘sf’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"1","configure: CC: gcc
+"
+"1","configure: CXX: g++ -std=gnu++17
+"
+"1","checking for gdal-config... "
+"1","/usr/bin/gdal-config
+"
+"1","checking gdal-config usability... "
+"1","yes
+"
+"1","configure: GDAL: 3.4.1
+checking GDAL version >= 2.0.1... "
+"1","yes
+"
+"1","checking for gcc... "
+"1","gcc
+"
+"1","checking whether the C compiler works... "
+"1","yes
+checking for C compiler default output file name... a.out
+"
+"1","checking for suffix of executables... "
+"1","
+"
+"1","checking whether we are cross compiling... "
+"1","no
+"
+"1","checking for suffix of object files... "
+"1","o
+"
+"1","checking whether the compiler supports GNU C... "
+"1","yes
+checking whether gcc accepts -g... "
+"1","yes
+"
+"1","checking for gcc option to enable C11 features... "
+"1","none needed
+"
+"1","checking for stdio.h... "
+"1","yes
+"
+"1","checking for stdlib.h... "
+"1","yes
+"
+"1","checking for string.h... "
+"1","yes
+"
+"1","checking for inttypes.h... "
+"1","yes
+checking for stdint.h... "
+"1","yes
+"
+"1","checking for strings.h... "
+"1","yes
+"
+"1","checking for sys/stat.h... "
+"1","yes
+"
+"1","checking for sys/types.h... "
+"1","yes
+"
+"1","checking for unistd.h... "
+"1","yes
+"
+"1","checking for gdal.h... "
+"1","yes
+"
+"1","checking GDAL: linking with --libs only... "
+"1","yes
+"
+"1","checking GDAL: /usr/share/gdal/pcs.csv readable... "
+"1","no
+"
+"1","checking GDAL: checking whether PROJ is available for linking:... "
+"1","yes
+"
+"1","checking GDAL: checking whether PROJ is available for running:... "
+"1","yes
+"
+"1","configure: GDAL: 3.4.1
+"
+"1","configure: pkg-config proj exists, will use it
+"
+"1","configure: using proj.h.
+"
+"1","configure: PROJ: 8.2.1
+"
+"1","checking PROJ: checking whether PROJ and sqlite3 are available for linking:... "
+"1","yes
+"
+"1","checking for geos-config... "
+"1","/usr/bin/geos-config
+"
+"1","checking geos-config usability... "
+"1","yes
+"
+"1","configure: GEOS: 3.10.2
+"
+"1","checking GEOS version >= 3.4.0... "
+"1","yes
+"
+"1","checking for geos_c.h... "
+"1","yes
+"
+"1","checking geos: linking with -L/usr/lib/x86_64-linux-gnu -lgeos_c... "
+"1","yes
+"
+"1","configure: Package CPP flags:   -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include
+configure: Package LIBS: -lproj   -L/usr/lib -lgdal -L/usr/lib/x86_64-linux-gnu -lgeos_c
+"
+"1","configure: creating ./config.status
+"
+"1","config.status: creating src/Makevars
+"
+"2","** libs
+"
+"2","using C++ compiler: ‘g++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c RcppExports.cpp -o RcppExports.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c bbox.cpp -o bbox.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal.cpp -o gdal.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal_geom.cpp -o gdal_geom.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal_read.cpp -o gdal_read.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal_read_stream.cpp -o gdal_read_stream.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal_utils.cpp -o gdal_utils.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c gdal_write.cpp -o gdal_write.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c geos.cpp -o geos.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c hex.cpp -o hex.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c mdim.cpp -o mdim.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c ops.cpp -o ops.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c polygonize.cpp -o polygonize.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c proj.cpp -o proj.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c proj_info.cpp -o proj_info.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c raster2sf.cpp -o raster2sf.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c sfc-sfg.cpp -o sfc-sfg.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c signed_area.cpp -o signed_area.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c stars.cpp -o stars.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c wkb.cpp -o wkb.o
+"
+"1","g++ -std=gnu++17 -I""/usr/share/R/include"" -DNDEBUG -DHAVE_PROJ_H -I/usr/include/gdal -I/usr/include -I'/home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/Rcpp/include'     -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2   -c zm_range.cpp -o zm_range.o
+"
+"1","g++ -std=gnu++17 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -flto=auto -Wl,-z,relro -o sf.so RcppExports.o bbox.o gdal.o gdal_geom.o gdal_read.o gdal_read_stream.o gdal_utils.o gdal_write.o geos.o hex.o mdim.o ops.o polygonize.o proj.o proj_info.o raster2sf.o sfc-sfg.o signed_area.o stars.o wkb.o zm_range.o -lproj -L/usr/lib -lgdal -L/usr/lib/x86_64-linux-gnu -lgeos_c -L/usr/lib/R/lib -lR
+"
+"2","installing to /home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-sf/00new/sf/libs
+"
+"2","** R
+"
+"2","** demo
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"1","in method for ‘dbWriteTable’ with signature ‘""PostgreSQLConnection"",""character"",""sf""’: no definition for class “PostgreSQLConnection”
+in method for ‘dbDataType’ with signature ‘""PostgreSQLConnection"",""sf""’: no definition for class “PostgreSQLConnection”
+in method for ‘coerce’ with signature ‘""Spatial"",""sf""’: no definition for class “Spatial”
+in method for ‘coerce’ with signature ‘""Spatial"",""sfc""’: no definition for class “Spatial”
+in method for ‘coerce’ with signature ‘""sf"",""Spatial""’: no definition for class “Spatial”
+in method for ‘coerce’ with signature ‘""sfc"",""Spatial""’: no definition for class “Spatial”
+in method for ‘coerce’ with signature ‘""XY"",""Spatial""’: no definition for class “Spatial”
+in method for ‘coerce’ with signature ‘""crs"",""CRS""’: no definition for class “CRS”
+in method for ‘coerce’ with signature ‘""sgbp"",""sparseMatrix""’: no definition for class “sparseMatrix”
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","*** copying figures
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** checking absolute paths in shared objects and dynamic libraries
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (sf)
+"
+"2","* installing *source* package ‘spatstat.univar’ ...
+"
+"2","** package ‘spatstat.univar’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"2","** libs
+"
+"2","using C compiler: ‘gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0’
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c access.c -o access.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c adaptive.c -o adaptive.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c colonel.c -o colonel.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c hotrod.c -o hotrod.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c init.c -o init.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c kernels.c -o kernels.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c tabnum.c -o tabnum.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c taylorboot.c -o taylorboot.o
+"
+"1","gcc -I""/usr/share/R/include"" -DNDEBUG       -fpic  -g -O2 -ffile-prefix-map=/build/r-base-avGvPq/r-base-4.4.1=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2  -c whist.c -o whist.o
+"
+"1","gcc -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -flto=auto -Wl,-z,relro -o spatstat.univar.so access.o adaptive.o colonel.o hotrod.o init.o kernels.o tabnum.o taylorboot.o whist.o -L/usr/lib/R/lib -lR
+"
+"2","installing to /home/joshoacr13/R/x86_64-pc-linux-gnu-library/4.4/00LOCK-spatstat.univar/00new/spatstat.univar/libs
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** checking absolute paths in shared objects and dynamic libraries
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (spatstat.univar)
+"
+"2","* installing *source* package ‘waldo’ ...
+"
+"2","** package ‘waldo’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"2","** R
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","*** copying figures
+"
+"2","** building package indices
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (waldo)
+"
+"2","* installing *source* package ‘httr2’ ...
+"
+"2","** package ‘httr2’ successfully unpacked and MD5 sums checked
+"
+"2","** using staged installation
+"
+"2","** R
+"
+"2","** inst
+"
+"2","** byte-compile and prepare package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","*** copying figures
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded from temporary location
+"
+"2","** testing if installed package can be loaded from final location
+"
+"2","** testing if installed package keeps a record of temporary installation path
+"
+"2","* DONE (httr2)
+"
+"2","
+"
+"2",""
+"2","The downloaded source packages are in
+	‘/tmp/RtmpVKtK4L/downloaded_packages’"
+"2",""
+"2","
+"
+"0","library(BiocStyle)"
+"0","knitr::opts_chunk$set(tidy=FALSE, cache=FALSE,"
+"0","                      dev=""png"","
+"0","                      message=FALSE, error=FALSE,"
+"0","                      warning=TRUE)"

@@ -1,0 +1,2 @@
+"0","dds = DESeqDataSetFromMatrix(counts(ids),"
+"0","                             colData(ids), design = ~condition)"
