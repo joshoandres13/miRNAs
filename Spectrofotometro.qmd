@@ -1,11 +1,28 @@
 ---
-title: "Espectrofotometro_data"
-author: "J. Andres Castiilo"
-format: html
+title: "Experimento N° 856 "
+author: "J. Andres Castillo"
+format:
+  pdf:
+    pdf-engine: pdflatex
+    papersize: a4
+    documentclass: article
+    toc: false
+    lang: en
+    fontsize: "11pt"
+    fontfamily: kpfonts
+    urlcolor: "blue"
+    number-sections: true
+    margin-left: "2.54cm"
+    margin-right: "2.54cm"
+    margin-bottom: "2.54cm"
+    margin-top: "2.54cm"
 editor: visual
+execute:
+#  echo: false
+  warning: false
 ---
 
-# Analisis de Espectofotometro con ORO de celulas HEPG2
+# Analisis de tinción ORO en células HEPG2 con espectrofotómetro
 
 ## Library
 
@@ -13,30 +30,17 @@ editor: visual
 library(tidyverse)
 library(ggplot2)
 library(emmeans)
-library(dplyr)
-
+library("dplyr")
 ```
 
 ## Data
 
 ```{r}
-# Data Frame Tratamientos
-data <- data.frame( 
-           Absorbancia = c(500, 500, 500,500,500,500),
-           T_0mM = c(0.183, 0.18,0.178,0.177,0.171,0.172),
-           T_0.5mM = c(0.311, 0.322, 0.314, 0.344, 0.327,0.325),
-           T_1mM = c(0.363, 0.385, 0.372, 0.364, 0.406, 0.393),
-           Control = c(0.045,0.049,0.048,0.047,0.046, 0.044))
-head(data)
-summary(data)
-```
-
-```{r}
 # Create a table
 datos <- data.frame(
-  condicion = rep(c("0mM", "0.5mM","1mM","Blanco"), each = 6 ),  # 6 réplicas por tratamiento (3 por muestra)
-  muestra = rep(c("Muestra_1", "Muestra_2","Muestra_3","Muestra_4","Muestra_5","Muestra_6", "BLANCO","BLANCO"), each = 3),  # Cada muestra tiene 3 réplicas
-  replica = rep(1:3, times = 8),  # Número de réplica
+  condicion = rep(c("0mM", "0.5mM","1mM","Blanco"), each = 6 ),
+  muestra = rep(c("Muestra_1", "Muestra_2","Muestra_3","Muestra_4","Muestra_5","Muestra_6", "BLANCO","BLANCO"), each = 3), 
+  replica = rep(1:3, times = 8),
   absorbancia = c(0.183, 0.18,0.178,
                   0.177,0.171,0.172,
                   0.311, 0.322, 0.314,
@@ -47,18 +51,20 @@ datos <- data.frame(
                   0.047,0.046, 0.044)
 )
 
-# Ver la tabla
-print(datos)
-head(datos)
-
-write.csv(datos,"/home/joshoacr13/Documentos/TFM/mirna_analysis/input/datos_ORO.csv")
-
-
+# Imprimir resultados
+knitr::kable(datos, 
+             col.names = c("Condicion", "Muestra", "Replica", "Absorbancia"),
+             align = c("c", "c", "c", "c"), 
+             escape = FALSE) 
+# Guardar resultados
+# write.csv(datos,"/home/joshoacr13/Documentos/TFM/mirna_analysis/input/datos_ORO.csv")
 ```
 
-```{r}
+## Análisis Estadistico
 
-# Calcular la media y desviación estándar por condición
+### Calcular la media y desviación estándar por condición
+
+```{r}
 resumen <- datos %>%
   group_by(condicion) %>%
   summarise(
@@ -66,9 +72,11 @@ resumen <- datos %>%
     sd_absorbancia = sd(absorbancia)
   )
 
-print(resumen)
-
-
+# Imprimir resultados
+knitr::kable(resumen, 
+             col.names = c("Condicion", "Media Absorbancia", "Desviación Estandar"),
+             align = c("c", "c", "c"), 
+             escape = FALSE) 
 ```
 
 ```{r}
@@ -83,63 +91,54 @@ ggplot(datos, aes(x = condicion, y = absorbancia, color = muestra)) +
     x = "Condición",
     y = "Absorbancia"
   )
-
-
 ```
+
+*Absorbancia por concentración*:
+
+- 0 mM (sin solución experimental): Tiene una absorbancia mayor que el blanco (0.177 vs. 0.047), lo que sugiere que hay un efecto residual en la medición. Esto podría ser causado por ruido instrumental o contaminación leve en la muestra. Esta condición actúa como un punto de referencia para las otras concentraciones.
+
+- 0.5 mM y 1 mM: Se observa un incremento en la absorbancia con el aumento de concentración (de 0.324 a 0.381), lo que sugiere una correlación positiva entre la concentración y la absorbancia en este rango.
+
+- Blanco: Como antes, la absorbancia del blanco es muy baja.
+
+*Variabilidad*:
+
+- Las desviaciones estándar siguen siendo bajas, lo que confirma que las mediciones son consistentes.
+- El valor más variable ocurre en 1 mM (0.01719), posiblemente por un mayor efecto experimental o instrumental en esta condición.
+
+### Comparaciones estadísticas: ANOVA
 
 ```{r}
-# Comparaciones estadísticas: ANOVA
 anova <- aov(absorbancia ~ condicion * muestra, data = datos)
 summary(anova)
-
-# Pruebas post-hoc para comparar condiciones (independientemente de la muestra)
-posthoc_condicion <- emmeans(anova, pairwise ~ condicion)
-print(posthoc_condicion)
-
-# Pruebas post-hoc para comparar muestras (independientemente de la condición)
-posthoc_muestra <- emmeans(anova, pairwise ~ muestra)
-print(posthoc_muestra)
-
 ```
+Los resultados no indican:
 
-## La Ley de Lambert-Beer es fundamental en espectroscopía y química analítica, y establece que:
+*Condición:*
+- Valor de Pr(>F): <2e-16, lo cual es extremadamente significativo (***). Esto indica que el factor condición tiene un efecto muy fuerte sobre la variable dependiente. Hay diferencias significativas entre los niveles de la condición.
 
-\[ A = \varepsilon \cdot c \cdot l \]
+*Muestra:*
+- Valor de Pr(>F): 0.0624, que está cerca del umbral de significancia (0.05). Esto sugiere que el efecto de la muestra podría ser marginalmente significativo, pero no lo suficiente como para ser concluyente bajo un nivel de significancia del 5%.
 
-Donde: - (A): Absorbancia medida (sin unidad). - (\varepsilon): Coeficiente de absorción molar (L·mol(^{-1})·cm(^{-1})), una constante que depende de la sustancia y la longitud de onda. - (c): Concentración de la sustancia en la muestra (mol·L(\^{-1})). - (l): Longitud del trayecto óptico o de la celda (cm), típicamente es 1 cm.
+*Residuals:*
+- Representan la variación no explicada por los factores. La varianza residual es muy pequeña, lo que respalda que la mayor parte de la variación en los datos es explicada por los factores considerados, especialmente por condición.
 
-### **¿En qué contexto puedes aplicar la Ley de Lambert-Beer?**
+## La Ley de Lambert-Beer
 
-1.  **Determinación de concentración**: Si conoces el coeficiente de absorción molar ((\varepsilon)) y la longitud del trayecto óptico ((l)), puedes usar la absorbancia medida ((A)) para calcular la concentración ((c)) de una sustancia desconocida.
+$A = \varepsilon \cdot c \cdot l$
 
-    Ejemplo:
+Donde: 
 
-    -   Si estás analizando la concentración de oro en una solución después de una tinción, puedes medir la absorbancia y, usando el coeficiente (\varepsilon), determinar cuánto oro está presente.
+- (A): Absorbancia medida (sin unidad). 
+- $(\varepsilon)$: Coeficiente de absorción molar $(L·mol(^{-1})·cm(^{-1}))$, una constante que depende de la sustancia y la longitud de onda. 
+- (c): Concentración de la sustancia en la muestra $(mol·L^{-1})$. 
+- (l): Longitud del trayecto óptico o de la celda (cm), típicamente es 1 cm.
 
-2.  **Verificación de linealidad**: La Ley de Lambert-Beer es válida en un rango lineal de concentraciones. Si trazas un gráfico de (A) vs. (c), debe ser una línea recta. Esto te ayuda a:
-
-    -   Comprobar si tu sistema experimental está en el rango válido.
-    -   Determinar (\varepsilon) (pendiente de la gráfica si (l = 1)).
-
-3.  **Evaluación de la pureza o composición de una muestra**: Comparando la absorbancia medida con valores esperados para sustancias puras, puedes detectar impurezas o variaciones en las propiedades ópticas.
-
-### **¿Qué buscarías analizar usando esta ley?**
-
--   **Concentración de un compuesto**: En muestras complejas, puedes analizar la cantidad de un compuesto específico que absorbe a una longitud de onda determinada. Ejemplo: Determinar la cantidad de oro en una solución coloreada usando absorbancia a 450 nm.
-
--   **Eficiencia de tinción**: Si estás utilizando una tinción basada en oro (como para biomarcadores), la absorbancia te indicará qué tan eficiente fue la tinción.
-
--   **Características ópticas del compuesto**: Determinar el coeficiente de absorción molar ((\varepsilon)) para una sustancia nueva o bajo condiciones particulares.
-
--   **Estudios cinéticos**: Si mides la absorbancia en función del tiempo, puedes estudiar reacciones químicas que cambien la concentración de sustancias absorbentes.
-
-### **Ejemplo práctico**
-
-Si deseas calcular concentraciones usando tus datos de absorbancia, asegúrate de tener: 1. **El valor de (**\varepsilon) para tu compuesto a la longitud de onda de medición. 2. La longitud del trayecto óptico ((l)), generalmente proporcionada por el fabricante de la cubeta.
+Se desea determinar la a concentración de oro en en las células después de la tinción, usando la absorbancia a 450 nm y, usando el coeficiente $(\varepsilon)$, determinar cuánto oro está presente. Ademas, esta esot nos permitira medir la absorbancia para indicarnos qué tan eficiente fue la tinción.
 
 #### Fórmula para concentración:
 
-\[ c = \frac{A}{\varepsilon \cdot l} \]
+$[ c = \frac{A}{\varepsilon \cdot l} ]$
 
 ```{r}
 # Parámetros experimentales
@@ -152,9 +151,6 @@ datos <- datos %>%
   mutate(concentracion_mol_L = absorbancia / (epsilon * l)) %>%
   mutate(concentracion_ug_mL = concentracion_mol_L * M * (10**6))
 
-# Verificar los resultados
-head(datos)
-
 # Resumir las concentraciones promedio por condición y muestra
 resumen_concentraciones <- datos %>%
   group_by(condicion, muestra) %>%
@@ -165,18 +161,23 @@ resumen_concentraciones <- datos %>%
     .groups = 'drop'
   )
 
-# Mostrar el resumen
-print(resumen_concentraciones)
+## Imprimir resultados
+knitr::kable(resumen_concentraciones, 
+             align = c("c", "c", "c"))
 
-# Graficar absorbancia y concentraciones
-library(ggplot2)
+```
 
-# Gráfico de absorbancia
-ggplot(datos, aes(x = condicion, y = absorbancia, color = muestra)) +
-  geom_point() +
-  labs(title = "Absorbancia por condición", x = "Condición", y = "Absorbancia") +
-  theme_minimal()
+1. Condiciones y concentraciones medias: Las concentraciones medias aumentan conforme incrementa la concentración nominal:
+- Blanco tiene la concentración más baja (1055.292).
+- 0 mM tiene valores cercanos a ~4000.
+- 0.5 mM tiene valores en el rango de ~7000.
+- 1 mM tiene los valores más altos (~8500 a ~8800).
 
+2. Desviaciones estándar: Las desviaciones estándar son pequeñas en relación con los valores medios, lo que sugiere mediciones consistentes. Sin embargo, las muestras asociadas a 1 mM muestran mayor dispersión, especialmente Muestra_6 con una desviación de 488.
+
+3.  Réplicas (n): Todas las condiciones tienen 3 réplicas excepto el Blanco, que tiene 6, lo que proporciona más confianza en su estimación.
+
+```{r}
 # Gráfico de concentración
 ggplot(datos, aes(x = condicion, y = concentracion_ug_mL, color = muestra)) +
   geom_point() +
