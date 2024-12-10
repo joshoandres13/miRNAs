@@ -315,11 +315,8 @@ significant_isomiRs |>
   kable_styling("striped")
 ```
 
-
-
-
-
 ## 8. Diferential expression analysis
+
 ### Steatosis 3 categorias
 
 `steatosis_3cat` Si el valor de Esteatosis es 3, lo convierte en 2. De lo contrario, mantiene el valor original.
@@ -327,6 +324,7 @@ significant_isomiRs |>
 ```         
 Entonces tengo ESteatosis: 0, 1, 2 (tres categorias)
 ```
+
 ```{r}
 # Ajustar el Modelo Completo
 dds_3cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
@@ -366,7 +364,6 @@ hist(resultsLRT_3cat$pvalue, breaks = 50, col = "blue", main = "Distribución de
 
 ```
 
-
 ```{r}
 # TOP
 top_3cat <- resultsLRT_3cat |> 
@@ -403,6 +400,7 @@ ggplot(cuentas, aes(x=steatosis_3cat, y=value)) + gg_decor()
 ```
 
 ### Steatosis 4 categorias
+
 ```{r}
 # Ajustar el Modelo Completo
 dds_4cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
@@ -418,11 +416,11 @@ resultsLRT_4cat <- results(dds_4cat, tidy=T)
 
 # Filtrar resultados significativos
 
-significant_isomiRs_estrict_4cat <- resultsLRT[resultsLRT$padj < 0.05 & abs(resultsLRT$log2FoldChange) > 1, ]  # Estricto
+significant_isomiRs_estrict_4cat <- resultsLRT_4cat[resultsLRT_4cat$padj < 0.05 & abs(resultsLRT_4cat$log2FoldChange) > 1, ]  # Estricto
 
-significant_isomiRs_relajado_4cat <- resultsLRT[resultsLRT$padj < 0.1 & abs(resultsLRT$log2FoldChange) > 0.05, ]  # Relajado
+significant_isomiRs_relajado_4cat <- resultsLRT_4cat[resultsLRT_4cat$padj < 0.1 & abs(resultsLRT_4cat$log2FoldChange) > 0.05, ]  # Relajado
 
-significant_isomiRs_masrelajado_4cat <- resultsLRT[resultsLRT$padj < 0.1, ]  # Mas Relajado
+significant_isomiRs_masrelajado_4cat <- resultsLRT_4cat[resultsLRT_4cat$padj < 0.1, ]  # Mas Relajado
 
 
 # Visualizar resultados
@@ -467,7 +465,9 @@ cuentas_4cat <- dplyr::select(cuentas0, any_of(top_4cat)) |>
 ggplot(cuentas_4cat, aes(x=Esteatosis, y=value)) + gg_decor()
 ```
 
+
 ### Steatosis 2 categoria
+
 ```{r}
 # Ajustar el Modelo Completo
 dds_2cat <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
@@ -532,53 +532,6 @@ cuentas_2cat <- dplyr::select(cuentas0, any_of(top_2cat)) |>
 ggplot(cuentas_2cat, aes(x=steatosis_01, y=value)) + gg_decor()
 ```
 
+## 9. Conclusion 
 
-
-##### Annotation
-
-To get a detail description for each isomiR, the function `isoAnnotate` can return the naming, sequence and importance value for each sample and isomiR. The importance is calculated by:
-
-$$importance = \frac{isomiR\_reads}{miRNA\_reads}$$
-
-```{r}
-head(isoAnnotate(ids_counts_ref))
-
-annotate_ref <- isoAnnotate(ids_counts_ref)
-
-save(annotate_ref, file="/home/joshoacr13/Documentos/TFM/mirna_analysis/input/annotate_references.Rdata")
-```
-
-
-
-
-```{r}
-
-# Lista de miRNA
-mirna_list <- c(top_1[1:5])  # Reemplaza con tus miRNA
-
-# Buscar genes diana
-targets <- get_multimir(mirna = mirna_list, table = "validated")
-
-# Filtrar resultados validados
-validated_targets <- subset(targets@data, type == "validated")
-head(validated_targets)
-
-```
-
-```{r}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-BiocManager::install("org.Hs.eg.db")
-
-
-# Suponiendo que tienes nombres de genes (SYMBOL)
-gene_symbols <- validated_targets$mRNA
-entrez_ids <- mapIds(org.Hs.eg.db, 
-                     keys = gene_symbols, 
-                     column = "ENTREZID", 
-                     keytype = "SYMBOL", 
-                     multiVals = "first")
-
-
-```
-
+In this part we decide to choose the steatosis 5 categorias. Y dentro de esto utilizamos el hsa-mir-372-3p and hsa-miR-144-3p, also we confirme this miR because they have a p. adjust value less than 0.05
