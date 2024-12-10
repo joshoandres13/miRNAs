@@ -1,0 +1,899 @@
+---
+title: "Search of mRNA targets with multiMiR to hsa-miR-342-3p and hsa-miR-144-3p"
+author: "J. Andrés Castillo Rivas"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+---
+
+
+
+# multiMiR
+
+## Installation
+
+
+
+```{r}
+#if (!require("BiocManager", quietly = TRUE))
+#    install.packages("BiocManager")
+
+#BiocManager::install("multiMiR")
+#browseVignettes("multiMiR")
+
+#install.packages("rentrez")
+
+```
+
+
+
+# Documentation
+
+
+
+```{r}
+library("multiMiR")
+library("kableExtra")
+library("dplyr")
+
+library("ggplot2") # Para visualización (opcional)
+library("clusterProfiler") # Para análisis funcional (opcional)
+library("org.Hs.eg.db") # Base de datos de genes humanos
+
+library("rentrez")
+```
+
+
+
+# Library
+
+The multiMiR database is now versioned. By default multiMiR will use the most recent version each time multiMiR is loaded. However it is now possible to switch between database versions and get information about the multiMiR database versions. `multimir_dbInfoVersions()` returns a dataframe with the available versions.
+
+
+
+```{r}
+db.ver = multimir_dbInfoVersions()
+db.ver
+```
+
+
+
+To switch between versions we can use `multimir_switchDBVersion()`.
+
+
+
+```{r multimir_dbInfoVersions}
+multimir_switchDBVersion(db_version = "2.4.0")
+
+# curr_vers  <- vers_table[1, "VERSION"]  # current version
+# multimir_switchDBVersion(db_version = curr_vers)
+
+```
+
+
+
+The remaining functions will query the selected version until the package is reloaded or until we switch to another version.
+
+Information from each external database is stored in a table in the multiMiR database. To see a list of the tables, we can use the `multimir_dbTables()` function.
+
+
+
+```{r multimir_dbTables}
+db.tables = multimir_dbTables()
+db.tables
+```
+
+
+
+The function `multimir_dbInfo()` will display information about the external miRNA and miRNA-target databases in multiMiR, including version, release date, link to download the data, and the corresponding table in multiMiR.
+
+
+
+```{r}
+db.info = multimir_dbInfo()
+db.info <- as.data.frame(db.info)
+
+print(db.info)
+#db.info |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+
+
+## Predicted tables
+
+
+
+```{r}
+predicted_tables()
+```
+
+
+
+## Validated Tables
+
+
+
+```{r}
+validated_tables()
+```
+
+
+
+## Diseasedrug Tables
+
+
+
+```{r}
+diseasedrug_tables()
+```
+
+
+
+To see how many records are in these 14 external databases we refer to the `multimir_dbCount` function.
+
+
+
+```{r}
+db.count = multimir_dbCount()
+db.count
+
+print(db.count)
+#db.count |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+
+
+# Objective 
+
+**1.Bioinformatic prediction of miR-520-5p and miR-655-3p mRNA targets** 
+
+*Publically available databases will be used to search for mir-520d-5p and mir-655-3p predicted mRNA targets. Most relevant mRNA search will be selected according to the highest score prediction from several algorithms. We intend to construct a list (35-40 mRNA targets) that will be further categorized according to their putative role on metabolism (by bibliographic analysis) to finally summarize 10-15 miRNA-mRNA targets with potential interest in metabolism. Gene ontology /annotation and enrichment analysis of mRNA targets will be performed using public data base (genecodis)*
+
+# Methodology
+
+To create the validated and predicted table, it was necessary to examine specific parameters available in the tables to ensure reliable results. These parameters were analyzed for each scenario (Validated and Predicted) since they vary depending on whether the goal is to validate or predict targets.
+
+## Parameters
+
+### Validated
+In this case, there is no need to specify a cutoff, as this table will contain only validated targets. Therefore, you should filter based on the columns of the table that you will be obtaining:
+
+#### **Table Information**  
+
+The columns represent various features or metadata associated with the interactions between microRNAs (miRNAs) and their potential targets.  
+
+1. **database**: Indicates the source database of the information (e.g., *mirtarbase*, *targetscan*, *miRDB*). This is useful if you want to focus on specific sources or compare results across databases.  
+
+2. **mature_mirna_acc**: The accession identifier for the mature version of the miRNA in the database (e.g., *MIMAT0003331*). This unique identifier is useful for unambiguous miRNA identification.  
+
+3. **mature_mirna_id**: The name of the mature miRNA in standard format (e.g., *hsa-miR-655-3p*). You can use this to filter specific miRNA interactions.  
+
+4. **target_symbol**: The gene symbol of the miRNA target (e.g., *TGFBR2*). Useful for focusing on results for a particular gene.  
+
+5. **target_entrez**: The unique gene identifier in the *Entrez Gene* database (e.g., *7048*). This is important for bioinformatic analyses requiring unique gene identifiers.  
+
+6. **target_ensembl**: The unique gene identifier in the *Ensembl* database (e.g., *ENSG00000163513*). Similar to the previous field, this is helpful for integration with tools and analyses using Ensembl.  
+
+7. **experiment**: Describes the experimental methods used to validate the interaction (e.g., *Luciferase reporter assay/Western blot/qRT-PCR*). This field is crucial if you want to prioritize results with strong experimental evidence.  
+
+8. **support_type**: Indicates the level of support for the interaction, such as "Functional MTI" (functional miRNA-target interaction). If you are only interested in functional or strongly supported interactions, this field is essential for filtering.  
+
+9. **pubmed_id**: The identifier of the article in PubMed where the interaction was reported (e.g., *23690952*). Useful for exploring the original studies to obtain more details.  
+
+10. **DB.link**: A link to the entry in the original database where the interaction can be verified. This is helpful for directly consulting the source.  
+
+11. **type**: Specifies whether the interaction is "validated" or "predicted." Validated interactions are usually more reliable as they are backed by experimental evidence. This is one of the most important fields for filtering reliable interactions.  
+
+#### **Which Columns Are Useful for Filtering More Accurate Results?**  
+
+To obtain more specific and reliable results, the following columns can be particularly useful:  
+
+- **type**: Filter by "validated" if you are only interested in experimentally confirmed interactions.  
+- **experiment**: Prioritize interactions with high-confidence experimental methods, such as *Luciferase reporter assay* or *Western blot*.  
+- **support_type**: Use "Functional MTI" to focus on functional interactions supported by experimental evidence.  
+- **pubmed_id**: Examine the references to validate the reliability of the reported data.  
+- **database**: Select databases that are most relevant or recognized for your research.  
+
+### Predicted 
+In the function `get_multimir` you need to adjust the following paramaters:
+#### **1. predicted.cutoff.type = ""**
+#####  `predicted.cutoff.type = "p"`
+- **Default Value (`predicted.cutoff = NULL`)**:  
+  - Automatically selects the **top 20% of predictions** if percentage-based cutoff is used (`predicted.cutoff.type = "p"`). This behavior is generally suitable for human studies because:  
+    - It provides a balanced set of high-quality predictions.  
+    - The filter is designed to reduce noise (i.e., less reliable interactions).  
+    - The resulting set remains manageable, even in large-scale analyses.  
+  - **Recommended if you prioritize quality over quantity** and do not have a specific criterion to customize the cutoff.  
+
+- **Customizing the Percentage (`predicted.cutoff = X`)**:  
+  - If you want a more restricted (stricter) set, you can reduce this percentage (e.g., selecting the top 10%, `predicted.cutoff = 10`).  
+
+
+##### `predicted.cutoff.type = "n"`
+
+Absolute cutoff is useful if you have a fixed dataset size in mind or if you want to maximize the scope of the analysis without focusing on relative proportions.  
+
+- **Default Value (`predicted.cutoff = NULL`)**:  
+  - Selects the **top 300,000 predictions** or all available records if there are fewer than 300,000.  
+  - This approach can be helpful for comprehensive studies but is less precise if you aim to prioritize high-quality predictions.  
+
+- **Customizing the Number (`predicted.cutoff = X`)**:  
+  - For example, setting `predicted.cutoff = 50,000` will select the top 50,000 predictions, providing a balance between result size and relevance.  
+  - This is useful if you have computational limitations or know the exact number of records you need to process.  
+
+#### **predicted.site = "conserved"**
+
+For humans, the default settings are reasonable in most cases because:  
+
+- **Conserved Predictions**: Conserved target sites (`predicted.site = "conserved"`) are generally more reliable for humans, as they are supported by evolutionary criteria and are more likely to be functional.  
+- **Top 20% as Default**: Provides high-quality predictions by filtering interactions with the highest scores.  
+
+- **Biological Significance**: Conserved sites are often associated with critical functions in organisms. In the case of miRNAs, these sites are more likely to represent real and functional interactions between the miRNA and the target gene. For example, if a binding site for a miRNA in a human gene is also present in mice and rats, it is likely to have an essential biological role.  
+
+- **Higher Likelihood of Experimental Validation**:  Since conserved sites hold greater biological relevance, they are more likely to have been experimentally validated, increasing confidence in the prediction.  
+
+- **Reduction of Noise in Predictions**:  Prediction databases such as **TargetScan**, **miRanda**, and **PITA** generate numerous potential interactions, but not all are biologically significant.  
+- Filtering for conserved sites removes less reliable predictions (based solely on sequence matches) and prioritizes those more likely to be functional.  
+
+- **Reliability of the Database Using `predicted.site = "conserved"`**  
+
+1. **Focus on More Robust Predictions**:  
+   - By setting `predicted.site = "conserved"`, you obtain results that meet conservation criteria in at least one of the three databases (**TargetScan**, **miRanda**, or **PITA**). This means the selected target sites have additional support in terms of evolutionary relevance.  
+
+2. **Limitations**:  
+   - **Lower Coverage**: Some miRNAs or genes may not have conserved target sites in these databases, potentially reducing the number of predictions.  
+   - **Context Dependency**: Not all functional interactions are conserved. Species- or tissue-specific interactions might be excluded.  
+
+- **When to Use Conserved Sites**  
+
+1. **Recommended**:  
+  - If you are looking for miRNA-gene interactions with a high likelihood of being functional and relevant.  
+  - For comparative studies across species or general approaches in evolutionary biology.  
+
+2. **Avoid It**:  
+  - If you are working with species-specific miRNAs or genes with emerging, less-studied roles.  
+  - If you want to maximize the coverage of predictions and are willing to analyze additional results (potentially with more noise).  
+
+## Search
+## miRNA targets
+
+### hsa-miR-372-3p
+#### 1. Validated Datasets
+
+
+```{r}
+# The default is to search validated interactions in human
+val_hsa_miR_372_3p <- get_multimir(org = "hsa",
+                                mirna = 'hsa-miR-372-3p',
+                                table = "validated",
+                                add.link = TRUE,
+                                use.tibble = TRUE,
+                                summary = TRUE)
+
+# Check which types of associations were returned
+table(val_hsa_miR_372_3p@data$type)
+dim(val_hsa_miR_372_3p@data)
+
+# Detailed information of the validated miRNA-target interaction
+head(val_hsa_miR_372_3p@data)
+```
+
+```{r}
+# Filter with the updated databases, experiment, support_type y type
+filter_val_hsa_miR_372_3p <- val_hsa_miR_372_3p@data[
+  val_hsa_miR_372_3p@data[["database"]] %in% c("mirtarbase", "tarbase") & # Filtrar por bases de datos específicas
+  grepl("Luciferase|Western blot|qRT-PCR", val_hsa_miR_372_3p@data[["experiment"]], ignore.case = TRUE) &  # Filtro por experimentos específicos
+  val_hsa_miR_372_3p@data[["support_type"]]  %in% c("Functional MTI", "Functional MTI (Weak)")  &  # Filtro por soporte funcional
+ val_hsa_miR_372_3p@data[["type"]] == "validated", # Filtro por tipo validado
+]
+
+print(filter_val_hsa_miR_372_3p)
+# Table with kable
+#filter_val_hsa_miR_520d_5p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+```
+
+
+
+#### 2. Predicted
+
+
+```{r}
+# Conserved Sites
+# The default is to search validated interactions in human
+pre_hsa_miR_372_3p <- get_multimir(org = "hsa",
+                                mirna = 'hsa-miR-372-3p',
+                                table = "predicted",
+                                predicted.cutoff = 10,
+                                predicted.cutoff.type = "p",
+                                predicted.site = "conserved",
+                                add.link = TRUE,
+                                use.tibble = TRUE,
+                                summary = TRUE)
+
+# Check which types of associations were returned
+table(pre_hsa_miR_372_3p@data$type)
+dim(pre_hsa_miR_372_3p@data)
+
+# Detailed information of the validated miRNA-target interaction
+head(pre_hsa_miR_372_3p@data)
+```
+
+```{r}
+# Filter with the updated databases (targetscan)
+filter_pre_hsa_miR_372_3p <-  pre_hsa_miR_372_3p@data[pre_hsa_miR_372_3p@data[["database"]] %in% c("targetscan", "mirdb") ,]
+#as.data.frame(pre_hsa_miR_520d_5p@data)
+dim(filter_pre_hsa_miR_372_3p)
+
+print(filter_pre_hsa_miR_372_3p)
+# Table with kable
+#filter_pre_hsa_miR_520d_5p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+
+
+#### 3. Filter and Combine
+
+
+
+```{r}
+combined_targets_hsa_miR_372_3p <- filter_val_hsa_miR_372_3p %>%
+  mutate(type = "validated") %>%
+  bind_rows(
+    filter_pre_hsa_miR_372_3p %>% mutate(type = "predicted") # Agregar etiquetas de origen
+  ) %>%
+  distinct()
+```
+
+
+
+#### 4. Resumir targets por miRNA
+
+
+
+```{r}
+summary_targets_hsa_miR_372_3p  <- combined_targets_hsa_miR_372_3p %>%
+  group_by(mature_mirna_id, type) %>%
+  summarise(
+    num_targets = n(),
+    top_targets = paste0(unique(target_symbol)[1:20], collapse = ", ")
+  )
+
+print(summary_targets_hsa_miR_372_3p)
+#summary_targets_miR_520d_5p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+
+
+#### 5: Análisis funcional
+
+##### Validated
+
+
+
+```{r}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_hsa_miR_372_3p_validated <- filter_val_hsa_miR_372_3p$target_symbol %>% unique()
+go_results_hsa_miR_372_3p_validated <- enrichGO(
+  gene = gene_symbols_hsa_miR_372_3p_validated,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "ALL",  # BP Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+head(go_results_hsa_miR_372_3p_validated@result,20)
+#go_results_miR_520d_5p_validated@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+
+# Visualización del análisis funcional
+barplot(go_results_hsa_miR_372_3p_validated, showCategory = 10, title = "Top 10 Procesos Biológicos Enriquecidos")
+
+```
+
+
+
+##### Predicted
+
+
+
+```{r}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_hsa_miR_372_3p_predicted <- filter_pre_hsa_miR_372_3p$target_symbol %>% unique()
+
+go_results_hsa_miR_372_3p_predicted <- enrichGO(
+  gene = gene_symbols_hsa_miR_372_3p_predicted,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "BP",  # Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+head(go_results_hsa_miR_372_3p_predicted@result,20 )
+#go_results_miR_520d_5p_predicted@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+
+# Visualización del análisis funcional
+barplot(go_results_hsa_miR_372_3p_predicted, showCategory = 10, title = "Top 10 Procesos Biológicos Enriquecidos")
+```
+
+
+
+#### 6: Exportar resultados
+
+
+
+```{r}
+write.csv(filter_val_hsa_miR_520d_5p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/updated/validated_targets.csv", row.names = FALSE)
+write.csv(filter_pre_hsa_miR_520d_5p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/updated/predicted_targets.csv", row.names = FALSE)
+write.csv(combined_targets_miR_520d_5p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/updated/combined_targets.csv", row.names = FALSE)
+write.csv(summary_targets_miR_520d_5p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/updated/summary_targets.csv", row.names = FALSE)
+```
+
+
+
+
+### hsa-miR-144-3p
+#### 1. Validated
+
+
+```{r }
+# The default is to search validated interactions in human
+val_hsa_miR_144_3p <- get_multimir(org = "hsa",
+                                mirna = 'hsa-miR-144-3p',
+                                table = "validated",
+                                add.link = TRUE,
+                                use.tibble = TRUE,
+                                summary = TRUE)
+
+# Check which types of associations were returned
+table(val_hsa_miR_144_3p@data$type)
+
+# Detailed information of the validated miRNA-target interaction
+head(val_hsa_miR_144_3p@data)
+```
+
+```{r}
+# Filter with the updated databases, experiment, support_type y type
+filter_val_hsa_miR_144_3p <- val_hsa_miR_144_3p@data[
+  val_hsa_miR_144_3p@data[["database"]] %in% c("mirtarbase", "tarbase") & # Filtrar por bases de datos específicas
+  grepl("Luciferase|Western blot|qRT-PCR", val_hsa_miR_144_3p@data[["experiment"]], ignore.case = TRUE) &  # Filtro por experimentos específicos
+  val_hsa_miR_144_3p@data[["support_type"]] %in% c("Functional MTI", "Functional MTI (Weak)") &  # Filtro por soporte funcional
+  val_hsa_miR_144_3p@data[["type"]] == "validated", # Filtro por tipo validado
+]
+
+print(filter_val_hsa_miR_144_3p)
+# Table with kable
+
+#filter_val_hsa_miR_655_3p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+```
+
+
+
+#### 2. Predicted
+
+
+
+```{r }
+# Conserved Sites
+# The default is to search validated interactions in human
+pre_hsa_miR_144_3p <- get_multimir(org = "hsa",
+                                mirna = 'hsa-miR-144-3p',
+                                table = "predicted",
+                                predicted.cutoff = 10,
+                                predicted.cutoff.type = "p",
+                                predicted.site = "conserved",
+                                add.link = TRUE,
+                                use.tibble = TRUE,
+                                summary = TRUE)
+
+# Check which types of associations were returned
+table(pre_hsa_miR_144_3p@data$type)
+dim(pre_hsa_miR_144_3p@data)
+
+# Detailed information of the validated miRNA-target interaction
+head(pre_hsa_miR_144_3p@data)
+```
+
+```{r}
+# Filter with the updated databases (targetscan)
+filter_pre_hsa_miR_144_3p <- pre_hsa_miR_144_3p@data[pre_hsa_miR_144_3p@data[["database"]] == "targetscan",]
+
+dim(filter_pre_hsa_miR_144_3p)
+print(filter_pre_hsa_miR_144_3p)
+# Table with kable
+#filter_pre_hsa_miR_655_3p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+```
+
+
+
+#### 3. Filter and Combine
+
+
+
+```{r}
+combined_targets_miR_144_3p <- filter_val_hsa_miR_144_3p %>%
+  mutate(type = "validated") %>%
+  bind_rows(
+    filter_pre_hsa_miR_144_3p %>% mutate(type = "predicted") # Agregar etiquetas de origen
+  ) %>%
+  distinct()
+```
+
+
+
+#### 4. Resumir targets por miRNA
+
+
+
+```{r}
+summary_targets_miR_144_3p <- combined_targets_miR_144_3p %>%
+  group_by(mature_mirna_id, type) %>%
+  summarise(
+    num_targets = n(),
+    top_targets = paste0(unique(target_symbol)[1:20], collapse = ", ")
+  )
+
+print(summary_targets_miR_144_3p)
+# Table with kable
+#summary_targets_miR_655_3p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+
+
+#### 5: Análisis funcional
+##### Validated
+
+
+
+```{r}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_miR_144_3p_validated <- filter_val_hsa_miR_144_3p$target_symbol %>% unique()
+go_results_miR_144_3p_validated <- enrichGO(
+  gene = gene_symbols_miR_144_3p_validated,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "BP",  # Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+head(go_results_miR_144_3p_validated@result,20)
+#go_results_miR_655_3p_validated@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+
+# Visualización del análisis funcional
+barplot(go_results_miR_144_3p_validated, showCategory = 10, title = "Top 10 Procesos Biológicos Enriquecidos validados")
+```
+
+
+
+##### Predicted
+
+
+
+```{r}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_miR_144_3p_predicted <- filter_pre_hsa_miR_144_3p$target_symbol %>% unique()
+go_results_miR_144_3p_predicted <- enrichGO(
+  gene = gene_symbols_miR_144_3p_predicted,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "BP",  # Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+head(go_results_miR_144_3p_predicted@result,20)
+#go_results_miR_655_3p_predicted@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+# Visualización del análisis funcional
+barplot(go_results_miR_144_3p_predicted, showCategory = 10, title = "Top 10 Procesos Biológicos Enriquecidos")
+
+```
+
+
+
+
+#### 6: Exportar resultados
+
+
+
+```{r}
+write.csv(filter_val_hsa_miR_655_3p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/updated/validated_targets.csv", row.names = FALSE)
+write.csv(filter_pre_hsa_miR_655_3p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/updated/predicted_targets.csv", row.names = FALSE)
+write.csv(combined_targets_miR_655_3p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/updated/combined_targets.csv", row.names = FALSE)
+write.csv(summary_targets_miR_655_3p, "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/updated/summary_targets.csv", row.names = FALSE)
+```
+
+
+
+### Both hsa-miR-372-3p & hsa-miR-144-3p
+
+#### 1. Validated
+
+
+
+```{r}
+list_miRNAs <- c("hsa-miR-372-3p","hsa-miR-144-3p")
+
+validated_targets_both <- lapply(list_miRNAs, function(miRNA){
+  get_multimir(org = "hsa",
+               mirna = list_miRNAs,
+               table = "validated",                                
+               add.link = TRUE,
+               use.tibble = TRUE,
+               summary = TRUE
+               )@data # Extract the data
+}) %>%
+  bind_rows() %>%  # Relate
+  distinct()  # Combine and eliminate duplicates
+
+```
+
+
+
+#### 2. Predicted
+
+
+
+```{r}
+predicted_targets_both <- lapply(list_miRNAs, function(miRNA){
+  get_multimir(org = "hsa",
+               mirna = list_miRNAs,
+               table = "predicted",
+               predicted.cutoff = 10,
+               predicted.cutoff.type = "p",
+               predicted.site = "conserved",
+               add.link = TRUE,
+               use.tibble = TRUE,
+               summary = TRUE
+               )@data
+}) %>%
+  bind_rows() %>%
+  distinct()  # Combine and eliminate duplicates
+```
+
+
+
+#### 3. Filter and combined
+
+
+
+```{r}
+combined_targets <- validated_targets_both %>%
+  mutate(type = "validated") %>%
+  bind_rows(
+    predicted_targets_both %>% mutate(type = "predicted") # Agregar etiquetas de origen
+  ) %>%
+  distinct()
+```
+
+
+
+#### 4. Resumir targets por miRNA
+
+
+
+```{r}
+summary_targets <- combined_targets %>%
+  group_by(mature_mirna_id, type) %>%
+  summarise(
+    num_targets = n(),
+    top_targets = paste0(unique(target_symbol)[1:10], collapse = ", ")
+  )
+print(summary_targets)
+
+```
+
+
+
+#### 5: Análisis funcional
+
+
+
+```{r}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols <- combined_targets$target_symbol %>% unique()
+go_results <- enrichGO(
+  gene = gene_symbols,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "BP",  # Biological Processes
+  pAdjustMethod = "BH",
+  pvalueCutoff = 0.05
+)
+
+# Visualización del análisis funcional
+barplot(go_results, showCategory = 10, title = "Top 10 Procesos Biológicos Enriquecidos")
+
+```
+
+
+
+## Search in PubMed with entrez
+
+### hsa-miR-372-3p
+
+#### Validated
+
+
+
+```{r}
+
+genes_hsa_miR_520d_5p_validated_mirtarbase <- unique(filter_val_hsa_miR_520d_5p$target_symbol)
+
+# Archivo para guardar los resultados
+output_file <- "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/rentrez_search/metabolism_obesity_updated.txt"
+
+# Abrir un archivo para escribir
+file_conn <- file(output_file, open = "w")
+
+# Bucle para consultar cada gen
+for (gene in genes_hsa_miR_520d_5p_validated_mirtarbase) {
+  query <- paste0(gene, " AND metabolism", " AND adipose")
+  
+  # Buscar en PubMed
+  search_results <- entrez_search(db = "pubmed", term = query, retmax = 10)
+  
+  # Si hay resultados, recuperar los abstracts
+  if (length(search_results$ids) > 0) {
+    abstracts <- entrez_fetch(db = "pubmed", id = search_results$ids, rettype = "abstract")
+    writeLines(paste("###---------->", gene, "<----------###", sep = " "), file_conn)
+    writeLines(abstracts, file_conn)
+    writeLines("\n", file_conn)
+  }
+}
+# Cerrar el archivo
+close(file_conn)
+
+cat("Resultados guardados en:", output_file, "\n")
+```
+
+
+
+
+
+
+#### Predicted
+
+
+
+```{r}
+genes_hsa_miR_520d_5p_predicted <- unique(filter_pre_hsa_miR_520d_5p$target_symbol)
+
+# Archivo para guardar los resultados
+output_file <- "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_520d_5p/rentrez_search/predicted_metabolism_updated.txt"
+
+# Abrir un archivo para escribir
+file_conn <- file(output_file, open = "w")
+
+# Bucle para consultar cada gen
+for (gene in genes_hsa_miR_520d_5p_predicted) {
+  query <- paste0(gene, " AND metabolism", " AND diabetes",  " AND adipose")
+  
+  # Buscar en PubMed
+  search_results <- entrez_search(db = "pubmed", term = query, retmax = 10)
+  
+  # Si hay resultados, recuperar los abstracts
+  if (length(search_results$ids) > 0) {
+    abstracts <- entrez_fetch(db = "pubmed", id = search_results$ids, rettype = "abstract")
+    writeLines(paste("###---------->", gene, "<----------###", sep = " "), file_conn)
+    writeLines(abstracts, file_conn)
+    writeLines("\n", file_conn)
+  }
+}
+# Cerrar el archivo
+close(file_conn)
+
+cat("Resultados guardados en:", output_file, "\n")
+```
+
+
+
+### hsa-miR-655-3p
+
+#### Validated
+
+
+
+```{r}
+genes_hsa_miR_655_3p_validated_mirtarbase <- unique(filter_val_hsa_miR_655_3p$target_symbol)
+
+# Archivo para guardar los resultados
+output_file <- "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/rentrez_search/mirtarbase_metabolism_updated.txt"
+
+# Abrir un archivo para escribir
+file_conn <- file(output_file, open = "w")
+
+# Bucle para consultar cada gen
+for (gene in genes_hsa_miR_655_3p_validated_mirtarbase) {
+  query <- paste0(gene, " AND metabolism", " AND adipose")
+  
+  # Buscar en PubMed
+  search_results <- entrez_search(db = "pubmed", term = query, retmax = 10)
+  
+  # Si hay resultados, recuperar los abstracts
+  if (length(search_results$ids) > 0) {
+    abstracts <- entrez_fetch(db = "pubmed", id = search_results$ids, rettype = "abstract")
+    writeLines(paste("###---------->", gene, "<----------###", sep = " "), file_conn)
+    writeLines(abstracts, file_conn)
+    writeLines("\n", file_conn)
+  }
+}
+# Cerrar el archivo
+close(file_conn)
+
+cat("Resultados guardados en:", output_file, "\n")
+```
+
+
+
+#### Predicted
+
+
+
+```{r}
+genes_hsa_miR_655_3p_predicted <- unique(filter_pre_hsa_miR_655_3p$target_symbol)
+
+# Archivo para guardar los resultados
+output_file <- "/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA_targets/hsa_miR_655_3p/rentrez_search/predicted_metabolism_updated.txt"
+
+# Abrir un archivo para escribir
+file_conn <- file(output_file, open = "w")
+
+# Bucle para consultar cada gen
+for (gene in genes_hsa_miR_655_3p_predicted) {
+  query <- paste0(gene, " AND metabolism", " AND diabetes", " AND adipose")
+  
+  # Buscar en PubMed
+  search_results <- entrez_search(db = "pubmed", term = query, retmax = 10)
+  
+  # Si hay resultados, recuperar los abstracts
+  if (length(search_results$ids) > 0) {
+    abstracts <- entrez_fetch(db = "pubmed", id = search_results$ids, rettype = "abstract")
+    writeLines(paste("###---------->", gene, "<----------###", sep = " "), file_conn)
+    writeLines(abstracts, file_conn)
+    writeLines("\n", file_conn)
+  }
+}
+# Cerrar el archivo
+close(file_conn)
+
+cat("Resultados guardados en:", output_file, "\n")
+```
+
