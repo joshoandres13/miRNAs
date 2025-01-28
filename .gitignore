@@ -26,4 +26,7 @@ miRNA_recover.qmd
 miRNAs_sex+steatosis.qmd   
 mRNAs_targets_multiMiR_DatabasesUpdated.pdf       
 mRNAs_targets_multiMiR_Steatosis.rmarkdown    
-samples_mirna.txt              
+samples_mirna.txt     
+References/
+Revisiones/
+qPCR/         
