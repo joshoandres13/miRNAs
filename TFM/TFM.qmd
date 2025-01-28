@@ -1,0 +1,69 @@
+---
+#title: "Role of microRNAs in adipose tissue metabolism"
+#subtitle: "Master thesis title"
+#author: "Jose Andres Castillo Rivas"
+#date: "2024-12-03"
+format:
+  pdf:
+    pdf-engine: pdflatex
+    papersize: letter
+    documentclass: book
+    linespread: 1.5 
+    toc: false
+    lang: en
+    fontsize: "11pt"
+    fontfamily: kpfonts
+    urlcolor: "blue"
+    number-sections: true
+    margin-left: "2.54cm"
+    margin-right: "2.54cm"
+    margin-bottom: "2.54cm"
+    margin-top: "2.54cm"
+    keep-tex: true
+    fig-pos: "h"
+    include-in-header:
+      text: |
+        \usepackage{booktabs}
+editor: visual
+execute:
+  echo: false
+  warning: false
+bibliography: references.bib
+citation-style: numeric
+csl: apa-numeric-superscript-brackets.csl
+appendix: true
+---
+
+{{< include Portada.qmd >}}
+
+\frontmatter
+
+# Acknowledgments
+
+# Abstract
+
+*Background*: Hepatic steatosis arises from excessive triglyceride sythesis in hepatocytes and correlates with the progression of metabolic dysfunction-associated steatotic liver disease (MASLD). Molecules secreted by subcutaneous white adipose tissue (scWAT), such as microRNAs (miRNAs), appear to influence MASLD by regulating key molecular pathways. This study aimed to identify miRNA as a potential biomarkers linked to steatosis in the scWAT of individuals with obesity and varying degrees of hepatic steatosis.
+
+*Methods*: Subcutaneous white adipose tissue (scWAT) samples were collected from 78 individuals with obesity undergoing bariatric surgery. The patients were categorized into four steatosis groups based on liver fat content: "\<5%", "5–33%", "33–66%", and "\>66%". Small RNA sequencing data from scWAT were processed with the *nf-core/smrnaseq pipeline* (v2.4.0), and gene expression analysis utilized the *DESeq2* and *isomiRs* R packages.
+
+*Results*: A total of 374 miRNAs were found to be differentially expressed between patients with obesity with varying degrees of hepatic steatosis. Among these, two miRNAs (*hsa-miR-372-3p* and *hsa-miR-144-3p*) remained significant after multiple test correction. Bioinformatic analysis of predicted target genes revealed their involvement in pathways related to hepatocellular carcinoma and hepatitis B. The *in vitro* essays *hsa-miR-372-3p* mimic show a significance downregulation the mRNA expression of the target gene *ACCA* and *FAS*, however, *hsa-miR-144-3p* inihibitor show no significant results on any of the target genes.
+
+*Conclusions*: The differential expression of *hsa-miR-372-3p* and *hsa-miR-144-3p* in scWAT suggests that these miRNAs may play a role in the regulation of hepatic steatosis and the progression of MASLD. Their association with hepatocellular carcinoma and hepatitis B pathways underscores their potential relevance to liver pathology. These findings open avenues for research on miRNA profiles as biomarkers or therapeutic targets for MASLD, with a focus on distinguishing simple steatosis from advanced disease.
+
+```{=tex}
+\tableofcontents
+\listoftables
+\listoffigures
+```
+\mainmatter
+
+{{< include IntroductionandAntecedents.qmd >}} 
+{{< include HypothesisandObjectives.qmd >}} 
+{{< include MethodologicalFramework.qmd >}} 
+{{< include Results.qmd >}} 
+{{< include Discussion.qmd >}} 
+{{< include Conclusions.qmd >}}
+
+\backmatter
+
+{{< include References.qmd >}}

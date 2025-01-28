@@ -1,0 +1,258 @@
+---
+title: "tables"
+author: "J. Andres"
+format: pdf
+editor: visual
+---
+
+|                                     | **Overall (n = 78)** | **Female (n=59)** | **Male (n=19)**  | **p test** |
+|---------------|:-------------:|:-------------:|:-------------:|:-------------:|
+| **Age (years)**                     |   49 \[41.0;55.0\]   | 47 \[41.0;54.0\]  | 51 \[42.0;56.0\] |   0.408    |
+| **BMI**                             |   46 \[42.0;50.0\]   | 45 \[41.0;.50.0\] | 47 \[42.0;51.0\] |   0.284    |
+| **NAFLD Activity Score Category**   |                      |                   |                  |   0.510    |
+| 0                                   |      22 (28.2%)      |    16 (27.1%)     |    6 (31.6%)     |            |
+| 1                                   |      16 (20.5%)      |    13 (22.0%)     |    3 (15.8%)     |            |
+| 2                                   |      17 (21.8%)      |    14 (23.7%)     |    3 (15.8%)     |            |
+| 3                                   |      9 (11.5%)       |     7 (11.9%)     |    2 (10.5%)     |            |
+| 4                                   |      9 (11.5%)       |     7 (11.9%)     |    2 (10.5%)     |            |
+| \>= 5                               |      5 ( 6.4%)       |     2 ( 3.4%)     |    3 (15.8%)     |            |
+| **Hepatic Steatosis Scale**         |                      |                   |                  |   0.818    |
+| \< 5%                               |      28 (35.9%)      |    21 (35.65%)    |    7 (36.8%)     |            |
+| 5-33%                               |      25 (32.1%)      |    20 (33.9%)     |    5 (26.3%)     |            |
+| \> 33-66%                           |      20 (25.6%)      |    15 (25.4%)     |    5 (26.3%)     |            |
+| \> 66%                              |      5 ( 6.4%)       |     3 ( 5.1%)     |    2 (10.5%)     |            |
+| **Hepatocytic ballooning Category** |                      |                   |                  |   0.489    |
+| None                                |      58 (74.4%)      |    45 (76.3%)     |    13 (68.4%)    |            |
+| Few cells                           |      13 (16.7%)      |    10 (16.9%)     |    3 (15.8%)     |            |
+| Many cells                          |      7 ( 9.0%)       |     4 ( 6.8%)     |    3 (15.8%)     |            |
+| **Lobular Imflammation Category**   |                      |                   |                  |   0.596    |
+| No foci                             |      52 (66.7%)      |    41 (69.5%)     |    11 (57.9%)    |            |
+| \< 2 foci/200x                      |      19 (24.4%)      |    14 (23.7%)     |    5 (26.3%)     |            |
+| 2-4 foci/200x                       |      4 ( 5.1%)       |     2 ( 3.4%)     |    2 (10.5%)     |            |
+| \> 4 foci/200x                      |      3 ( 3.8%)       |     2 ( 3.4%)     |    1 ( 5.3%)     |            |
+| **Diabetes**                        |                      |                   |                  |   1.000    |
+| Yes (%)                             |      21 (26.9%)      |    16 (27.1%)     |    5 (26.3%)     |            |
+| No (%)                              |      57 (73.1%)      |    43 (72.9%)     |    14 (73.7%)    |            |
+| **Hyperlipidemia**                  |                      |                   |                  |   0.006    |
+| Yes (%)                             |      27 (34.6%)      |    15 (25.4%)     |    12 (63.2%)    |            |
+| No (%)                              |      51 (65.4%)      |    44 (74.6%)     |    7 (36.8%)     |            |
+| **NASH**                            |                      |                   |                  |   0.249    |
+| NASH (%)                            |      12 (15.4%)      |     7 (11.9%)     |    5 (26.3%)     |            |
+| Non-NASH (%)                        |      66 (84.6%)      |    52 (88.1%)     |    14 (73.7%)    |            |
+
+: Clinical characteristics of the FATe cohort and their statistical differences- Data are presented as number (%) or median \[interquartile range\]. Differences between groups were tested with the Mann–Whitney U test and chi-square test; BMI, Body Mass Indx (kg/m²); NASH, Non-alcoholic steatohepatitis {.striped .hover #tbl-description}
+
+```{=latex}
+\begin{table}[h]
+\centering
+\caption{Clinical characteristics of the FATe cohort and their statistical differences- Data are presented as number (\%) or median {[}interquartile range{]}. Differences between groups were tested with the Mann–Whitney U test and chi-square test; BMI, Body Mass Indx (kg/m²); NASH, Non-alcoholic steatohepatitis}
+\label{tab:my-description}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+\multicolumn{1}{l}{}                                                                & \textbf{\begin{tabular}[c]{@{}c@{}}Overall \\ (n = 78)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Female\\ (n=59)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Male\\ (n=19)\end{tabular}} & \textbf{p test} \\ \midrule
+\multicolumn{1}{l}{\textbf{Age (years) median (IQR)}}                               & 47.03 (13.75)                                                        & 46.53 (13)                                                       & 48.58 (14)                                                     & 0.408           \\ \midrule
+\multicolumn{1}{l}{\textbf{Body Mass Index (kgm\textasciicircum{}2)  median (IQR)}} & 46.11 (8.70)                                                         & 45.68 (8.76)                                                     & 47.42 (8.70)                                                   & 0.284           \\ \midrule
+\multicolumn{1}{l}{\textbf{NAFLD Activity Score Category (\%)}}                     &                                                                      &                                                                  &                                                                & 0.510           \\
+0                                                                                   & 22 (28.2)                                                            & 16 (27.1)                                                        & 6 (31.6)                                                       &                 \\
+1                                                                                   & 16 (20.5)                                                            & 13 (22.0)                                                        & 3 (15.8)                                                       &                 \\
+2                                                                                   & 17 (21.8)                                                            & 14 (23.7)                                                        & 3 (15.8)                                                       &                 \\
+3                                                                                   & 9 (11.5)                                                             & 7 (11.9)                                                         & 2 (10.5)                                                       &                 \\
+4                                                                                   & 9 (11.5)                                                             & 7 (11.9)                                                         & 2 (10.5)                                                       &                 \\
+\textgreater{}=  5                                                                  & 5 ( 6.4)                                                             & 2 ( 3.4)                                                         & 3 (15.8)                                                       &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Hepatic Steatosis Scale (\%)}}                           &                                                                      &                                                                  &                                                                & 0.818           \\
+\textless 5\%                                                                       & 28 (35.9)                                                            & 21 (35.6)                                                        & 7 (36.8)                                                       &                 \\
+5-33\%                                                                              & 25 (32.1)                                                            & 20 (33.9)                                                        & 5 (26.3)                                                       &                 \\
+\textgreater 33-66\%                                                                & 20 (25.6)                                                            & 15 (25.4)                                                        & 5 (26.3)                                                       &                 \\
+\textgreater 66\%                                                                   & 5 ( 6.4)                                                             & 3 ( 5.1)                                                         & 2 (10.5)                                                       &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Hepatocytic ballooning Category (\%)}}                   &                                                                      &                                                                  &                                                                & 0.489           \\
+None                                                                                & 58 (74.4)                                                            & 45 (76.3)                                                        & 13 (68.4)                                                      &                 \\
+Few cells                                                                           & 13 (16.7)                                                            & 10 (16.9)                                                        & 3 (15.8)                                                       &                 \\
+Many cells                                                                          & 7 ( 9.0)                                                             & 4 ( 6.8)                                                         & 3 (15.8)                                                       &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Lobular Imflammation Category (\%)}}                     &                                                                      &                                                                  &                                                                & 0.596           \\
+No foci                                                                             & 52 (66.7)                                                            & 41 (69.5)                                                        & 11 (57.9)                                                      &                 \\
+\textless 2 foci/200x                                                               & 19 (24.4)                                                            & 14 (23.7)                                                        & 5 (26.3)                                                       &                 \\
+2-4 foci/200x                                                                       & 4 ( 5.1)                                                             & 2 ( 3.4)                                                         & 2 (10.5)                                                       &                 \\
+\textgreater 4 foci/200x                                                            & 3 ( 3.8)                                                             & 2 ( 3.4)                                                         & 1 ( 5.3)                                                       &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Diabetes}}                                               &                                                                      &                                                                  &                                                                & 1.000           \\
+Yes (\%)                                                                            & 21 (26.9)                                                            & 16 (27.1)                                                        & 5 (26.3)                                                       &                 \\
+No (\%)                                                                             & 57 (73.1)                                                            & 43 (72.9)                                                        & 14 (73.7)                                                      &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Hyperlipidemia}}                                         &                                                                      &                                                                  &                                                                & 0.006           \\
+Yes (\%)                                                                            & 27 (34.6)                                                            & 15 (25.4)                                                        & 12 (63.2)                                                      &                 \\
+No (\%)                                                                             & 51 (65.4)                                                            & 44 (74.6)                                                        & 7 (36.8)                                                       &                 \\ \midrule
+\multicolumn{1}{l}{\textbf{Non-alcoholic steatohepatitis (NASH)}}                   &                                                                      &                                                                  &                                                                & 0.249           \\
+NASH (\%)                                                                           & 12 (15.4)                                                            & 7 (11.9)                                                         & 5 (26.3)                                                       &                 \\
+Non-NASH (\%)                                                                       & 66 (84.6)                                                            & 52 (88.1)                                                        & 14 (73.7)                                                      &                 \\ \bottomrule
+\end{tabular}
+\end{table}
+```
+```{r}
+
+```
+
+###################3 The percentage of duplicate reads (Duplicate reads) has a mean value of 98.80, reflecting a high degree of duplication in the data, although with slight variation between samples. Nevertheless, given that these are short reads of about 20 or 30 nucleotides, as is the case with these smRNAseq samples, these elevated duplication figures are to be expected. The overall metrics for these samples align with what would be anticipated for this type of read.
+
+The average of percentage of GC content has a mean of 46.18, suggesting that your samples have a balanced nucleotide composition, which is generally favorable, although with a range of 7.00. The average read length is 24.52 bp, indicating good quality in the obtained reads, with moderate variability. Finally, the median read length is 23.08 bp, suggesting stability in the quality of the reads.
+
+```{r table of fastp}
+library(readr)
+library(dplyr)
+library(knitr)
+library(psych)
+library(kableExtra)
+
+file_path_data <- "data/general_stats_table.tsv"  # Cambia esto por la ruta real
+general_stats_data <- read.delim(file_path_data, header = TRUE, sep = "\t")
+
+general_stats_data <- read_delim(file_path_data, delim = "\t", col_names = TRUE, na = c(".", "NA"), guess_max = 10000)
+
+filtrados <- general_stats_data[grep("^SC_\\d+$", general_stats_data$Sample), ]
+# Eliminar columnas sin informacion
+filtrados <- filtrados %>% select(-`IsomiR %`, -`M IsomiR reads`,-`Error rate`,-`Non-primary`,-`Reads mapped`,-`Total seqs`,-`% Mapped`,-Seqs...16,-Seqs...21,-`GC content`,-`M Ref miRNA reads`,-`M Reads`)
+
+# Calcular estadísticas descriptivas
+summary_metrics <- filtrados %>%
+  summarise(
+    Mean_Percent_Duplication = mean(`% Duplication`),
+    Median_Percent_Duplication = median(`% Duplication`),
+    IQR_Percent_Duplication = IQR(`% Duplication`),
+    
+    Mean_Reads_After_Filtering = mean(`Reads After Filtering`),
+    Median_Reads_After_Filtering = median(`Reads After Filtering`),
+    IQR_Reads_After_Filtering = IQR(`Reads After Filtering`),
+    
+    Mean_Percent_PF = mean(`% PF`),
+    Median_Percent_PF = median(`% PF`),
+    IQR_Percent_PF = IQR(`% PF`),
+    
+    Mean_Percent_Adapter = mean(`% Adapter`),
+    Median_Percent_Adapter = median(`% Adapter`),
+    IQR_Percent_Adapter = IQR(`% Adapter`),
+    
+    Mean_Dups = mean(Dups),
+    Median_Dups = median(Dups),
+    IQR_Dups = IQR(Dups),
+    
+    Mean_GC = mean(GC),
+    Median_GC = median(GC),
+    IQR_GC = IQR(GC),
+    
+    Mean_Avg_len = mean(`Avg len`),
+    Median_Avg_len = median(`Avg len`),
+    IQR_Avg_len = IQR(`Avg len`),
+    
+    Mean_Median_len = mean(`Median len`),
+    Median_Median_len = median(`Median len`),
+    IQR_Median_len = IQR(`Median len`),
+  )
+
+summary_stats <- describe(filtrados[ , -1])  # Excluir la columna 'Sample' si no es numérica
+summary_stats <- summary_stats %>% select(-vars, -se, -trimmed, -mad,-n, -skew,-kurtosis)
+
+
+rownames(summary_stats) <- c("Duplication (%)", "Reads After Filtering (M)", "PF (%)", "Adapter (%)", "Duplicate reads (%)", "GC (%)", "Average Read length (bp)", "Median Read Length (bp)")
+
+summary_stats[, 2:ncol(summary_stats)] <- round(summary_stats[, 2:ncol(summary_stats)], 2)
+```
+
+```{r}
+#| tbl-cap: "Descriptive statistics of the analyzed metrics with fastp. % Duplication: Duplication rate before filtering; Reads After Filtering: Total reads after filtering in millions; PF: Percent reads passing filter; Adapter: Percentage adapter-trimmed reads"
+#| label: "tbl-metrics"
+knitr::kable(summary_stats,
+             col.names = c("", "Mean", 
+                              "sd", "Median", 
+                              "Minimum", "Maximum", "Range"),)%>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"), # Escala automáticamente
+    font_size = 10.5   # Ajustar tamaño de fuente
+  ) %>%
+  row_spec(0, bold = TRUE) # Encabezado en negrita
+```
+
+```{r}
+mdata <- read_csv("~/Documentos/TFM/mirna_analysis/input/20241104-metadata4JAndres.csv")
+mdata <- mdata |>
+  mutate(prefix = paste0("SC_", muestra), .before = 1) |>
+  mutate(sexo = gsub("hombre", "male", sexo),
+         sexo = gsub("mujer", "female", sexo)) |>
+  column_to_rownames("prefix") |>
+  select(muestra, sexo, edad, imc, Steatosis, nash, LobularInflamm, Diabetes, Ballooning, NAS, Hyperlipidemia, SAOS)
+
+mdata <- mdata[rownames(mdata) %in% data_nfcore, ]
+
+mdata$sexo <-as.factor(mdata$sexo)
+
+# Separar los datos en grupos por sexo
+male <- mdata %>% filter(sexo == "male")
+female <- mdata %>% filter(sexo == "female")
+
+# Comparar la edad
+t_test_age <- t.test(male$edad, female$edad, var.equal = FALSE)
+mann_whitney_age <- wilcox.test(male$edad, female$edad)
+
+# Comparar el IMC
+t_test_imc <- t.test(male$imc, female$imc, var.equal = FALSE)
+mann_whitney_imc <- wilcox.test(male$imc, female$imc)
+
+# Mostrar los resultados
+cat("Comparación de Edad:\n")
+cat("t-test: t =", t_test_age$statistic, ", p-value =", t_test_age$p.value, "\n")
+cat("Mann-Whitney U: W =", mann_whitney_age$statistic, ", p-value =", mann_whitney_age$p.value, "\n\n")
+
+cat("Comparación de IMC:\n")
+cat("t-test: t =", t_test_imc$statistic, ", p-value =", t_test_imc$p.value, "\n")
+cat("Mann-Whitney U: W =", mann_whitney_imc$statistic, ", p-value =", mann_whitney_imc$p.value, "\n")
+
+
+################################################################################
+
+# Cargar la librería necesaria
+# install.packages("ggplot2")  # Descomentar si no tienes la librería instalada
+library(ggplot2)
+
+# Prueba de Shapiro-Wilk para normalidad
+shapiro_test_male <- shapiro.test(male$edad)
+shapiro_test_female <- shapiro.test(female$edad)
+
+# Resultados de la prueba
+cat("Prueba de Shapiro-Wilk para hombres: W =", shapiro_test_male$statistic, ", p-value =", shapiro_test_male$p.value, "\n")
+cat("Prueba de Shapiro-Wilk para mujeres: W =", shapiro_test_female$statistic, ", p-value =", shapiro_test_female$p.value, "\n")
+
+# Gráfico Q-Q para hombres
+qqnorm(male$edad, main = "Q-Q Plot para Edad (Hombres)")
+qqline(male$edad)
+
+# Gráfico Q-Q para mujeres
+qqnorm(female$edad, main = "Q-Q Plot para Edad (Mujeres)")
+qqline(female$edad)
+
+
+################################################################################
+
+# Verificar los datos
+print("Datos de hombres:")
+print(mdata[mdata$sexo == "male", ])
+
+print("Datos de mujeres:")
+print(mdata[mdata$sexo == "female", ])
+
+# Verificar la cantidad de datos en cada grupo
+cat("Número de hombres:", nrow(mdata[mdata$sexo == "male", ]), "\n")
+cat("Número de mujeres:", nrow(mdata[mdata$sexo == "female", ]), "\n")
+
+# Comprobar si hay valores idénticos en la columna de edad
+cat("Valores únicos de edad (hombres):", unique(mdata[mdata$sexo == "male", "edad"]), "\n")
+cat("Valores únicos de edad (mujeres):", unique(mdata[mdata$sexo == "female", "edad"]), "\n")
+
+# Realizar la prueba de Levene
+library(car)  # Asegúrate de que la librería car esté cargada
+levene_test_clean <- leveneTest(edad ~ sexo, data = mdata)
+
+cat("Prueba de Levene: F =", levene_test_clean$F, ", p-value =", levene_test_clean$p.value, "\n")
+
+```
+##############################################################################
+
+## Differential expression analysis
+
+Para el analisis de expesion diferencial se agrupa todas las variantes de isomiRs en una única entrada por miRNA, a demas de que el número mínimo de secuencias de isomiRs que debe tener un miRNA para ser incluido en el análisis fuera de 20 y el número mínimo de muestras que deben superar el umbral establecido por este número mínimo de secuencias de isomiRs es de 40. En la figura [@fig-isomiRsAbundance] se muestra en el eje y el Percentage of Relative Abundance (pct_abundance) y en el eje x the unique identifier (uid), usando 2294 secuencias de isomiRs. Se puede oberserva 
+

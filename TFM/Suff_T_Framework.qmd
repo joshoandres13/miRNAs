@@ -1,0 +1,132 @@
+---
+title: "Stuff_T_Framework"
+format: html
+editor: visual
+---
+
+-   Brief overview of hepatic steatosis (non-alcoholic fatty liver disease - NAFLD) and its increasing prevalence worldwide.
+-   Role of subcutaneous adipose tissue in the pathophysiology of steatosis and its interaction with the liver through metabolic and molecular signaling.
+-   Importance of microRNAs (miRNAs) as key post-transcriptional regulators in cellular biology and their involvement in metabolic disorders.
+-   Justification of the study for identifying specific biomarkers that could improve diagnosis, risk stratification, and understanding of the underlying molecular mechanisms in steatosis.
+
+------------------------------------------------------------------------
+
+### **Introducción**
+
+1.  **Contexto general: la esteatosis como problema clínico relevante**
+    -   Define qué es la esteatosis (en términos de enfermedad del hígado graso no alcohólico o esteatosis hepática) y su prevalencia en la población.\
+    -   Explica los factores de riesgo asociados (obesidad, resistencia a la insulina, síndrome metabólico, etc.).\
+    -   Destaca la importancia de identificar biomarcadores que puedan mejorar el diagnóstico, pronóstico o tratamiento.
+2.  **Tejido adiposo subcutáneo y su rol en la fisiopatología de la esteatosis**
+    -   Describe cómo el tejido adiposo subcutáneo está implicado en la regulación metabólica y cómo puede influir en la acumulación de grasa hepática.\
+    -   Resalta su papel en la secreción de moléculas (adipocinas, miRNAs) que podrían actuar como mediadores entre el tejido adiposo y el hígado.
+3.  **MicroRNAs (miRNAs) y su relevancia como biomarcadores**
+    -   Introduce los miRNAs como moléculas reguladoras de la expresión génica.\
+    -   Explica su importancia en el metabolismo lipídico, la inflamación y la señalización celular.\
+    -   Menciona estudios previos que sugieren su papel en la esteatosis o enfermedades metabólicas.
+4.  **Identificación de genes diana y redes funcionales**
+    -   Describe brevemente cómo los miRNAs regulan genes específicos y cómo esto puede influir en procesos biológicos clave.\
+    -   Justifica la importancia de predecir e investigar los genes diana para entender los mecanismos subyacentes a la enfermedad.
+5.  **Vacío en el conocimiento y justificación del estudio**
+    -   Identifica qué aspectos aún no se comprenden completamente (por ejemplo, la contribución específica de los miRNAs del tejido adiposo subcutáneo a la esteatosis).\
+    -   Argumenta la necesidad de analizar los miRNAs diferencialmente expresados en diferentes grados de esteatosis para identificar nuevos biomarcadores y posibles dianas terapéuticas.
+6.  **Objetivo del estudio**
+    -   Declara explícitamente el propósito del trabajo, como:\
+        *"El presente estudio tiene como objetivo identificar microRNAs diferencialmente expresados en tejido adiposo subcutáneo de pacientes con diferentes grados de esteatosis hepática, y predecir sus posibles genes diana para comprender mejor las vías moleculares asociadas con esta patología."*
+
+------------------------------------------------------------------------
+
+-   Structure and functions of subcutaneous adipose tissue.
+-   Metabolic and molecular changes in adipose tissue under pathological conditions like steatosis.
+-   Crosstalk between adipose tissue and the liver in metabolic syndrome.
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| The liver and SAT are intimately connected through metabolic and endocrine pathways. Excess free fatty acids (FFAs) released from dysfunctional SAT are transported to the liver via the portal circulation, contributing to the development of hepatic steatosis. Moreover, the altered secretion of adipokines from SAT, such as reduced adiponectin and increased pro-inflammatory cytokines, exacerbates hepatic insulin resistance and inflammation. This bidirectional communication between SAT and the liver plays a pivotal role in the progression of metabolic syndrome and related pathologies, including non-alcoholic fatty liver disease (NAFLD). |
+| Recent studies have highlighted the molecular and metabolic shifts occurring in SAT in patients with varying degrees of hepatic steatosis. These alterations underscore the importance of SAT not only as a storage organ but also as a dynamic regulator of systemic metabolism. Understanding these processes may provide insights into novel therapeutic strategies targeting adipose tissue dysfunction to mitigate liver-related metabolic diseases.                                                                                                                                                                                                        |
+
+### MicroRNAs (miRNAs): Function and Significance
+
+-   Description of miRNAs: biogenesis, structure, and mechanism of action.
+-   Gene regulation by miRNAs and their impact on metabolic networks. [@ghesmati2024update]
+-   The role of miRNAs in inflammation, fibrosis, and metabolic disorders.
+
+### RNA Sequencing in Biomedical Research
+
+-   Principles of RNA sequencing and its application in identifying differentially expressed miRNAs.
+-   Bioinformatics analysis for detecting significant differences in miRNA expression across steatosis grades.
+-   Methods for predicting target mRNAs and validating them experimentally.
+
+[@lopez2024unraveling]
+
+## Theoretical Foundations of Bioinformatics Analysis
+
+-   Statistical methods for analyzing differentially expressed miRNAs.
+-   Databases and algorithms for predicting target genes (e.g., TargetScan, miRDB, DianaTools). [@santulli2015microrna]
+-   Functional interpretation of target genes: enrichment analysis in metabolic pathways (e.g., KEGG, GO).
+
+Gene expresiion scWAT \[passaro2017gene\] \## Importance and Potential Clinical Applications - Connecting the study findings to their potential for developing new diagnostic tools. - Therapeutic perspectives based on miRNA modulation. - Implications for understanding steatosis pathophysiology and personalizing treatments.
+
+NAFLD also is intimately linked with insulin resistance, type 2 diabetes, cardiovascular disease mortality, and risk for hepatocellular carcinoma. Currently, there are no proven pharmacological therapies for the effective treatment of NAFLD, leading health organizations to advocate lifestyle modiﬁcation (exercise and diet) as the cornerstone for treatment.[@thyfault2020exercise]
+
+Accumulating clinical and epidemiological evidence shows that physical activity levels, exercise behavior, and aerobic capacity can independently impact risk for hepatic steatosis. Moreover, exercise training is a potent treatment for hepatic steatosis.[@thyfault2020exercise]
+
+Mirtop paper talk about Isomirs...
+
+Subcutaneous white adipose tissue (scWAT) plays a critical role in the pathophysiology of steatosis due to its dynamic nature as an energy storage site and endocrine organ [@lopez2024unraveling]. scWAT communicates with the liver and other metabolic organs through a network of signaling molecules, including adipokines, free fatty acids, and cytokines, which influence metabolic homeostasis [@ghesmati2024update]. Dysregulation of this crosstalk in the context of obesity and insulin resistance contributes to ectopic fat deposition and inflammation, exacerbating hepatic steatosis [@koenen2021obesity].
+
+-   Structure and functions of subcutaneous adipose tissue.
+-   Metabolic and molecular changes in adipose tissue under pathological conditions like steatosis.
+-   Crosstalk between adipose tissue and the liver in metabolic syndrome.
+
+Subcutaneous White Adipose Tissue (scWAT) is the most abundant type of adipose tissue, found in various locations such as under the skin and in clustered regions of the body, including the upper (deep and shallow abdomen) and lower (gluteofemoral) body areas [@kwok2016heterogeneity]. scWAT primarily functions as an energy storage depot and an endocrine organ [@lopez2024unraveling]. Structurally, scWAT is composed predominantly of adipocytes, which constitute approximately 50% of its cellular content [@koenen2021obesity]. In addition to adipocytes, scWAT includes vascular cells, fibroblasts, adipocyte precursors, multipotent mesenchymal stem-like cells, nerve processes, and immune cells such as macrophages, lymphocytes, eosinophils, and mast cells. These components are embedded within an extracellular matrix that provides structural support [@koenen2021obesity]. Collectively, these cells secrete a wide array of signaling molecules, including adipokines such as leptin, adiponectin, and resistin, which play essential roles in maintaining metabolic homeostasis [@lopez2024unraveling].
+
+Under physiological conditions, scWAT acts as a buffer to store excess energy in the form of triglycerides, protecting other organs from ectopic lipid deposition. This buffering capacity has been found to confer certain beneficial effects on metabolism [@zwick2018anatomical]. However, the function of scWAT is closely linked to body fat distribution, and under pathological conditions, its capacity to store lipids becomes overwhelmed. This dysfunction impairs its ability to store lipids appropriately, leading to hypoxia, infiltration of pro-inflammatory macrophages, and ectopic fat accumulation in other tissues like liver [@ipsen2018molecular]. These alterations directly contribute to the dysregulation of adipokine secretion, fostering a pro-inflammatory state and systemic insulin resistance, which are hallmark features in patients with NAFLD-associated diseases [@ipsen2018molecular].
+
+\####################################
+
+Por un lado, el imitador *hsa-miR-372-3p* reguló a la baja la expresión de ARNm del supuesto gen diana QKI (−45.85% ± 5.22; p \< 0.001) en células HepG2 tratadas con FFA (Figura 1A), que fue acompañado por una disminución similar en los niveles de ARNm de PPARA (−12.05% ± 4.78; p \< 0.05), FOXO1 (−30.50% ± 8.86; p \< 0.05), SREBF1 (−25.10% ± 8.26; p \< 0.05), MAPKAPK2 (−61.20% ± 2.53; p \< 0.001), FASN (−23.50% ± 8.63; p \< 0.05), y GSK3B (−18.20% ± 5.95; p \< 0.05). RXRA, ACOX1, y G6PC los niveles de ARNm no se modificaron en comparación con las células de control negativo (Figura 1B). En particular, una marcada regulación a la baja del objetivo miR8126-3p predicho QKI ARNm (−36.29% ± 4.16; p \< 0.001) se informó en células HepG2 basales (sin tratamiento con FFA) en comparación con las células de control (Figura complementaria S4A). Las células HepG2 no tratadas con FFA también mostraron una disminución significativa en la expresión de ARNm de PPARA (−27.00% ± 4.47; p \< 0.05), FOXO1 (−39.57% ± 3.86; p \< 0.001), SREBF1 (−27.00% ± 6.44; p \< 0.01), MAPKAPK2 (−57.20% ± 4.78; p \< 0.001), FASN (−27.57% ± 7.97; p \< 0.01), ACOX1 (−16.00% ± 2.24; p \< 0.05), y GSK3B (−31.50% ± 3.64; p \< 0.05), mientras que no hay variación en la expresión de ARNm de RXRA y G6PC fue detectado (Figura complementaria S4B).
+
+HepG2 cells were transfected with 50 nM of mirVana mimic *hsa-miR-372-3p* (5'-AAAGUGCUGCGACAUUUGAGCGU-3') along with a randomized sequence as a control (Negative Control 1). Twenty-four hours post-transfection, the cells were treated with oleic acid (0.5 mM) for 24 hours. mRNA expression levels were quantified using qPCR, with Cq values normalized to the $\beta$-actin gene and expressed as relative gene expression levels compared to the negative control cells treated with olein acid, calculated using the $2 -\triangle\triangle CT$ method. The results are presented as mean relative gene expression ± standard error of the mean (SEM) (n = 3). Statistical significance was determined using a two-tailed Student's t-test, with *p* \< 0.05 and \*\**p* \< 0.001 indicating significance. Abbreviations: NC (negative control), OA (oleic acid), *ACACA* (Acetyl-CoA Carboxylase Alpha), *DGAT2* (Diacylglycerol O-Acyltransferase 2), *FAS* (Fatty Acid Synthase), *PNPLA2* (Patatin-like phospholipase domain-containing protein 2), *PPARG* (Peroxisome Proliferator Activated Receptor Gamma).###########################################3
+
+Sí, los genes mencionados están implicados tanto en el metabolismo de la glucosa como en el metabolismo de los lípidos, aunque su función principal puede variar. A continuación se detalla la relación de cada uno de estos genes con ambos tipos de metabolismo:
+
+### **1. Peroxisome Proliferator Activated Receptor Gamma (PPARG):**
+
+-   **Metabolismo de la glucosa:**
+    -   Regula la sensibilidad a la insulina y el uso de glucosa en tejidos, especialmente en el tejido adiposo y muscular.
+    -   Participa en la regulación de la gluconeogénesis y la captación de glucosa.
+-   **Metabolismo de lípidos:**
+    -   Fundamental en la diferenciación de adipocitos y en la regulación del almacenamiento y movilización de lípidos.
+
+### **2. Patatin Like Phospholipase Domain Containing 2 (PNPLA2):**
+
+-   **Metabolismo de la glucosa:**
+    -   Aunque su función principal está en el metabolismo de lípidos, la lipólisis y la liberación de ácidos grasos pueden influir en la regulación del metabolismo de la glucosa, ya que los ácidos grasos pueden afectar la sensibilidad a la insulina.
+-   **Metabolismo de lípidos:**
+    -   Principalmente implicado en la lipólisis, catalizando la hidrólisis de triglicéridos a ácidos grasos libres y glicerol.
+
+### **3. Diacylglycerol O-Acyltransferase 2 (DGAT2):**
+
+-   **Metabolismo de la glucosa:**
+    -   A través de la regulación de la síntesis de triglicéridos, influye indirectamente en la homeostasis de la glucosa, ya que el almacenamiento y la movilización de grasas afectan la sensibilidad a la insulina.
+-   **Metabolismo de lípidos:**
+    -   Es esencial para la síntesis de triglicéridos, promoviendo el almacenamiento de energía en forma de grasa.
+
+### **4. Fas Cell Surface Death Receptor (FAS):**
+
+-   **Metabolismo de la glucosa:**
+    -   Su papel en la apoptosis puede influir en la homeostasis del tejido adiposo y en la regulación de la glucosa, aunque no está directamente involucrado en la regulación del metabolismo de la glucosa.
+-   **Metabolismo de lípidos:**
+    -   Su activación puede estar relacionada con la muerte celular en adipocitos, afectando el balance de lípidos en el organismo.
+
+### **5. Acetyl-CoA Carboxylase Alpha (ACACA):**
+
+-   **Metabolismo de la glucosa:**
+    -   La producción de malonil-CoA no solo es clave para la síntesis de ácidos grasos, sino que también regula la oxidación de ácidos grasos y, por lo tanto, puede influir en la disponibilidad de sustratos para la producción de energía a partir de glucosa.
+-   **Metabolismo de lípidos:**
+    -   Es fundamental en la síntesis de ácidos grasos, actuando como un regulador clave en la biosíntesis de lípidos.
+
+### **Conclusión**
+
+En resumen, estos genes están interrelacionados en el metabolismo de la glucosa y los lípidos, ya que el metabolismo lipídico puede influir en la homeostasis de la glucosa y viceversa. La regulación del metabolismo de los lípidos tiene un impacto significativo en la sensibilidad a la insulina y en el manejo de la glucosa en el organismo, lo que es especialmente relevante en el contexto de enfermedades metabólicas como la diabetes tipo 2 y la obesidad.

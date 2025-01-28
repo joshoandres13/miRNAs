@@ -1,0 +1,266 @@
+
+# Appendices
+
+The following tables and figures present the alignment results using Samtools for all samples analyzed. 
+
+```{r fig-mapped-unmapped,fig.cap="Samtools: stats: Aligment Scores", fig.width=8, fig.height=12}
+#| label: fig-mapped-unmapped
+#| fig-cap: "Samtools: stats: Aligment Scores"
+
+library(dplyr)
+library(ggforce)
+
+file_path_sam <- "data/samtools_alignment_plot.tsv"  # Cambia esto por la ruta real
+data_sam <- read.delim(file_path_sam, header = TRUE, sep = "\t")
+# Asegurarse de que las muestras sean factores
+data_sam$Sample <- factor(data_sam$Sample, levels = data_sam$Sample)
+
+# Crear grupos para dividir las muestras
+data_sam <- data_sam %>%
+  mutate(Group = ceiling(row_number() / 118)) # Cambiar "4" al tamaño deseado por grupo
+
+
+library(tidyr)
+
+data_long <- data_sam %>%
+  pivot_longer(
+    cols = c("Mapped..with.MQ.0.", "Unmapped"),
+    names_to = "Category",
+    values_to = "Count"
+  )
+
+
+library(ggplot2)
+
+for (group_id in unique(data_long$Group)) {
+  # Filtrar datos del grupo actual
+  data_group <- data_long %>% filter(Group == group_id)
+  
+  # Crear el gráfico
+  p <- ggplot(data_group, aes(x = Count, y = Sample, fill = Category)) +
+    geom_bar(stat = "identity", position = "stack") +
+    scale_fill_viridis_d(option = "cividis", 
+                         labels = c(
+                           "Mapped..with.MQ.0." = "Mapped",
+                           "Unmapped" = "Unmapped")) +
+    labs(
+      title = "",
+      x = "Number of reads",
+      y = "",
+      fill = "Categoría"
+    ) +
+    scale_x_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+    theme_minimal() +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 7),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 5),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "bottom",
+    legend.spacing.x = unit(0.3, "cm"),
+    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+  ) +
+  guides(fill = guide_legend(nrow = 1))  # Forzar que la leyenda tenga 2 filas
+  # Mostrar el gráfico
+  print(p)
+  
+  # Opcional: Guardar el gráfico
+  # ggsave(paste0("group_", group_id, ".png"), plot = p, width = 8, height = 6)
+}
+```
+
+# Appendices
+
+```{r fig-mapped_unmapped_percentages,fig.cap="Samtools: stats: Aligment Scores in percentages", fig.width=8, fig.height=12}
+#| label: fig-mapped_unmapped_percentages
+#| fig-cap: "Samtools: stats: Aligment Scores in percentages"
+
+library(dplyr)
+library(ggforce)
+library(ggplot2)
+
+file_path_sam <- "data/samtools_alignment_plot.tsv"  # Cambia esto por la ruta real
+data_sam <- read.delim(file_path_sam, header = TRUE, sep = "\t")
+# Asegurarse de que las muestras sean factores
+data_sam$Sample <- factor(data_sam$Sample, levels = data_sam$Sample)
+
+# Crear grupos para dividir las muestras
+data_sam <- data_sam %>%
+  mutate(Group = ceiling(row_number() / 118)) # Cambiar "4" al tamaño deseado por grupo
+
+data_long <- data_sam %>%
+  pivot_longer(
+    cols = c("Mapped..with.MQ.0.", "Unmapped"),
+    names_to = "Category",
+    values_to = "Count"
+  ) %>%
+  group_by(Sample, Group) %>%
+  mutate(Percentage = Count / sum(Count) * 100) # Calcular porcentaje
+
+for (group_id in unique(data_long$Group)) {
+  # Filtrar datos del grupo actual
+  data_group <- data_long %>% filter(Group == group_id)
+  
+  # Crear el gráfico
+  p <- ggplot(data_group, aes(x = Percentage, y = Sample, fill = Category)) +
+    geom_bar(stat = "identity", position = "stack") +
+    scale_fill_viridis_d(option = "cividis", 
+                         labels = c(
+                           "Mapped..with.MQ.0." = "Mapped",
+                           "Unmapped" = "Unmapped")) +
+    labs(
+      title = "",
+      x = "Percentage of reads",
+      y = "",
+      fill = "Categoría"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 7),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 5),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "bottom",
+    legend.spacing.x = unit(0.3, "cm"),
+    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+  ) +
+  guides(fill = guide_legend(nrow = 1))  # Forzar que la leyenda tenga 2 filas
+  # Mostrar el gráfico
+  print(p)
+  
+  # Opcional: Guardar el gráfico
+  # ggsave(paste0("group_", group_id, ".png"), plot = p, width = 8, height = 6)
+}
+```
+
+# Appendices
+
+```{r Table SAMTOOLS}
+#| tbl-cap: "Alignment stats with Samtools (version 1.16.1)"
+#| label: "tbl-sam"
+library(dplyr)
+library(knitr)
+library(kableExtra)
+
+file_path_sam <- "data/samtools_alignment_plot.tsv"  # Cambia esto por la ruta real
+table_sam <- read.delim(file_path_sam, header = TRUE, sep = "\t")
+
+table_sam <- table_sam %>% 
+  ungroup() %>%
+  mutate(Percentage_Mapped = (Mapped..with.MQ.0. / (Mapped..with.MQ.0. + Unmapped)) * 100,
+         Percentage_Unmapped = (Unmapped / (Mapped..with.MQ.0. + Unmapped)) * 100)
+
+knitr::kable(table_sam,
+             col.names = c("Sample", "Mapped reads", 
+                              "Unmapped reads", "% Mapped", 
+                              "% Unmapped")) %>%
+  kable_styling(
+    font_size = 9,   # Ajustar el tamaño de la fuente
+    full_width = FALSE
+  ) %>%
+  row_spec(0, bold = TRUE)
+```
+
+```{r}
+# Leer la tabla (ajusta el nombre del archivo y separador si es necesario)
+data_Stats_samtools <- read.table(file_path_sam, header = TRUE, sep = "\t")
+
+data_Stats_samtools <- data_Stats_samtools %>%
+  mutate(Percentage_Mapped = (Mapped..with.MQ.0. / (Mapped..with.MQ.0. + Unmapped)) * 100,
+         Percentage_Unmapped = (Unmapped / (Mapped..with.MQ.0. + Unmapped)) * 100)
+
+# Filtrar las filas según los términos deseados
+data_mature_hairpin_genome <- data_Stats_samtools[grep("mature_hairpin_genome$", data_Stats_samtools$Sample), ]
+data_mature_hairpin <- data_Stats_samtools[grep("mature_hairpin$", data_Stats_samtools$Sample), ]
+data_mature <- data_Stats_samtools[grep("mature$", data_Stats_samtools$Sample), ]
+
+# Unir los datos filtrados para estadísticas globales
+data_filtered <- rbind(data_mature_hairpin_genome, data_mature_hairpin, data_mature)
+
+# Calcular estadísticas globales
+# Total de reads mapeados y no mapeados
+total_mapped <- sum(data_filtered$Mapped..with.MQ.0.)
+total_unmapped <- sum(data_filtered$Unmapped)
+
+# Promedios de porcentajes
+avg_percentage_mapped <- mean(data_filtered$Percentage_Mapped)
+avg_percentage_unmapped <- mean(data_filtered$Percentage_Unmapped)
+
+# Mostrar resultados
+#cat("Total Mapped Reads:", total_mapped, "\n")
+#cat("Total Unmapped Reads:", total_unmapped, "\n")
+#cat("Average Percentage Mapped:", avg_percentage_mapped, "\n")
+#cat("Average Percentage Unmapped:", avg_percentage_unmapped, "\n")
+
+```
+
+# Appendices
+
+```{r Libraries appendix 2, message=FALSE, echo=FALSE}
+library("isomiRs")
+library("readr")
+library("tibble")
+library("pheatmap")
+library("dplyr")
+library("ggplot2")
+library("DESeq2")
+library("kableExtra")
+library("ggpubr")
+library("compareGroups")
+library("tidyr")
+library("org.Mm.eg.db")
+library("clusterProfiler")
+library("tibble")
+library("knitr")
+library("ashr")
+library(kableExtra)
+
+```
+```{r Data of Isomirs appendix 2, message=FALSE, echo=FALSE}
+setwd("~/Documentos/TFM/mirna_analysis/miRNA/TFM")
+  # Steatosis 
+  # Count matrix
+countdata <- read_csv("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv")
+  # Metadata matrix
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105_metadata_steatosis.Rdata")
+
+# Usar IsomirDataSeqFromMirtop
+# mirna_data_steatosis <- IsomirDataSeqFromMirtop(mirtop = countdata_complete, coldata = mdata_steatosis)
+#mirna_data_steatosis <- IsomirDataSeqFromMirtop(mirtop = countdata, coldata = mdata_steatosis)
+
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata")
+```
+```{r ids counts appendix 2, fig.width=8, fig.height=4, fig.pos="H"}
+# Cuentas con los miRNA de referencia
+# ids_counts <- isoCounts(mirna_data_steatosis, minc = 20, mins = 40)
+# Plot
+##| fig-cap: "fig-isomiRsAbundance"
+##| out-width: "15cm"
+#isoPlot(ids_counts,type="all")
+#title(xlab = "Unique Identifier", ylab = "Percentage of Relative Abundance")
+```
+
+```{r table miRNA referencia,echo=FALSE, results='asis', message=FALSE, warning=FALSE}
+#| tbl-cap: "The reference miRNA (374) across the samples"
+#| label: "tbl-mirnaref"
+
+#mirna_ref <- counts(ids_counts)
+
+# Crear la tabla
+#knitr::kable(mirna_ref, 
+#      format = "latex", 
+#      booktabs = TRUE,
+#      longtable = TRUE) %>%
+#  kable_styling(
+#    latex_options = c("hold_position", "scale_down"), # Escala automáticamente
+#    font_size = 8) %>%
+#  row_spec(0, bold = TRUE) # Encabezado en negrita
+
+
+```
+

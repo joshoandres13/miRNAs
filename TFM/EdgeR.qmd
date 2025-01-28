@@ -1,0 +1,6 @@
+---
+title: "EdgeR"
+author: "J. Andres"
+format: pdf
+editor: visual
+---

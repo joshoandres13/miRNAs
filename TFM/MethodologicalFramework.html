@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>methodologicalframework</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="MethodologicalFramework_files/libs/clipboard/clipboard.min.js"></script>
+<script src="MethodologicalFramework_files/libs/quarto-html/quarto.js"></script>
+<script src="MethodologicalFramework_files/libs/quarto-html/popper.min.js"></script>
+<script src="MethodologicalFramework_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="MethodologicalFramework_files/libs/quarto-html/anchor.min.js"></script>
+<link href="MethodologicalFramework_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="MethodologicalFramework_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="MethodologicalFramework_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="MethodologicalFramework_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="MethodologicalFramework_files/libs/bootstrap/bootstrap-afb7ef7cec2bb82ae451d0cdffc16375.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="methodological-framework" class="level1">
+<h1>Methodological Framework</h1>
+<section id="study-population" class="level2">
+<h2 class="anchored" data-anchor-id="study-population">Study Population</h2>
+<p>The analyzed data corresponds to a FATe cohort <span class="citation" data-cites="torres2015fat">[@torres2015fat]</span> of 78 obese patients with varying degrees of adiposity from subcutaneous adipose tissue (scWAT) samples. These samples are registered at the regional Biobank (Biobanco Aragón) and have previously obtained approval from CEICA. The patients in the FATe cohort are characterized by the following variables: sex, age, body mass index (BMI), steatosis, non-alcoholic steatohepatitis (NASH), hepatocytic ballooning, lobular inflammation, diabetes, hyperlipidemia, and metabolic dysfunction-associated steatotic liver disease (MASLD).</p>
+</section>
+<section id="rna-isolation" class="level2">
+<h2 class="anchored" data-anchor-id="rna-isolation">RNA isolation</h2>
+<p>Total RNA was extracted from frozen biopsies of subcutaneous white adipose tissue (scWAT) and cell cultures using TRIzol (#T9424, Sigma Aldrich) following the manufacturer’s instructions. For lysing adipose tissue samples, 1 ml of TRIzol was added per sample in a homogenizer, while for cell cultures, 1 ml of TRIzol was used per 10 cm² of the culture plate, along with a scraper. The resulting cell lysates or tissue disaggregates were transferred to a vial and incubated for 5 minutes at room temperature to dissociate nuclear components. Subsequently, 0.2 ml of 100% chloroform per ml of TRIzol was added. The mixture was shaken vigorously, incubated for 15 minutes at room temperature, and then centrifuged for 15 minutes at 12,000 g and 4 ºC.</p>
+<p>Following centrifugation, three distinct phases were formed. The aqueous phase, which contained the ribonucleic acids, was collected, and 0.5 ml of 100% isopropanol was added to precipitate the RNA. This mixture was mixed, incubated on ice for 10 minutes, and then centrifuged at 12,000 g for 15 minutes at 4 ºC. Afterward, the supernatant was carefully decanted, and the RNA pellet was resuspended in 1 ml of 75% ethanol for washing. The pellet was homogenized and centrifuged at 7,500 g for 5 minutes at 4 ºC. The supernatant was discarded, and the pellet was allowed to dry for 10 minutes at room temperature. Finally, the RNA was resuspended in DEPC-treated water. To eliminate any genomic DNA contamination, all RNA samples were treated with RNase-Free DNase (Life Technologies). The concentration and purity of the RNA were assessed by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher). The quality of the extracted RNA was visualized using an agarose gel.</p>
+</section>
+<section id="rna-sequencing" class="level2">
+<h2 class="anchored" data-anchor-id="rna-sequencing">RNA Sequencing</h2>
+</section>
+<section id="analysis-of-srna-seq-data-with-nf-coresmrnaseq" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-srna-seq-data-with-nf-coresmrnaseq">Analysis of sRNA-seq Data with <em>nf-core/smrnaseq</em></h2>
+<p>For the analysis of small RNA sequencing (sRNA-seq) data, version 2.4.0 of the nf-core/smrnaseq pipeline <span class="citation" data-cites="alexanderpeltzer2024">[@alexanderpeltzer2024]</span> was used, which is specifically designed for the automated processing of miRNAs data. This pipeline facilitates quality control, filtering, and quantification of miRNAs and their variants, and it was executed using the Docker profile to ensure reproducibility and compatibility across operating systems.</p>
+<section id="execution-of-the-nf-coresmrnaseq-pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="execution-of-the-nf-coresmrnaseq-pipeline">Execution of the <em>nf-core/smrnaseq</em> Pipeline</h3>
+<p>The installation of <em>nf-core/smrnaseq</em> was carried out following the instructions provided by the authors, available at <a href="https://nf-co.re/smrnaseq/2.4.0" class="uri">https://nf-co.re/smrnaseq/2.4.0</a>.</p>
+<p>To ensure the proper installation and execution of the pipeline, the following key components were installed beforehand:</p>
+<ol type="1">
+<li><p><em>Nextflow</em>: Version 24.04.4 of Nextflow was used, following the detailed instructions at <a href="https://nf-co.re/usage/installation" class="uri">https://nf-co.re/usage/installation</a>.</p></li>
+<li><p><em>Java Runtime Environment (JRE)</em>: Version 11.0.25 of the Java Runtime Environment was installed, as it is required for compatibility with Nextflow and the <em>nf-core/smrnaseq</em> pipeline.</p></li>
+</ol>
+<p>To ensure reproducibility and streamline the pipeline execution, one of the available Docker containers was utilized. These containers provide the necessary instructions and configurations required to run the pipeline. The configuration is specified at runtime using the <code>profile</code> argument. For this analysis, the Docker image <em>nf-core/smrnaseq</em>, available at <a href="https://hub.docker.com/r/nfcore/smrnaseq">Docker Hub</a>, was employed.</p>
+<p>The pipeline was executed on a server with 8 CPUs, 16 GB of RAM, and a Linux operating system. The following command was used in the terminal, which configures the main options, including the reference genome, input data, and output file location:</p>
+<pre><code>nextflow run nf-core/smrnaseq -r 2.4.0 
+-profile docker,ci  
+--genome GRCh38  
+--input '/home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/input/samples.csv' 
+--fasta 'https://github.com/nf-core/test-datasets/raw/smrnaseq/reference/genome.fa' 
+--mirtrace_species 'hsa' 
+--outdir /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/workdir  
+-resume -c /home/joshoacr13/Documentos/TFM/nfcore-smrnaseq/nextflow_memory.config 
+--save_intermediates FALSE</code></pre>
+<p>The pipeline was executed three times to accommodate the large number of samples, processing 26 samples per run.</p>
+</section>
+<section id="description-of-the-parameters-used" class="level3">
+<h3 class="anchored" data-anchor-id="description-of-the-parameters-used">Description of the Parameters Used</h3>
+<ul>
+<li><p><code>-profile docker,ci</code>: Runs the pipeline inside a Docker container to ensure reproducibility and sets up a continuous integration (CI) profile.</p></li>
+<li><p><code>--genome GRCh38</code>: Specifies the human genome (version GRCh38) as the reference for sequence mapping.</p></li>
+<li><p><code>--input</code>: Provides the path to the CSV file containing metadata and the paths to the FASTQ files.</p></li>
+<li><p><code>--fasta</code>: URL to the FASTA file of the reference genome.</p></li>
+<li><p><code>--mirtrace_species hsa</code>: Defines the species as Homo sapiens (hsa) for miRNAs analysis with miRTrace.</p></li>
+<li><p><code>--outdir</code>: Sets the working directory for the processed results.</p></li>
+<li><p><code>-resume</code>: Allows continuation of a previous analysis without restarting from the beginning.</p></li>
+<li><p><code>-c</code>: Specifies a custom configuration file (nextflow_memory.config) to adjust resource usage.</p></li>
+<li><p><code>--save_intermediates FALSE</code>: Prevents the storage of intermediate files to save disk space.</p></li>
+</ul>
+</section>
+<section id="analysis-workflow-and-tools-used" class="level3">
+<h3 class="anchored" data-anchor-id="analysis-workflow-and-tools-used">Analysis Workflow and Tools Used</h3>
+<p>The <em>nf-core/smrnaseq</em> pipeline performs the following steps:</p>
+<ol type="1">
+<li><p><strong>Quality Control</strong> An initial quality assessment of the raw reads was conducted using <em>FastQC</em> (version 0.12.1) <span class="citation" data-cites="andrews2010fastqc">[@andrews2010fastqc]</span>. Additionally, 3’ adapter trimming was performed using <em>fastp</em> (version 0.23.4) <span class="citation" data-cites="chen2018fastp">[@chen2018fastp]</span>, followed by quality and length filtering. A second quality assessment of the trimmed reads was conducted with <em>FastQC</em>.</p></li>
+<li><p><strong>miRNA Quality Control</strong> A more specific quality control for miRNAs sequencing was performed using <em>mirtrace</em> (version 1.0.1) <span class="citation" data-cites="kang2018mirtrace">[@kang2018mirtrace]</span>. This tool allowed us to:</p></li>
+</ol>
+<ul>
+<li><strong>Verify Read Length Distribution</strong>: The majority of reads fell within the expected range of 18–24 nucleotides, indicative of high-quality small RNA data.</li>
+<li><strong>Identify Contaminants</strong>: Potential contaminants such as tRNA, rRNA, and other non-target molecules were flagged.</li>
+<li><strong>Taxonomic Classification</strong>: Reads were classified taxonomically to ensure that most sequences originated from the organism of interest (<em>Homo sapiens</em>).</li>
+</ul>
+<p>Samples that failed to meet the minimum quality thresholds, as determined by <em>mirtrace</em>, were excluded from further analysis to maintain data integrity and reliability.</p>
+<ol start="3" type="1">
+<li><strong>miRNAs Quantification</strong>:</li>
+</ol>
+<ul>
+<li><strong>Alignment</strong>: The filtered reads were aligned against mature miRNA sequences in the miRBase database using <em>Bowtie1</em> (version 1.3.1)<span class="citation" data-cites="langmead2009ultrafast">[@langmead2009ultrafast]</span>. Unmapped reads were aligned against “hairpin” sequences to identify miRNA precursors.</li>
+<li><strong>Post-Alignment Processing</strong>: <em>SAMtools</em> (version 1.16.1) <span class="citation" data-cites="10.1093/gigascience/giab008">[@10.1093/gigascience/giab008]</span> was used to process the mapping results.</li>
+<li><strong>Quantification and Normalization</strong>: Initial quantification was performed with <em>edgeR</em> (version 4.4) <span class="citation" data-cites="edgeR">[@edgeR]</span>, generating normalized count tables (TMM) for detected miRNAs. Exploratory graphs were generated, including a multidimensional scaling (MDS) analysis to cluster samples and a heatmap to evaluate similarities among them.</li>
+</ul>
+<ol start="4" type="1">
+<li><strong>IsomiR Annotation</strong>: The collapsed reads were processed with <em>mirtop</em> (version 0.4.28) <span class="citation" data-cites="desvignes2020unification">[@desvignes2020unification]</span> to identify miRNA variants (isomiRs). This analysis allows for the mapping and annotation of variants related to length and sequence modifications of mature miRNAs.</li>
+</ol>
+<p>The <em>mirtop</em> tool employs the Blending Analysis technique to process and integrate miRNA data, ultimately generating a count matrix that accurately represents the expression levels of these molecules in the analyzed samples. This method includes the following essential steps:</p>
+<ul>
+<li><strong>Read Grouping</strong>: The miRNA reads are grouped from the processed data, ensuring that different variants and reference sequences are integrated coherently.</li>
+<li><strong>Adjustment for Variants</strong>: Both miRNA variants (isomiRs) and standard reference sequences extracted from databases such as miRBase are considered. This adjustment is fundamental to obtain an accurate representation of miRNA expression in the analyzed samples.</li>
+</ul>
+<p>The application of <em>Blending Analysis</em> allows for the generation of a more robust and comprehensive count matrix, thus facilitating subsequent differential expression analysis.</p>
+<ol start="5" type="1">
+<li><strong>Analysis and Visualization of Results</strong>: The overall pipeline metrics, encompassing quality assessments, mapping statistics, and expression analysis results, were consolidated and summarized using <em>MultiQC</em> (version 1.25.1) <span class="citation" data-cites="MultiQC">[@MultiQC]</span>. This versatile tool that aggregates output from various bioinformatics analyses into a unified, interactive report, enabling an efficient overview of the data processing workflow.</li>
+</ol>
+</section>
+</section>
+<section id="differential-expression-analysis-according-to-steatosis-using-deseq2" class="level2">
+<h2 class="anchored" data-anchor-id="differential-expression-analysis-according-to-steatosis-using-deseq2">Differential expression analysis according to steatosis using <em>DEseq2</em></h2>
+<p>For the differential expression analysis, the R statistical software <span class="citation" data-cites="rproject">[@rproject]</span>, version 4.4.1 (2024-06-14) (<a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>), was used. This analysis was performed using the RStudio integrated development environment (IDE) <span class="citation" data-cites="RStudio">[@RStudio]</span>, version 2023.12.0+369, designed for Ubuntu Jammy (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>).</p>
+<p>The script used to perform the differential expression analysis is available in the file “<code>miRNA_steatosis.qmd</code>” which can be accessed at the following link: <a href="https://github.com/joshoandres13/miRNAs" class="uri">https://github.com/joshoandres13/miRNAs</a>.</p>
+<p>The analysis began by loading essential R packages: <em>tidyverse</em> (version 2.0.0)<span class="citation" data-cites="tidyverse">[@tidyverse]</span> for data manipulation, <em>isomiRs</em> <span class="citation" data-cites="isomiRs">[@isomiRs]</span> (version 1.32.1) for analyze isomirs and miRNAs from small RNA-seq, <em>DESeq2</em> (version 1.44.0) <span class="citation" data-cites="deseq">[@deseq]</span> for differential expresion analysis, <em>org.Hs.eg.db</em> (version 3.19.1) <span class="citation" data-cites="org">[@org]</span> for gene annotation.</p>
+<section id="data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
+<p>Metadata were imported, and sample identifiers were stablished as row names. The variable <em>Steatosis</em> is categorized in four distinct groups. Isomirs count data were subsequently obtained where rows represent the identified isomiRs and columns correspond to the experimental samples.</p>
+<p>Using isomirs count data and metadata, an object of class <code>IsomirDataSeq</code> was created. This object enables efficient management of information derived from small RNA sequencing studies, streamlining differential expression analyses and facilitating the interpretation of biological findings.</p>
+</section>
+<section id="filtering-and-processing-of-isomirs" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-and-processing-of-isomirs">Filtering and Processing of isomiRs</h3>
+<p>The filtering process enables the grouping of isomiRs into distinct categories, associating them with a single variant of a miRNA. This grouping is essential for ensuring consistency and accuracy in differential expression analyses. To reduce technical noise and highlight biologically meaningful signals, a stringent filtering criterion was applied: only isomiRs with a minimum of 20 counts in at least 40 samples were retained.</p>
+</section>
+<section id="data-quality-assesment" class="level3">
+<h3 class="anchored" data-anchor-id="data-quality-assesment">Data quality assesment</h3>
+</section>
+<section id="differential-expression-in-scwat" class="level3">
+<h3 class="anchored" data-anchor-id="differential-expression-in-scwat">Differential expression in scWAT</h3>
+<p>In this study, the <em>DESeq2</em> package was used to perform differential expression analysis on scWAT samples with varying degrees of liver steatosis. The <em>DESeq2</em> object was configured using the Likelihood Ratio Test (LRT), enabling the analysis to account for all four steatosis categories: &lt;5% (no steatosis), 5–33% (mild steatosis), 33–66% (moderate steatosis), and &gt;66% (severe steatosis). This approach allowed for a comprehensive assessment of gene expression changes across the entire spectrum of steatosis progression.</p>
+<section id="testing-for-differential-expression" class="level4">
+<h4 class="anchored" data-anchor-id="testing-for-differential-expression">Testing for differential expression</h4>
+<p>The criteria established to identify significant isomiRs across the steatosis categories involved applying a false discovery rate (FDR) cutoff of less than 0.05. After identifying these isomiRs, we further analyzed the expression patterns of the selected miRNAs by representing their normalized counts in boxplots across the four steatosis groups. This approach allowed us to observe how the expression of these significant miRNAs varies across different degrees of steatosis, providing deeper insights into the potential roles these miRNAs may play in the progression of steatosis.</p>
+</section>
+</section>
+</section>
+<section id="target-mrna-selection-and-validation-using-multimir" class="level2">
+<h2 class="anchored" data-anchor-id="target-mrna-selection-and-validation-using-multimir">Target mRNA Selection and Validation Using <em>multiMiR</em></h2>
+<p>Este paquete permite realizar una búsqueda sistemática y una anotación detallada de interacciones entre miRNAs y mRNAs, utilizando bases de datos experimentales y funcionales.</p>
+<p>The selected miRNAs were used for the identification of mRNA targets through the <em>multiMiR</em> bioinformatics package <span class="citation" data-cites="multiMiR microRNAtarget">[@multiMiR; @microRNAtarget]</span>, version 2.4.0 in R. <em>multiMiR</em> facilitates a systematic search and annotation of miRNA targets, providing functional analysis to elucidate biological mechanisms. For this analysis, only validated interaction data were utilized.</p>
+<section id="filtering-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-parameters">Filtering Parameters</h3>
+<p>The validated target table provided by <em>multiMiR</em> was used during the selection process. Key columns included:</p>
+<ol type="1">
+<li><strong>database</strong>: Source database of validated interactions, such as <em>miRTarBase</em>, <em>TarBase</em>, or <em>miRecords</em>.</li>
+<li><strong>mature_mirna_id</strong>: Standard format identifier for the miRNA.</li>
+<li><strong>target_symbol</strong>: Target gene symbol.</li>
+<li><strong>experiment</strong>: Experimental methods used for validation, including luciferase assays, Western blot, or qRT-PCR.</li>
+<li><strong>support_type</strong>: Level of experimental support, such as “Functional MTI” (miRNA-mRNA functional interaction).</li>
+<li><strong>pubmed_id</strong>: References to PubMed articles reporting the interaction.</li>
+<li><strong>type</strong>: Specifies whether the interaction is “validated” or “predicted.”</li>
+</ol>
+</section>
+<section id="selection-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="selection-criteria">Selection Criteria</h3>
+<p>To ensure reliable results, databases were filtered according to update criteria and the following selection parameters:</p>
+<ul>
+<li><p>Databases up-to-date at the time of analysis were prioritized (<em>miRTarBase</em> and <em>TarBase</em>).</p></li>
+<li><p>Only interactions classified as “validated” were included.</p></li>
+<li><p>Interactions backed by robust experimental methods, such as luciferase assays or Western blot, were prioritized.</p></li>
+<li><p>Interactions with functional support (“Functional MTI”) and verifiable references in PubMed were selected.</p></li>
+</ul>
+<p>This approach ensured the identification of mRNA targets with high reliability and experimental backing, facilitating the analysis of potential regulatory functions of the studied miRNAs.</p>
+</section>
+<section id="functional-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="functional-analysis">Functional Analysis</h3>
+<p>To explore biological functions associated with validated target genes, Gene Ontology (GO) enrichment analysis was conducted using the <em>clusterProfiler</em> package <span class="citation" data-cites="clusterProfiler">[@clusterProfiler]</span> in R. This analysis identified biological processes, molecular functions, and cellular components involving miRNA-regulated genes.</p>
+<ol type="1">
+<li><strong>Data Preparation</strong>:
+<ul>
+<li>Symbols for validated genes (<em>target_symbol</em>) associated with selected miRNAs were extracted using <em>multiMiR</em>, with duplicates removed.</li>
+</ul></li>
+<li><strong>GO Enrichment Analysis</strong>:
+<ul>
+<li>The <code>enrichGO()</code> function from <em>clusterProfiler</em> was used with the following parameters:
+<ul>
+<li><code>OrgDb</code>: Human gene database from <em>org.Hs.eg.db</em> <span class="citation" data-cites="org">[@org]</span>.</li>
+<li><code>keyType</code>: Key type defined as “SYMBOL”.</li>
+<li><code>ont</code>: Ontology type analyzed, including “ALL” (biological processes, molecular functions, and cellular components).</li>
+<li><code>pAdjustMethod</code>: False discovery rate (FDR) adjustment method using Benjamini-Hochberg.</li>
+<li><code>qvalueCutoff</code> and <code>pvalueCutoff</code>: Cutoff values set to 0.05 to select significant results.</li>
+</ul></li>
+</ul></li>
+<li><strong>Results and Visualization</strong>:
+<ul>
+<li>A bar plot of the top 10 enriched categories in biological processes (GO:BP) was generated, showing statistical significance and the number of genes associated with each category.</li>
+<li>The plot highlighted key biological processes related to the activity of miRNA target genes.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="functional-validation-of-mirnas" class="level2">
+<h2 class="anchored" data-anchor-id="functional-validation-of-mirnas">Functional validation of miRNAs</h2>
+<section id="cell-culture-and-transfections-with-mirna-mimics" class="level3">
+<h3 class="anchored" data-anchor-id="cell-culture-and-transfections-with-mirna-mimics">Cell Culture and Transfections with miRNA Mimics</h3>
+<p>The human hepatoma HepG2 cell line (American Type Culture Collection, ATCC® HB-8065™; Manassas, VA, USA) was cultured in an incubator at 37 ºC and 5% CO<span class="math inline">\(_2\)</span> using high-glucose Dulbecco’s Modified Eagle Medium L-GlutaMAX (DMEM) (Gibco, Thermo Fisher Scientific Inc., Waltham, MA, USA) supplemented with 10% fetal bovine serum (FBS; Gibco, Thermo Fisher Scientific Inc., Brazil). Experiments were carried out when the cells reached 70-80% confluence.</p>
+<p>For the experiments, HepG2 cells were plated at a density of 100,000 cells per well in 12 well-plates for gene expression assays, in DMEM high-glucose (1 g/L) L-GlutaMAX supplemented with 10% FBS.</p>
+<p>HepG2 cells were reverse-transfected with Lipofectamine RNAiMAX Reagent (Thermo Fisher Scientific Inc.) and 50 nM of the following mirVana™ miRNA mimics (Thermo Fisher Scientific Inc.): a scramble sequence as a negative control (mirVana™ miRNA Mimic, Negative Control #1), negative control (mirVana™ miRNA Inhibitor, Negative Control #1), <em>hsa-miR-144-3p</em> (<span class="math inline">\(5'-UACAGUAUAGAUGAUGUACU-3'\)</span>; assay ID H11051), and <em>hsa-miR-372-3p</em> (<span class="math inline">\(5'-AAAGUGCUGCGACAUUUGAGCGU-3'\)</span>; assay ID MC10165). The miRNA mimics were diluted in Opti-MEM I Reduced Serum Medium (Gibco, Thermo Fisher Scientific Inc.) and added to the wells according to the manufacturer’s instructions. Following this, Lipofectamine was added to the wells containing the diluted miRNA mimics and incubated for 15 minutes at room temperature to form miRNA mimic–lipofectamine complexes. HepG2 cells diluted in DMEM with 10% FBS were then plated into the wells. The cells were incubated for 24 hours to assess transfection efficiency (miRNA expression assays) and/or for 48 hours for mRNA expression analysis.</p>
+<p>To induce lipid accumulation and simulate steatosis <span class="citation" data-cites="gomez2007human">[@gomez2007human]</span>, HepG2 cells were treated with oleic acid 24 hours after miRNA mimic transfections, mixed in DMEM GlutaMAX-I supplemented with 10% FBS, at a final concentration of 0.5 mM, which reflects the physiological range of fatty acids used to mimic hepatic steatosis <span class="citation" data-cites="belfort2006placebo">[@belfort2006placebo]</span>.</p>
+</section>
+<section id="rna-isolation-and-gene-expression-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="rna-isolation-and-gene-expression-analyses">RNA Isolation and Gene Expression Analyses</h3>
+<p>HepG2 cells were frozen on dry ice and stored at -80 °C until RNA extraction. Cells used for miRNA expression analyses were washed previously with phosphate-buffered saline (PBS) to completely remove potential unabsorbed miRNA mimics. Total RNA was extracted from frozen cell cultures using TRIzol (#T9424, Sigma Aldrich) following the manufacturer’s instructions. For lysing cell cultures, 1 ml of TRIzol was used per 10 cm² of the culture plate, along with a scraper. The resulting cell lysates were transferred to a vial and incubated for 5 minutes at room temperature to dissociate nuclear components. Subsequently, 0.2 ml of 100% chloroform per ml of TRIzol was added. The mixture was shaken vigorously, incubated for 15 minutes at room temperature, and then centrifuged for 15 minutes at 12,000 g and 4 ºC. RNA concentration were determined using Qubit 4 Fluorometer (Thermo Fisher Scientific Inc.).</p>
+<p>Following centrifugation, three distinct phases were formed. The aqueous phase, which contained the ribonucleic acids, was collected, and 0.5 ml of 100% isopropanol was added to precipitate the RNA. This mixture was mixed, incubated on ice for 10 minutes, and then centrifuged at 12,000 g for 15 minutes at 4 ºC. Afterward, the supernatant was carefully decanted, and the RNA pellet was resuspended in 1 ml of 75% ethanol for washing. The pellet was homogenized and centrifuged at 7,500 g for 5 minutes at 4 ºC. The supernatant was discarded, and the pellet was allowed to dry for 10 minutes at room temperature. Finally, the RNA was resuspended in DEPC-treated water. To eliminate any genomic DNA contamination, all RNA samples were treated with RNase-Free DNase (Life Technologies). The concentration and purity of the RNA were assessed by measuring absorbance at 260/280 nm and 260/230 nm using a Nanodrop 2000 (Thermo Fisher). The quality of the extracted RNA was visualized using an agarose gel.</p>
+<p>mRNA expression was evaluated in HepG2 cells transfected with miRNA mimics for 48 h. RNA was reverse transcribed using PrimeScript Reverse Transcriptase (Takara Bio), with 100 ng of RNA utilized for each reaction in a total volume of 10 <span class="math inline">\(\mu\)</span>l. The process was carried out using an Applied Biosystems 2720 Thermal Cycler, following this protocol: 10 minutes at 25 °C, 2 hours at 37 °C, and finally, 5 minutes at 85 °C. Ten nanograms of the cDNA product were amplified using Quantitative-real time PCR (qPCR) in a total reaction volume of 15 <span class="math inline">\(\mu\)</span>l with SYBR Select Master Mix (Applied Biosystems), to which 0.5 <span class="math inline">\(\mu\)</span>l of gene-specific primers at a concentration of 10 <span class="math inline">\(\mu\)</span>M was added. The primers utilized are detailed in <a href="#tbl-primers" class="quarto-xref">Table&nbsp;1</a> cDNA amplification was performed on a StepOnePlus system (Applied Biosystems) with the following protocol: an initial step at 95 °C for 10 minutes, followed by 40 cycles of 15 seconds at 95 °C and 1 minute at 60 °C, concluding with 15 seconds at 95 °C, 1 minute at 60 °C, and a final 15 seconds at 95 °C. The gene <span class="math inline">\(\beta\)</span>-actin was used as a housekeeping control to normalize gene expression levels (<span class="math inline">\(\triangle Cq\)</span>). Comparisons between gene expression levels after miRNA mimic transfections vs.&nbsp;scramble-sequence-transfected cells (negative control) were established using the the <span class="math inline">\(2 -\triangle\triangle CT\)</span> method, determining relative gene expression <span class="citation" data-cites="rao2013improvement">[@rao2013improvement]</span>.</p>
+<div id="tbl-primers" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-primers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Primers designed for qPCR mRNA gene expression analysis.
+</figcaption>
+<div aria-describedby="tbl-primers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="statistical-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-analysis">Statistical Analysis</h2>
+<p>The results are expressed as median [interquartile range] and number (%). Pairwise group comparisons for continuous variables were calculated using Student’s t-test for variables with a Gaussian distribution and the Mann–Whitney U test for data that do not follow this distribution. Categorical variables were analyzed using the chi-square test.</p>
+<p>The differences between groups of steatosis was evaluated using Kruskali Walls test.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

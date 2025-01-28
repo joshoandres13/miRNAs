@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Stuff_T_Framework</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Suff_T_Framework_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Suff_T_Framework_files/libs/quarto-html/quarto.js"></script>
+<script src="Suff_T_Framework_files/libs/quarto-html/popper.min.js"></script>
+<script src="Suff_T_Framework_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Suff_T_Framework_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Suff_T_Framework_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Suff_T_Framework_files/libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Suff_T_Framework_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Suff_T_Framework_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Suff_T_Framework_files/libs/bootstrap/bootstrap-afb7ef7cec2bb82ae451d0cdffc16375.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Stuff_T_Framework</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<ul>
+<li>Brief overview of hepatic steatosis (non-alcoholic fatty liver disease - NAFLD) and its increasing prevalence worldwide.</li>
+<li>Role of subcutaneous adipose tissue in the pathophysiology of steatosis and its interaction with the liver through metabolic and molecular signaling.</li>
+<li>Importance of microRNAs (miRNAs) as key post-transcriptional regulators in cellular biology and their involvement in metabolic disorders.</li>
+<li>Justification of the study for identifying specific biomarkers that could improve diagnosis, risk stratification, and understanding of the underlying molecular mechanisms in steatosis.</li>
+</ul>
+<hr>
+<section id="introducción" class="level3">
+<h3 class="anchored" data-anchor-id="introducción"><strong>Introducción</strong></h3>
+<ol type="1">
+<li><strong>Contexto general: la esteatosis como problema clínico relevante</strong>
+<ul>
+<li>Define qué es la esteatosis (en términos de enfermedad del hígado graso no alcohólico o esteatosis hepática) y su prevalencia en la población.<br>
+</li>
+<li>Explica los factores de riesgo asociados (obesidad, resistencia a la insulina, síndrome metabólico, etc.).<br>
+</li>
+<li>Destaca la importancia de identificar biomarcadores que puedan mejorar el diagnóstico, pronóstico o tratamiento.</li>
+</ul></li>
+<li><strong>Tejido adiposo subcutáneo y su rol en la fisiopatología de la esteatosis</strong>
+<ul>
+<li>Describe cómo el tejido adiposo subcutáneo está implicado en la regulación metabólica y cómo puede influir en la acumulación de grasa hepática.<br>
+</li>
+<li>Resalta su papel en la secreción de moléculas (adipocinas, miRNAs) que podrían actuar como mediadores entre el tejido adiposo y el hígado.</li>
+</ul></li>
+<li><strong>MicroRNAs (miRNAs) y su relevancia como biomarcadores</strong>
+<ul>
+<li>Introduce los miRNAs como moléculas reguladoras de la expresión génica.<br>
+</li>
+<li>Explica su importancia en el metabolismo lipídico, la inflamación y la señalización celular.<br>
+</li>
+<li>Menciona estudios previos que sugieren su papel en la esteatosis o enfermedades metabólicas.</li>
+</ul></li>
+<li><strong>Identificación de genes diana y redes funcionales</strong>
+<ul>
+<li>Describe brevemente cómo los miRNAs regulan genes específicos y cómo esto puede influir en procesos biológicos clave.<br>
+</li>
+<li>Justifica la importancia de predecir e investigar los genes diana para entender los mecanismos subyacentes a la enfermedad.</li>
+</ul></li>
+<li><strong>Vacío en el conocimiento y justificación del estudio</strong>
+<ul>
+<li>Identifica qué aspectos aún no se comprenden completamente (por ejemplo, la contribución específica de los miRNAs del tejido adiposo subcutáneo a la esteatosis).<br>
+</li>
+<li>Argumenta la necesidad de analizar los miRNAs diferencialmente expresados en diferentes grados de esteatosis para identificar nuevos biomarcadores y posibles dianas terapéuticas.</li>
+</ul></li>
+<li><strong>Objetivo del estudio</strong>
+<ul>
+<li>Declara explícitamente el propósito del trabajo, como:<br>
+<em>“El presente estudio tiene como objetivo identificar microRNAs diferencialmente expresados en tejido adiposo subcutáneo de pacientes con diferentes grados de esteatosis hepática, y predecir sus posibles genes diana para comprender mejor las vías moleculares asociadas con esta patología.”</em></li>
+</ul></li>
+</ol>
+<hr>
+<ul>
+<li>Structure and functions of subcutaneous adipose tissue.</li>
+<li>Metabolic and molecular changes in adipose tissue under pathological conditions like steatosis.</li>
+<li>Crosstalk between adipose tissue and the liver in metabolic syndrome.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>The liver and SAT are intimately connected through metabolic and endocrine pathways. Excess free fatty acids (FFAs) released from dysfunctional SAT are transported to the liver via the portal circulation, contributing to the development of hepatic steatosis. Moreover, the altered secretion of adipokines from SAT, such as reduced adiponectin and increased pro-inflammatory cytokines, exacerbates hepatic insulin resistance and inflammation. This bidirectional communication between SAT and the liver plays a pivotal role in the progression of metabolic syndrome and related pathologies, including non-alcoholic fatty liver disease (NAFLD).</td>
+</tr>
+<tr class="even">
+<td>Recent studies have highlighted the molecular and metabolic shifts occurring in SAT in patients with varying degrees of hepatic steatosis. These alterations underscore the importance of SAT not only as a storage organ but also as a dynamic regulator of systemic metabolism. Understanding these processes may provide insights into novel therapeutic strategies targeting adipose tissue dysfunction to mitigate liver-related metabolic diseases.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="micrornas-mirnas-function-and-significance" class="level3">
+<h3 class="anchored" data-anchor-id="micrornas-mirnas-function-and-significance">MicroRNAs (miRNAs): Function and Significance</h3>
+<ul>
+<li>Description of miRNAs: biogenesis, structure, and mechanism of action.</li>
+<li>Gene regulation by miRNAs and their impact on metabolic networks. <span class="citation" data-cites="ghesmati2024update">[@ghesmati2024update]</span></li>
+<li>The role of miRNAs in inflammation, fibrosis, and metabolic disorders.</li>
+</ul>
+</section>
+<section id="rna-sequencing-in-biomedical-research" class="level3">
+<h3 class="anchored" data-anchor-id="rna-sequencing-in-biomedical-research">RNA Sequencing in Biomedical Research</h3>
+<ul>
+<li>Principles of RNA sequencing and its application in identifying differentially expressed miRNAs.</li>
+<li>Bioinformatics analysis for detecting significant differences in miRNA expression across steatosis grades.</li>
+<li>Methods for predicting target mRNAs and validating them experimentally.</li>
+</ul>
+<p><span class="citation" data-cites="lopez2024unraveling">[@lopez2024unraveling]</span></p>
+</section>
+<section id="theoretical-foundations-of-bioinformatics-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="theoretical-foundations-of-bioinformatics-analysis">Theoretical Foundations of Bioinformatics Analysis</h2>
+<ul>
+<li>Statistical methods for analyzing differentially expressed miRNAs.</li>
+<li>Databases and algorithms for predicting target genes (e.g., TargetScan, miRDB, DianaTools). <span class="citation" data-cites="santulli2015microrna">[@santulli2015microrna]</span></li>
+<li>Functional interpretation of target genes: enrichment analysis in metabolic pathways (e.g., KEGG, GO).</li>
+</ul>
+<p>Gene expresiion scWAT [passaro2017gene] ## Importance and Potential Clinical Applications - Connecting the study findings to their potential for developing new diagnostic tools. - Therapeutic perspectives based on miRNA modulation. - Implications for understanding steatosis pathophysiology and personalizing treatments.</p>
+<p>NAFLD also is intimately linked with insulin resistance, type 2 diabetes, cardiovascular disease mortality, and risk for hepatocellular carcinoma. Currently, there are no proven pharmacological therapies for the effective treatment of NAFLD, leading health organizations to advocate lifestyle modiﬁcation (exercise and diet) as the cornerstone for treatment.<span class="citation" data-cites="thyfault2020exercise">[@thyfault2020exercise]</span></p>
+<p>Accumulating clinical and epidemiological evidence shows that physical activity levels, exercise behavior, and aerobic capacity can independently impact risk for hepatic steatosis. Moreover, exercise training is a potent treatment for hepatic steatosis.<span class="citation" data-cites="thyfault2020exercise">[@thyfault2020exercise]</span></p>
+<p>Mirtop paper talk about Isomirs…</p>
+<p>Subcutaneous white adipose tissue (scWAT) plays a critical role in the pathophysiology of steatosis due to its dynamic nature as an energy storage site and endocrine organ <span class="citation" data-cites="lopez2024unraveling">[@lopez2024unraveling]</span>. scWAT communicates with the liver and other metabolic organs through a network of signaling molecules, including adipokines, free fatty acids, and cytokines, which influence metabolic homeostasis <span class="citation" data-cites="ghesmati2024update">[@ghesmati2024update]</span>. Dysregulation of this crosstalk in the context of obesity and insulin resistance contributes to ectopic fat deposition and inflammation, exacerbating hepatic steatosis <span class="citation" data-cites="koenen2021obesity">[@koenen2021obesity]</span>.</p>
+<ul>
+<li>Structure and functions of subcutaneous adipose tissue.</li>
+<li>Metabolic and molecular changes in adipose tissue under pathological conditions like steatosis.</li>
+<li>Crosstalk between adipose tissue and the liver in metabolic syndrome.</li>
+</ul>
+<p>Subcutaneous White Adipose Tissue (scWAT) is the most abundant type of adipose tissue, found in various locations such as under the skin and in clustered regions of the body, including the upper (deep and shallow abdomen) and lower (gluteofemoral) body areas <span class="citation" data-cites="kwok2016heterogeneity">[@kwok2016heterogeneity]</span>. scWAT primarily functions as an energy storage depot and an endocrine organ <span class="citation" data-cites="lopez2024unraveling">[@lopez2024unraveling]</span>. Structurally, scWAT is composed predominantly of adipocytes, which constitute approximately 50% of its cellular content <span class="citation" data-cites="koenen2021obesity">[@koenen2021obesity]</span>. In addition to adipocytes, scWAT includes vascular cells, fibroblasts, adipocyte precursors, multipotent mesenchymal stem-like cells, nerve processes, and immune cells such as macrophages, lymphocytes, eosinophils, and mast cells. These components are embedded within an extracellular matrix that provides structural support <span class="citation" data-cites="koenen2021obesity">[@koenen2021obesity]</span>. Collectively, these cells secrete a wide array of signaling molecules, including adipokines such as leptin, adiponectin, and resistin, which play essential roles in maintaining metabolic homeostasis <span class="citation" data-cites="lopez2024unraveling">[@lopez2024unraveling]</span>.</p>
+<p>Under physiological conditions, scWAT acts as a buffer to store excess energy in the form of triglycerides, protecting other organs from ectopic lipid deposition. This buffering capacity has been found to confer certain beneficial effects on metabolism <span class="citation" data-cites="zwick2018anatomical">[@zwick2018anatomical]</span>. However, the function of scWAT is closely linked to body fat distribution, and under pathological conditions, its capacity to store lipids becomes overwhelmed. This dysfunction impairs its ability to store lipids appropriately, leading to hypoxia, infiltration of pro-inflammatory macrophages, and ectopic fat accumulation in other tissues like liver <span class="citation" data-cites="ipsen2018molecular">[@ipsen2018molecular]</span>. These alterations directly contribute to the dysregulation of adipokine secretion, fostering a pro-inflammatory state and systemic insulin resistance, which are hallmark features in patients with NAFLD-associated diseases <span class="citation" data-cites="ipsen2018molecular">[@ipsen2018molecular]</span>.</p>
+<p>####################################</p>
+<p>Por un lado, el imitador <em>hsa-miR-372-3p</em> reguló a la baja la expresión de ARNm del supuesto gen diana QKI (−45.85% ± 5.22; p &lt; 0.001) en células HepG2 tratadas con FFA (Figura 1A), que fue acompañado por una disminución similar en los niveles de ARNm de PPARA (−12.05% ± 4.78; p &lt; 0.05), FOXO1 (−30.50% ± 8.86; p &lt; 0.05), SREBF1 (−25.10% ± 8.26; p &lt; 0.05), MAPKAPK2 (−61.20% ± 2.53; p &lt; 0.001), FASN (−23.50% ± 8.63; p &lt; 0.05), y GSK3B (−18.20% ± 5.95; p &lt; 0.05). RXRA, ACOX1, y G6PC los niveles de ARNm no se modificaron en comparación con las células de control negativo (Figura 1B). En particular, una marcada regulación a la baja del objetivo miR8126-3p predicho QKI ARNm (−36.29% ± 4.16; p &lt; 0.001) se informó en células HepG2 basales (sin tratamiento con FFA) en comparación con las células de control (Figura complementaria S4A). Las células HepG2 no tratadas con FFA también mostraron una disminución significativa en la expresión de ARNm de PPARA (−27.00% ± 4.47; p &lt; 0.05), FOXO1 (−39.57% ± 3.86; p &lt; 0.001), SREBF1 (−27.00% ± 6.44; p &lt; 0.01), MAPKAPK2 (−57.20% ± 4.78; p &lt; 0.001), FASN (−27.57% ± 7.97; p &lt; 0.01), ACOX1 (−16.00% ± 2.24; p &lt; 0.05), y GSK3B (−31.50% ± 3.64; p &lt; 0.05), mientras que no hay variación en la expresión de ARNm de RXRA y G6PC fue detectado (Figura complementaria S4B).</p>
+<p>HepG2 cells were transfected with 50 nM of mirVana mimic <em>hsa-miR-372-3p</em> (5’-AAAGUGCUGCGACAUUUGAGCGU-3’) along with a randomized sequence as a control (Negative Control 1). Twenty-four hours post-transfection, the cells were treated with oleic acid (0.5 mM) for 24 hours. mRNA expression levels were quantified using qPCR, with Cq values normalized to the <span class="math inline">\(\beta\)</span>-actin gene and expressed as relative gene expression levels compared to the negative control cells treated with olein acid, calculated using the <span class="math inline">\(2 -\triangle\triangle CT\)</span> method. The results are presented as mean relative gene expression ± standard error of the mean (SEM) (n = 3). Statistical significance was determined using a two-tailed Student’s t-test, with <em>p</em> &lt; 0.05 and **<em>p</em> &lt; 0.001 indicating significance. Abbreviations: NC (negative control), OA (oleic acid), <em>ACACA</em> (Acetyl-CoA Carboxylase Alpha), <em>DGAT2</em> (Diacylglycerol O-Acyltransferase 2), <em>FAS</em> (Fatty Acid Synthase), <em>PNPLA2</em> (Patatin-like phospholipase domain-containing protein 2), <em>PPARG</em> (Peroxisome Proliferator Activated Receptor Gamma).###########################################3</p>
+<p>Sí, los genes mencionados están implicados tanto en el metabolismo de la glucosa como en el metabolismo de los lípidos, aunque su función principal puede variar. A continuación se detalla la relación de cada uno de estos genes con ambos tipos de metabolismo:</p>
+<section id="peroxisome-proliferator-activated-receptor-gamma-pparg" class="level3">
+<h3 class="anchored" data-anchor-id="peroxisome-proliferator-activated-receptor-gamma-pparg"><strong>1. Peroxisome Proliferator Activated Receptor Gamma (PPARG):</strong></h3>
+<ul>
+<li><strong>Metabolismo de la glucosa:</strong>
+<ul>
+<li>Regula la sensibilidad a la insulina y el uso de glucosa en tejidos, especialmente en el tejido adiposo y muscular.</li>
+<li>Participa en la regulación de la gluconeogénesis y la captación de glucosa.</li>
+</ul></li>
+<li><strong>Metabolismo de lípidos:</strong>
+<ul>
+<li>Fundamental en la diferenciación de adipocitos y en la regulación del almacenamiento y movilización de lípidos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="patatin-like-phospholipase-domain-containing-2-pnpla2" class="level3">
+<h3 class="anchored" data-anchor-id="patatin-like-phospholipase-domain-containing-2-pnpla2"><strong>2. Patatin Like Phospholipase Domain Containing 2 (PNPLA2):</strong></h3>
+<ul>
+<li><strong>Metabolismo de la glucosa:</strong>
+<ul>
+<li>Aunque su función principal está en el metabolismo de lípidos, la lipólisis y la liberación de ácidos grasos pueden influir en la regulación del metabolismo de la glucosa, ya que los ácidos grasos pueden afectar la sensibilidad a la insulina.</li>
+</ul></li>
+<li><strong>Metabolismo de lípidos:</strong>
+<ul>
+<li>Principalmente implicado en la lipólisis, catalizando la hidrólisis de triglicéridos a ácidos grasos libres y glicerol.</li>
+</ul></li>
+</ul>
+</section>
+<section id="diacylglycerol-o-acyltransferase-2-dgat2" class="level3">
+<h3 class="anchored" data-anchor-id="diacylglycerol-o-acyltransferase-2-dgat2"><strong>3. Diacylglycerol O-Acyltransferase 2 (DGAT2):</strong></h3>
+<ul>
+<li><strong>Metabolismo de la glucosa:</strong>
+<ul>
+<li>A través de la regulación de la síntesis de triglicéridos, influye indirectamente en la homeostasis de la glucosa, ya que el almacenamiento y la movilización de grasas afectan la sensibilidad a la insulina.</li>
+</ul></li>
+<li><strong>Metabolismo de lípidos:</strong>
+<ul>
+<li>Es esencial para la síntesis de triglicéridos, promoviendo el almacenamiento de energía en forma de grasa.</li>
+</ul></li>
+</ul>
+</section>
+<section id="fas-cell-surface-death-receptor-fas" class="level3">
+<h3 class="anchored" data-anchor-id="fas-cell-surface-death-receptor-fas"><strong>4. Fas Cell Surface Death Receptor (FAS):</strong></h3>
+<ul>
+<li><strong>Metabolismo de la glucosa:</strong>
+<ul>
+<li>Su papel en la apoptosis puede influir en la homeostasis del tejido adiposo y en la regulación de la glucosa, aunque no está directamente involucrado en la regulación del metabolismo de la glucosa.</li>
+</ul></li>
+<li><strong>Metabolismo de lípidos:</strong>
+<ul>
+<li>Su activación puede estar relacionada con la muerte celular en adipocitos, afectando el balance de lípidos en el organismo.</li>
+</ul></li>
+</ul>
+</section>
+<section id="acetyl-coa-carboxylase-alpha-acaca" class="level3">
+<h3 class="anchored" data-anchor-id="acetyl-coa-carboxylase-alpha-acaca"><strong>5. Acetyl-CoA Carboxylase Alpha (ACACA):</strong></h3>
+<ul>
+<li><strong>Metabolismo de la glucosa:</strong>
+<ul>
+<li>La producción de malonil-CoA no solo es clave para la síntesis de ácidos grasos, sino que también regula la oxidación de ácidos grasos y, por lo tanto, puede influir en la disponibilidad de sustratos para la producción de energía a partir de glucosa.</li>
+</ul></li>
+<li><strong>Metabolismo de lípidos:</strong>
+<ul>
+<li>Es fundamental en la síntesis de ácidos grasos, actuando como un regulador clave en la biosíntesis de lípidos.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusión" class="level3">
+<h3 class="anchored" data-anchor-id="conclusión"><strong>Conclusión</strong></h3>
+<p>En resumen, estos genes están interrelacionados en el metabolismo de la glucosa y los lípidos, ya que el metabolismo lipídico puede influir en la homeostasis de la glucosa y viceversa. La regulación del metabolismo de los lípidos tiene un impacto significativo en la sensibilidad a la insulina y en el manejo de la glucosa en el organismo, lo que es especialmente relevante en el contexto de enfermedades metabólicas como la diabetes tipo 2 y la obesidad.</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

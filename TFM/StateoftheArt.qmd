@@ -1,0 +1,9 @@
+
+# State of the Art
+
+   - Review of previous studies identifying miRNAs associated with steatosis or similar metabolic diseases.
+   - Comparison of findings regarding miRNAs in adipose tissue versus other relevant tissues (liver, blood, etc.).
+   - Advances in the use of miRNAs as biomarkers for the diagnosis and prognosis of steatosis.
+   - Bioinformatics tools and databases for predicting miRNA targets and analyzing their functional pathways.
+
+---

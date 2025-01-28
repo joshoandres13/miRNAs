@@ -1,0 +1,29 @@
+
+# Hypothesis and Objectives
+## Hypothesis 
+The main hypothesis of this study is that microRNAs (miRNAs) derived from subcutaneous adipose tissue might play a key role in regulating metabolic processes involved in the development and progression of hepatic steatosis. These miRNAs can alter fundamental metabolic pathways by modulating genes associated with lipid metabolism in human hepatocytes.  
+
+More specifically, it is proposed that:  
+
+- miRNAs secreted or expressed in the subcutaneous adipose tissue of patients with obesity, are involved in intercellular communication that affects lipid accumulation in the liver, contributing to the development of hepatic steatosis.  
+- Bioinformatic analysis of RNAseq data might identify differentially expressed miRNAs in the subcutaneous adipose tissue of patients with obesity, associated with key metabolic pathways related to lipogenesis, lipolysis, and $\beta$-oxidation.  
+- The experimental modulation of specific miRNAs in *in vitro* cellular models of human hepatocytes, through overexpression or inhibition strategies, can reveal their functional role in processes related to hepatic steatosis.  
+- The functional characterization of these miRNAs enable their use as potential biomarkers or therapeutic targets for the prevention and treatment of obesity-associated hepatic steatosis.  
+
+## Main objective 
+To identify the function of microRNAs (miRNAs) expressed in subcutaneous adipose tissue in the regulation of metabolic processes involved in the development of hepatic steatosis, with the aim of these miRNAs could contitute potential biomarkers and therapeutic targets for obesity management.
+
+## Specific Objectives
+
+1. To analyze RNAseq data from subcutaneous adipose tissue of obese patients obtained from the FATe cohort (ADIPOFAT).
+
+2. To identify a set of differentially expressed miRNAs associated with metabolic pathways involved in lipogenesis, $\beta$-oxidation, and lipolysis related to hepatic steatosis.
+
+3. To establish in vitro cell models of human hepatocytes to study the function of candidate miRNAs.
+
+4. To modify the expression of specific miRNAs through transfection with synthetic analogs in an in vitro model of steatosis.
+
+5. To evaluate the expression of key genes related to lipogenesis, lipolysis, and $\beta$-oxidation in miRNA-transfected hepatocytes.
+
+6. To explore the potential of identified miRNAs as biomarkers or therapeutic targets for the treatment of obesity and its associated disorders.
+

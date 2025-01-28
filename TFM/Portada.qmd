@@ -1,0 +1,71 @@
+---
+#title: "Título del trabajo final de máster"
+#author: |
+#  Autor Apellido Apellido
+#  \vspace{3mm}  % Espacio adicional entre el autor y el director
+#  Directores:
+#  \begin{itemize}
+#    \item Director Apellido Apellido
+#    \item Director Apellido Apellido
+#  \end{itemize}
+#date: "2016"
+output: pdf_document
+header-includes:
+  - \usepackage{graphicx}  # Para incluir imágenes
+  - \usepackage{adjustbox}  # Para usar adjustbox
+  - \usepackage{fancyhdr}   # Para personalizar encabezados y pies de página
+  - \pagenumbering{gobble}  # Desactivar numeración de página en la portada
+  - \renewcommand{\thefootnote}{\arabic{footnote}}  # Formato de las notas al pie
+  - \setlength{\fboxsep}{3.4mm}  # Ajustar el espaciado de la caja
+  - \setlength{\baselineskip}{20pt}  # Ajustar la interlineado
+---
+
+```{=tex}
+\begin{titlepage}
+\centering
+\vspace*{-4mm}
+\includegraphics[width=69.62mm]{/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA/TFM/Imagenes/logo.png}  % Incluir logo
+
+\vspace{17mm}
+
+\fontsize{28pt}{28pt}\selectfont
+\adjustbox{minipage=14.4cm,cfbox=blue,center}{\begin{center} Trabajo Fin de Máster \end{center}}
+
+\vspace{18.7mm}
+
+\fontsize{20pt}{20pt}\selectfont
+Función de los microARNs del tejido adiposo subcutáneo en la regulación de la esteatosis hepática.
+
+\baselineskip 20pt
+Role of microRNAs from subcutaneous adipose tissue in the regulation of hepatic steatosis.
+
+
+\vspace*{2cm} 
+\baselineskip 36pt
+\fontsize{12pt}{12pt}\selectfont
+\center{\rm  Autor}
+
+\vspace*{3.65mm} 
+\fontsize{18pt}{18pt}\selectfont
+\center{José Andrés Castillo Rivas}
+
+\vspace*{1cm}
+\baselineskip 36pt
+\fontsize{12pt}{12pt}\selectfont
+\center{\rm  Directores}
+
+\vspace*{3.56mm}
+\fontsize{14pt}{14pt}\selectfont
+\center{Silvia Lorente Cebrián - UNIZAR}
+\center{José Miguel Arbonés Mainar - IACS}
+
+\vspace*{16.45mm}
+\fontsize{12pt}{12pt}\selectfont
+\center{Master in Biophysics and Quantitative Biotechnology}
+
+\vspace*{3.56mm}
+\fontsize{12pt}{12pt}\selectfont
+\center{FACULTAD DE CIENCIAS}\\
+2024–2025
+\end{titlepage}
+```

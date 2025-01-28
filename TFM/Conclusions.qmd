@@ -1,0 +1,12 @@
+
+# Conclusions
+
+1. MiRNAs derived from subcutaneous adipose tissue play a fundamental role in regulating metabolic processes related to hepatic steatosis, suggesting that their expression may influence the progression of liver diseases.
+
+2. Specific miRNAs, such as *hsa-miR-372-3p* and *hsa-miR-144-3p*, have been identified as potential biomarkers for the diagnosis and prognosis of hepatic steatosis and its complications, opening new opportunities for personalized medicine.
+
+3. This study enhances the understanding of the relationship between adipose tissue and the liver, highlighting how miRNAs may be involved in regulating lipid accumulation and disease progression.
+
+4. Further investigations are needed to validate these findings and explore the therapeutic potential of miRNAs in treating hepatic steatosis and other metabolic disorders.
+
+5. The results of this study contribute to the current understanding of metabolic health, suggesting that modulation of miRNAs may offer novel strategies to address health issues related to obesity and liver diseases.

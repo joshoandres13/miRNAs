@@ -1,0 +1,241 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={tables},
+  pdfauthor={J. Andres},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{tables}
+\author{J. Andres}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}
+  >{\centering\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2000}}@{}}
+\caption{Clinical characteristics of the FATe cohort and their
+statistical differences- Data are presented as number (\%) or median
+{[}interquartile range{]}. Differences between groups were tested with
+the Mann--Whitney U test and chi-square test; BMI, Body Mass Indx
+(kg/m²); NASH, Non-alcoholic steatohepatitis}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Overall (n = 78)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Female (n=59)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Male (n=19)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{p test}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Overall (n = 78)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Female (n=59)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Male (n=19)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{p test}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Age (years)} & 49 {[}41.0;55.0{]} & 47 {[}41.0;54.0{]} & 51
+{[}42.0;56.0{]} & 0.408 \\
+\textbf{BMI} & 46 {[}42.0;50.0{]} & 45 {[}41.0;.50.0{]} & 47
+{[}42.0;51.0{]} & 0.284 \\
+\textbf{NAFLD Activity Score Category} & & & & 0.510 \\
+0 & 22 (28.2\%) & 16 (27.1\%) & 6 (31.6\%) & \\
+1 & 16 (20.5\%) & 13 (22.0\%) & 3 (15.8\%) & \\
+2 & 17 (21.8\%) & 14 (23.7\%) & 3 (15.8\%) & \\
+3 & 9 (11.5\%) & 7 (11.9\%) & 2 (10.5\%) & \\
+4 & 9 (11.5\%) & 7 (11.9\%) & 2 (10.5\%) & \\
+\textgreater= 5 & 5 ( 6.4\%) & 2 ( 3.4\%) & 3 (15.8\%) & \\
+\textbf{Hepatic Steatosis Scale} & & & & 0.818 \\
+\textless{} 5\% & 28 (35.9\%) & 21 (35.65\%) & 7 (36.8\%) & \\
+5-33\% & 25 (32.1\%) & 20 (33.9\%) & 5 (26.3\%) & \\
+\textgreater{} 33-66\% & 20 (25.6\%) & 15 (25.4\%) & 5 (26.3\%) & \\
+\textgreater{} 66\% & 5 ( 6.4\%) & 3 ( 5.1\%) & 2 (10.5\%) & \\
+\textbf{Hepatocytic ballooning Category} & & & & 0.489 \\
+None & 58 (74.4\%) & 45 (76.3\%) & 13 (68.4\%) & \\
+Few cells & 13 (16.7\%) & 10 (16.9\%) & 3 (15.8\%) & \\
+Many cells & 7 ( 9.0\%) & 4 ( 6.8\%) & 3 (15.8\%) & \\
+\textbf{Lobular Imflammation Category} & & & & 0.596 \\
+No foci & 52 (66.7\%) & 41 (69.5\%) & 11 (57.9\%) & \\
+\textless{} 2 foci/200x & 19 (24.4\%) & 14 (23.7\%) & 5 (26.3\%) & \\
+2-4 foci/200x & 4 ( 5.1\%) & 2 ( 3.4\%) & 2 (10.5\%) & \\
+\textgreater{} 4 foci/200x & 3 ( 3.8\%) & 2 ( 3.4\%) & 1 ( 5.3\%) & \\
+\textbf{Diabetes} & & & & 1.000 \\
+Yes (\%) & 21 (26.9\%) & 16 (27.1\%) & 5 (26.3\%) & \\
+No (\%) & 57 (73.1\%) & 43 (72.9\%) & 14 (73.7\%) & \\
+\textbf{Hyperlipidemia} & & & & 0.006 \\
+Yes (\%) & 27 (34.6\%) & 15 (25.4\%) & 12 (63.2\%) & \\
+No (\%) & 51 (65.4\%) & 44 (74.6\%) & 7 (36.8\%) & \\
+\textbf{NASH} & & & & 0.249 \\
+NASH (\%) & 12 (15.4\%) & 7 (11.9\%) & 5 (26.3\%) & \\
+Non-NASH (\%) & 66 (84.6\%) & 52 (88.1\%) & 14 (73.7\%) & \\
+\end{longtable}
+
+
+
+
+\end{document}

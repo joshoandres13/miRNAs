@@ -320,3 +320,62 @@ write.csv(results, "DEGS_new.csv")
 # Display top differentially expressed miRNAs
 
 ```
+
+
+
+###################################################################################
+
+```{r}
+pseudoCount1<-log2(counts(mirna_data_steatosis)+1)
+library(reshape2)
+df1<-melt(pseudoCount1)
+df1<-data.frame(df1,Condition=substr(df1$Var2,1,7))
+colnames(df1)<-c("isomiR","sample","value","Condition")
+library(ggplot2)
+ggplot(df1,aes(x=sample,y=value,fill=Condition))+geom_boxplot()+xlab("") +
+  ylab(expression(log[2](count+1))) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 90 , hjust = 1, size = 5),
+    axis.text.y = element_text(angle = 0 , hjust = 1, size = 7),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "none",
+    legend.margin = margin(t = -20),  # Ajusta el margen superior de la leyenda
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+)
+
+ggplot(df1,aes(x=value,colour=sample,fill=sample))+ylim(c(0,0.15)) +
+  geom_density(alpha=0.2,size=1.25)+
+  facet_wrap(~Condition)+theme(legend.position="none")+
+  xlab(expression(log[2](count+1)))
+```
+
+
+
+```{r}
+x<-pseudoCount1[,1]
+y<-pseudoCount1[,2]
+M<-x-y
+A<-(x+y)/2
+dfMA<-data.frame(A,M)
+ggplot(dfMA,aes(x=A,y=M)) +
+  geom_point(size=1.5,alpha=1/5)+geom_hline(yintercept=0,color="blue3") +
+  stat_smooth(se=FALSE,method="loess",color="red3")
+```
+
+
+```{r}
+```
+
+
+
+```{r,fig.width=8, fig.height=4, fig.pos="H"}
+# table(colData(dds)$Esteatosis)
+# Visualizar resultados
+#| fig-cap: "www"
+hist(resultsLRT$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
+
+```

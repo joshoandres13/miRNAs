@@ -1,0 +1,1663 @@
+---
+title: "Figures-Joined"
+author: "J. Andrés"
+format: pdf
+editor: visual
+---
+
+## Sequence Quality
+
+```{r}
+::::: {#fig-fstqc_quality_control .figure .layout-ncol-1 .layout-nrow-2 fig-cap="FastQC (v0.12.1) Analysis. *A* and *B*: Mean quality values of sequences across all bases after and before using fastp (v0.23.4); *C* and *D*: Per Sequence Quality Scores across all bases after and before using fastp; *E* and *F*: Per Sequence GC Content Raw after and before using fastp; *G* and *H*: Read N content after and before using fastp."}
+# Cargar librerías
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+library(scales)
+library(gridExtra)
+library(tidyverse)
+
+################################################################################
+### FastQC: Quality Histograms Raw
+# Cargar los datos desde un archivo .tsv
+file_path_sq <- "data/fastqc_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+data_sq <- read.delim(file_path_sq, header = TRUE, sep = "\t")
+# Renombrar las columnas
+colnames(data_sq) <- c("Sample", as.character(1:(ncol(data_sq) - 1))) 
+# Transformar los datos de formato ancho a formato largo
+data_long_sq<- pivot_longer(data_sq, cols = -Sample, names_to = "bp", values_to = "Contenido")
+# Convertir el contenido a porcentajes
+data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+# Filtrar solo las posiciones de 1 a 30
+data_long_sq <- data_long_sq[data_long_sq$bp %in% as.character(1:49), ]
+
+################################################################################
+### FastQC: Quality Histograms Trimmed
+# Cargar los datos desde un archivo .tsv
+file_path_sqt <- "data/fastqc-1_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+data_sqt <- read.delim(file_path_sqt, header = TRUE, sep = "\t")
+# Renombrar las columnas
+colnames(data_sqt) <- c("Sample", as.character(1:(ncol(data_sqt) - 1))) 
+# Transformar los datos de formato ancho a formato largo
+data_long_sqt <- pivot_longer(data_sqt, cols = -Sample, names_to = "bp", values_to = "Contenido")
+# Convertir el contenido a porcentajes
+data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+# Filtrar solo las posiciones de 1 a 30
+data_long_sqt <- data_long_sqt[data_long_sqt$bp %in% as.character(1:49), ]
+```
+
+```{r PLOT qualityhistograms, fig.width=8, fig.height=3,fig.pos='H'}
+# Primer gráfico: FastQC: Quality Histograms Raw
+p1 <- ggplot(data_long_sq, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(title = "A",
+       subtitle = "Raw",
+       x = "Position (bp)",
+       y = "Phred Score") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+
+# Segundo gráfico: FastQC: Quality Histograms (trimmed)
+p2 <- ggplot(data_long_sqt, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(title = "B",
+       subtitle = "Trimmed",
+       x = "Position (bp)",
+       y = "") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+# Unir los gráficos en una fila
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+```{r data per_sequence_quality_score}
+# Cargar los datos desde un archivo .tsv
+file_path_psq <- "data/fastqc_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psq <- read.delim(file_path_psq, header = TRUE, sep = "\t")
+  
+file_path_psqs <- "data/fastqc-1_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psqs <- read.delim(file_path_psqs, header = TRUE, sep = "\t")
+  
+################################################################################
+
+long_data_psq <- data_psq %>%
+pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+  
+long_data_psqs <- data_psqs %>%
+pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+```
+
+```{r PLOT per_sequence_quality_score, fig.width=8, fig.height=3,fig.pos='H'}
+# Primer gráfico
+p3 <- ggplot(long_data_psq, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(title = "C",
+       subtitle = "Raw",
+       x = "Mean Sequence Quality (Phred Score)",
+       y = "Count") +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() +
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+
+# Segundo gráfico
+p4 <- ggplot(long_data_psqs, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(title = "D",
+       subtitle = "Trimmed",
+       x = "Mean Sequence Quality (Phred Score)",
+       y = "") +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() + 
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+# Unir los gráficos en una fila
+grid.arrange(p3, p4, ncol = 2)
+```
+
+```{r data GC}
+### FastQC: Per Sequence GC Content Raw
+# Cargar los datos desde un archivo .tsv
+file_path_gc <- "data/fastqc_per_sequence_gc_content_plot.tsv"  # Cambia esto por la ruta real
+data_gc <- read.delim(file_path_gc, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_gc) <- c("Sample", as.character(1:(ncol(data_gc) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_gc <- pivot_longer(data_gc, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Convertir el contenido a porcentajes
+data_long_gc$Contenido <- data_long_gc$Contenido  # Convertir a porcentaje
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_gc <- data_long_gc[data_long_gc$bp %in% as.character(1:101), ]
+
+################################################################################
+
+### FastQC: QPer Sequence GC Content Trimmed
+
+# Cargar los datos desde un archivo .tsv
+file_path_gct <- "data/fastqc-1_per_sequence_gc_content_plot.tsv"  # Cambia esto por la ruta real
+data_gct <- read.delim(file_path_gct, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_gct) <- c("Sample", as.character(1:(ncol(data_gct) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_gct <- pivot_longer(data_gct, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_gct <- data_long_gct[data_long_gct$bp %in% as.character(1:101), ]
+```
+
+```{r PLOT GC, fig.width=8, fig.height=3,fig.pos='H'}
+# Primer gráfico: FastQC: Quality Histograms Raw
+p5 <- ggplot(data_long_gc, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_line() +
+  labs(title = "E",
+       subtitle = "Raw",
+       x = "% GC",
+       y = "Percentage") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 40), labels = scales::percent_format(scale = 1)) +  # Mantén los límites sin formato de porcentaje
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+
+# Segundo gráfico: FastQC: Quality Histograms (trimmed)
+p6 <- ggplot(data_long_gct, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_line() +
+  labs(title = "F",
+       subtitle = "Trimmed",
+       x = "% GC",
+       y = "") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 40), labels = scales::percent_format(scale = 1)) +  # Establecer límites del eje Y hasta 5%
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+
+# Unir los gráficos en una fila
+grid.arrange(p5, p6, ncol = 2)
+
+```
+
+```{r data N}
+### FastQC: Per Sequence GC Content Raw
+
+# Cargar los datos desde un archivo .tsv
+file_path_n <- "data/fastqc_per_base_n_content_plot.tsv"  # Cambia esto por la ruta real
+data_n <- read.delim(file_path_n, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_n) <- c("Sample", as.character(1:(ncol(data_n) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_n <- pivot_longer(data_n, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Convertir el contenido a porcentajes
+data_long_n$Contenido <- data_long_n$Contenido  # Convertir a porcentaje
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_n <- data_long_n[data_long_n$bp %in% as.character(1:50), ]
+
+################################################################################
+
+### FastQC: QPer Sequence GC Content Trimmed
+
+# Cargar los datos desde un archivo .tsv
+file_path_nt <- "data/fastqc-1_per_base_n_content_plot.tsv"  # Cambia esto por la ruta real
+data_nt <- read.delim(file_path_nt, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_nt) <- c("Sample", as.character(1:(ncol(data_nt) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_nt <- pivot_longer(data_nt, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_nt <- data_long_nt[data_long_nt$bp %in% as.character(1:50), ]
+```
+
+```{r PLOT n, fig.width=8, fig.height=3,fig.pos='H'}
+p7 <- ggplot(data_long_n, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_line() +
+  labs(title = "G",
+       subtitle = "Raw",
+       x = "Position in read (bp)",
+       y = "Percentage N-Count") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 5), labels = scales::percent_format(scale = 1)) +  # Mantén los límites sin formato de porcentaje
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+# Segundo gráfico: FastQC: Quality Histograms (trimmed)
+p8 <- ggplot(data_long_nt, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  geom_line() +
+  labs(title = "H",
+       subtitle = "Trimmed",
+       x = "Position in read (bp)",
+       y = "") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 5), labels = scales::percent_format(scale = 1)) +  # Establecer límites del eje Y hasta 5%
+  scale_color_viridis_d(option = "Cividis") +  # Aplicar la paleta Cividis
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 1, size = 9),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 9),
+    axis.title = element_text(size = 10),
+    plot.subtitle = element_text(size = 10, hjust = 0.5 ),
+    plot.title = element_text(size = 12, face = "bold"),
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10),
+    legend.position = "none"
+  )
+# Unir los gráficos en una fila
+grid.arrange(p7, p8, ncol = 2)
+
+```
+
+:::::
+
+### Sequence related
+
+```{r data QC }
+# Libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Leer el archivo .txt
+qc_mirna <- read.table("data/mirtrace_qc_plot.tsv", header = TRUE, sep = "\t")
+
+# Transformar los datos al formato largo
+data_long <- qc_mirna %>%
+  pivot_longer(
+    cols = -Sample,
+    names_to = "Category",
+    values_to = "Reads"
+  )
+```
+
+```{r PLOT bar}
+stacked_bar <- ggplot(data_long, aes(x = Sample, y = Reads, fill = Category)) +
+  geom_bar(stat = "identity") +  # Barras apiladas
+  labs(
+    title = "",
+    x = "Sample",
+    y = "# Reads",
+    fill = "Categoría"
+  ) +
+  scale_fill_discrete(
+    labels = c(
+      "Reads...18.nt.after.adapter.removal" = "Reads >= 18 nt",
+      "Reads.without.adapter" = "Reds without adaptador",
+      "Reads...18.nt.after.adapter.removal.1" = "Reads < 18 nt",
+      "Reads.with.low.complexity" = "Reads los complexity",
+      "Reads.with.low.PHRED.score" = "Reads low PHRED"
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),  # Texto del eje X en formato vertical
+    legend.position = "bottom"  # Leyenda debajo del gráfico
+  )
+```
+
+```{r violin plot, fig.width=8, fig.height=4}
+# Visualizar resultados
+#| label: fig-mirnaqc
+#| fig-cap: "miRTrace: Quality control for small RNA sequencing data"
+
+h <- ggplot(data_long, aes(x = Category, y = Reads, fill = Category)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +  # Dibujar los violines
+  geom_boxplot(width = 0.2, outlier.color = "red", outlier.size = 2, alpha = 0.5) +  # Agregar el boxplot
+  labs(
+    title = "",
+    x = "",
+    y = "Number of Reads"
+  ) +
+  scale_x_discrete(
+    labels = c(
+      "Reads...18.nt.after.adapter.removal" = "Reads >= 18 nt",
+      "Reads.without.adapter" = "Reds without adaptador",
+      "Reads...18.nt.after.adapter.removal.1" = "Reads < 18 nt",
+      "Reads.with.low.complexity" = "Reads los complexity",
+      "Reads.with.low.PHRED.score" = "Reads low PHRED"
+    )
+  ) +
+  scale_y_continuous(
+    labels = function(x) sprintf("%.1fM", x / 1e6)  # Formatear el eje Y en millones
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )  
+```
+
+```{r}
+library(tidyr)
+library(ggplot2)
+
+# Cargar los datos desde un archivo .tsv
+file_path_sam <- "data/samtools_alignment_plot.tsv"  # Cambia esto por la ruta real
+data_sam <- read.delim(file_path_sam, header = TRUE, sep = "\t")
+head(data_sam)
+
+
+# Calcular el porcentaje de lecturas mapeadas
+data_sam <- data_sam %>%
+  mutate(Total = Mapped..with.MQ.0. + Unmapped,
+         Percent_Mapped = (Mapped..with.MQ.0. / Total) * 100)
+
+# Transformar el dataframe al formato largo
+alignment_data_long <- pivot_longer(data_sam, 
+                                    cols = c(Mapped..with.MQ.0., Unmapped, Total), 
+                                    names_to = "Alignment_Type", 
+                                    values_to = "Count")
+
+# Crear boxplots usando ggplot2
+ggplot(alignment_data_long, aes(x = Alignment_Type, y = Count, fill = Alignment_Type)) +
+  geom_boxplot() +
+  labs(title = "Boxplots de reads mapeados y no mapeados",
+       x = "Tipo de Alineación",
+       y = "Conteo de Reads") +
+  theme_minimal()
+
+```
+
+```{r}
+# Crear gráfico de barras para el porcentaje mapeado
+ggplot(data_sam, aes(x = reorder(Sample, -Percent_Mapped), y = Percent_Mapped)) +
+  geom_boxplot() +
+  labs(title = "Boxplots de reads mapeados y no mapeados",
+       x = "Tipo de Alineación",
+       y = "Conteo de Reads") +
+  theme_minimal()
+
+```
+
+## Mirtrace
+
+::: {#fig-mirtrace .figure .layout-ncol-1 .layout-nrow-3 fig-cap="miRTrace (v1.0.1) Analysis. *A*: Quality control for small RNA sequencing data; *B*: RNA Categories; *C*: Contamination Check"}
+```{r QC,fig.width=8, fig.height=2.5, fig.pos="H"}
+# Cargar datos
+qc_mirna <- read.table("data/mirtrace_qc_plot.tsv", header = TRUE, sep = "\t")
+
+# Transformación de los datos
+data_long <- qc_mirna %>%
+  pivot_longer(cols = -Sample, names_to = "Category", values_to = "Reads") %>%
+  group_by(Sample) %>%
+  mutate(Proportion = Reads / sum(Reads)) %>%  # Calcular proporciones por muestra
+  ungroup()
+
+# Gráfico de barras apiladas al 100%
+ggplot(data_long, aes(x = Sample, y = Proportion, fill = Category)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.9) +
+  labs(
+    title = "A",
+    x = "",
+    y = "Reads (%)"
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(option = "cividis", 
+                       labels = c(
+                         "Reads...18.nt.after.adapter.removal" = "Adapter detected, insert >= 18 nt",
+                         "Reads.without.adapter" = "Adapter not detected",
+                         "Reads...18.nt.after.adapter.removal.1" = "Length < 18 nt",
+                         "Reads.with.low.complexity" = "Low complexity",
+                         "Reads.with.low.PHRED.score" = "Low PHRED score"
+                       ))+
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 5),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 7),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "bottom",
+    legend.margin = margin(t = -20),  # Ajusta el margen superior de la leyenda
+  )
+```
+
+```{r RNA Categories, fig.width=8, fig.height=3}
+# Gráfico 2: Tipos de RNA
+tipos_rna <- read.table("data/mirtrace_rna_categories.txt", header = TRUE, sep = "\t")
+tipos_rna_long <- tipos_rna %>%
+  pivot_longer(cols = c(miRNA, rRNA, tRNA, Artifact, Unknown), 
+               names_to = "Tipo_RNA", 
+               values_to = "Conteo") %>%
+  group_by(Sample) %>%
+  mutate(Proporcion = Conteo / sum(Conteo)) %>% 
+  ungroup()
+
+#Plot
+ggplot(tipos_rna_long, aes(x = Sample, y = Proporcion, fill = Tipo_RNA)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.9) +
+  labs(
+    title = "B",
+    x = "",
+    y = "Quality filtered reads (%)"
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(option = "cividis") +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 90 , hjust = 1, size = 5),
+    axis.text.y = element_text(angle = 0 , hjust = 1, size = 7),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "bottom",
+    legend.margin = margin(t = -20),  # Ajusta el margen superior de la leyenda
+    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+  )
+```
+
+```{r Contamination Check, fig.width=8, fig.height=3.5}
+# Gráfico 3: Contaminación
+mirtrace_data <- read.table("data/mirtrace_contamination_check_plot.tsv", header = TRUE, sep = "\t")
+
+# Transformación de los datos
+data_long <- mirtrace_data %>%
+  pivot_longer(cols = c("gymnosperms", "monocots", "dicots", "nematode", 
+                        "insects", "lophotrochozoa", "fish", "rodents", 
+                        "primates", "bryophytes", "birds_reptiles"), 
+               names_to = "Group", 
+               values_to = "Conteo") %>%
+  group_by(Sample) %>%
+  mutate(Proporcion = Conteo / sum(Conteo)) %>% 
+  ungroup()
+
+# Gráfico de barras apiladas al 100%
+ggplot(data_long, aes(x = Sample, y = Proporcion, fill = Group)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.9) +
+  labs(
+    title = "C",
+    x = "",
+    y = "Clade-specific miRNAs (%)"
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(option = "cividis", 
+                       labels = c(
+      "gymnosperms" = "Gymnosperms",
+      "monocots" = "Monocots",
+      "dicots" = "Dicots",
+      "nematode" = "Nematode",
+      "insects" = "Insects",
+      "lophotrochozoa" = "Lophotrochozoa",
+      "fish" = "Fish",
+      "rodents" = "Rodents",
+      "primates" = "Primates",
+      "bryophytes" = "Bryophytes",
+      "birds_reptiles" = "Birds & Reptiles"
+    )) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 5),
+    axis.text.y = element_text(angle = 0, hjust = 1, size = 7),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "bottom",
+    legend.margin = margin(t = -20),  # Ajusta el margen superior de la leyenda
+    legend.spacing.x = unit(0.3, "cm"),
+    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+  ) +
+  guides(fill = guide_legend(nrow = 2))  # Forzar que la leyenda tenga 2 filas
+
+```
+:::
+
+### Mirtrace related
+
+```{r join, fig.width=6, fig.height=6}
+# Visualizar resultados
+#| label: fig-join
+#| fig-cap: "miRTrace"
+#| fig-subcap: 
+#|   - "raw"
+#|   - "trimmed"
+#|   - "fuck"
+#| layout-ncol: 1
+#| layout-nrow: 3
+
+# Gráfico 1: QC miRNA
+qc_mirna <- read.table("data/mirtrace_qc_plot.tsv", header = TRUE, sep = "\t")
+data_long <- qc_mirna %>%
+  pivot_longer(cols = -Sample, names_to = "Category", values_to = "Reads")
+
+ggplot(data_long, aes(x = Category, y = Reads, fill = Category)) + 
+  geom_violin(trim = FALSE, alpha = 0.7) +  # Dibujar los violines
+  geom_boxplot(width = 0.2, outlier.color = "red", outlier.size = 2, alpha = 0.5) +  # Agregar el boxplot
+  labs(
+    title = "a) Quality control for small RNA sequencing data",
+    x = "",
+    y = "Number of Reads"
+  ) +
+  scale_x_discrete(
+    labels = c(
+      "Reads...18.nt.after.adapter.removal" = "Reads >= 18 nt",
+      "Reads.without.adapter" = "Reds without adaptador",
+      "Reads...18.nt.after.adapter.removal.1" = "Reads < 18 nt",
+      "Reads.with.low.complexity" = "Reads los complexity",
+      "Reads.with.low.PHRED.score" = "Reads low PHRED"
+    )
+  ) +
+  scale_y_continuous(
+    labels = function(x) sprintf("%.1fM", x / 1e6)  # Formatear el eje Y en millones
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  ) 
+
+# Gráfico 2: Tipos de RNA
+tipos_rna <- read.table("data/mirtrace_rna_categories.txt", header = TRUE, sep = "\t")
+tipos_rna_long <- tipos_rna %>%
+  pivot_longer(cols = c(miRNA, rRNA, tRNA, Artifact, Unknown), names_to = "Tipo_RNA", values_to = "Conteo")
+tipos_rna_long <- tipos_rna_long %>% mutate(Conteo_millones = Conteo / 1e6)
+ggplot(tipos_rna_long, aes(x = Tipo_RNA, y = Conteo, fill = Tipo_RNA)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2) +
+  labs(
+    title = "b) RNA Categories",
+    x = "",
+    y = "Number of reads"
+  ) +
+  theme_minimal(base_size = 14) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+
+# Gráfico 3: Contaminación
+mirtrace_data <- read.table("data/mirtrace_contamination_check_plot.tsv", header = TRUE, sep = "\t")
+data_long <- pivot_longer(mirtrace_data, -Sample, names_to = "Group", values_to = "Value")
+ggplot(data_long, aes(x = Group, y = Value, fill = Group)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +  # Dibujar los violines
+  geom_boxplot(width = 0.2, outlier.color = "red", outlier.size = 2, alpha = 0.5) +  # Agregar el boxplot
+  labs(
+    title = "c) Contamination Check",
+    x = "",
+    y = "Number of miRNA detected"
+  ) +
+  scale_x_discrete(
+    labels = c(
+      "gymnosperms" = "Gymnosperms",
+      "monocots" = "Monocots",
+      "dicots" = "Dicots",
+      "nematode" = "Nematode",
+      "insects" = "Insects",
+      "lophotrochozoa" = "Lophotrochozoa",
+      "fish" = "Fish",
+      "rodents" = "Rodents",
+      "primates" = "Primates",
+      "bryophytes" = "Bryophytes",
+      "birds_reptiles" = "Birds & Reptiles"
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+
+# Combinar gráficos con layout deseado
+#combined_plot <- p1 / p2 / p3
+
+# Mostrar y guardar el gráfico combinado
+#print(combined_plot)
+# ggsave("combined_plot.png", plot = combined_plot, width = 12, height = 10, dpi = 300)
+```
+
+```{r data mirbase}
+# Libraries
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(scales)
+
+# Leer el archivo .txt
+tipos_rna <- read.table("data/mirtrace_rna_categories.txt", header = TRUE, sep = "\t")
+
+# Transformar al formato largo
+tipos_rna_long <- tipos_rna %>%
+  pivot_longer(cols = c(miRNA, rRNA, tRNA, Artifact, Unknown), 
+               names_to = "Tipo_RNA", 
+               values_to = "Conteo")
+
+# Transformar a escala de millones
+tipos_rna_long <- tipos_rna_long %>% mutate(Conteo_millones = Conteo / 1e6)
+
+```
+
+```{r PLOT mirbase, fig.width=4, fig.height=4}
+# Visualizar resultados
+#| label: fig-rnac
+#| fig-cap: "miRTrace: RNA Categories"
+
+rnatypes <- ggplot(tipos_rna_long, aes(x = Tipo_RNA, y = Conteo, fill = Tipo_RNA)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2) +
+  labs(
+    x = "",
+    y = "Number of reads"
+  ) +
+  theme_minimal(base_size = 14) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )  
+```
+
+```{r PLOT contamination,fig.width=4, fig.height=4}
+mirtrace_data <- read.table("data/mirtrace_contamination_check_plot.tsv", header = TRUE, sep = "\t")
+# Transformar los datos a formato largo
+data_long <- pivot_longer(mirtrace_data, -Sample, names_to = "Group", values_to = "Value")
+
+# Visualizar resultados
+#| label: fig-contamination
+#| fig-cap: "miRTrace: Contamination Check"
+#| 
+#  PLot
+l <- ggplot(data_long, aes(x = Group, y = Value, fill = Group)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +  # Dibujar los violines
+  geom_boxplot(width = 0.2, outlier.color = "red", outlier.size = 2, alpha = 0.5) +  # Agregar el boxplot
+  labs(
+    title = "",
+    x = "",
+    y = "Number of miRNA detected"
+  ) +
+  scale_x_discrete(
+    labels = c(
+      "gymnosperms" = "Gymnosperms",
+      "monocots" = "Monocots",
+      "dicots" = "Dicots",
+      "nematode" = "Nematode",
+      "insects" = "Insects",
+      "lophotrochozoa" = "Lophotrochozoa",
+      "fish" = "Fish",
+      "rodents" = "Rodents",
+      "primates" = "Primates",
+      "bryophytes" = "Bryophytes",
+      "birds_reptiles" = "Birds & Reptiles"
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 7),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 9),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 10),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )  
+```
+
+############################################### 
+
+############################################################################### 
+
+# TABLA 1
+
+############################################################################### 
+
+# Cargar las librerías necesarias
+
+library(dplyr) library(readr) library(tibble) library(knitr) library(kableExtra) library(tidyverse) library(tableone)
+
+# Definir el vector con los nombres
+
+data_nfcore \<- c("SC_284", "SC_286", "SC_287", "SC_288", "SC_290", "SC_292", "SC_293", "SC_294", "SC_296","SC_298", "SC_301", "SC_303", "SC_307", "SC_309", "SC_312", "SC_313", "SC_314", "SC_315","SC_318", "SC_319", "SC_321", "SC_325", "SC_330", "SC_331", "SC_334", "SC_337", "SC_340","SC_343", "SC_344", "SC_345", "SC_346", "SC_350", "SC_359", "SC_360", "SC_363", "SC_366","SC_371", "SC_372", "SC_373", "SC_375", "SC_380", "SC_387", "SC_390", "SC_394", "SC_398","SC_400", "SC_403", "SC_408", "SC_409", "SC_410", "SC_413", "SC_414", "SC_417", "SC_421","SC_428", "SC_429", "SC_433", "SC_439", "SC_443", "SC_457", "SC_458", "SC_459", "SC_460","SC_461", "SC_471", "SC_472", "SC_473", "SC_479", "SC_484", "SC_485", "SC_486", "SC_487","SC_488", "SC_491", "SC_492", "SC_496", "SC_497", "SC_498")
+
+# Leer el archivo CSV
+
+mdata \<- read_csv("\~/Documentos/TFM/mirna_analysis/input/20241104-metadata4JAndres.csv") mdata \<- mdata \|\> mutate(prefix = paste0("SC\_", muestra), .before = 1) \|\> mutate(sexo = gsub("hombre", "male", sexo), sexo = gsub("mujer", "female", sexo)) \|\> column_to_rownames("prefix") \|\> select(muestra, sexo, edad, imc, Steatosis, nash, LobularInflamm, Diabetes, Ballooning, NAS, Hyperlipidemia, SAOS)
+
+mdata \<- mdata\[rownames(mdata) %in% data_nfcore, \]
+
+mdata$sexo <-as.factor(mdata$sexo)
+
+mdata \<- mdata %\>% rename("Age" = edad, "Body Mass Index" = imc, "NAFLD Activity Score" = NAS, "Hepatic Steatosis" = Steatosis, "Hepatocytic ballooning" = Ballooning, "Lobular Imflammation" = LobularInflamm, "Non-alcoholic steatohepatitis (NASH)" = nash, "Diabetes" = Diabetes, "Hyperlipidemia" = Hyperlipidemia, "Obstructive sleep apnea syndrome" = SAOS)
+
+variables \<- c("Age","Body Mass Index","NAFLD Activity Score", "Hepatic Steatosis", "Hepatocytic ballooning", "Lobular Imflammation", "Non-alcoholic steatohepatitis (NASH)", "Diabetes", "Hyperlipidemia", "Obstructive sleep apnea syndrome")
+
+# 1. Crear tabla general (todas las muestras, sin estratificación)
+
+tabla_general \<- CreateTableOne(vars = variables, data = mdata) print(tabla_general) summary(tabla_general)
+
+# 2. sex tabla estratificada por sexo
+
+tabla_sexo \<- CreateTableOne(vars = variables, strata = "sexo", data = mdata, test = TRUE)
+
+summary(tabla_sexo) print(tabla_sexo)
+
+# 3. Combinar ambas tablas en un solo objeto
+
+tabla_combinada \<- list("Overall" = print(tabla_general, showAllLevels = TRUE), "By Sex" = print(tabla_sexo, showAllLevels = TRUE, test = TRUE))
+
+### IQR
+
+iqr_col \<- sapply(mdata\[sapply(mdata,is.numeric)\], IQR) print(iqr_col)
+
+library(dplyr)
+
+# Calcular el IQR para hombres
+
+iqr_hombres \<- mdata %\>% filter(sexo == "male") %\>% summarise(IQR = IQR(`Body Mass Index`, na.rm = TRUE)) %\>% pull(IQR)
+
+# Calcular el IQR para mujeres
+
+iqr_mujeres \<- mdata %\>% filter(sexo == "female") %\>% summarise(IQR = IQR(`Body Mass Index`)) %\>% pull(IQR)
+
+# Imprimir resultados
+
+print(paste("IQR del BMI para hombres:", iqr_hombres)) print(paste("IQR del BMI para mujeres:", iqr_mujeres))
+
+################### 
+
+# Calcular el IQR para hombres
+
+iqr_hombres_age \<- mdata %\>% filter(sexo == "male") %\>% summarise(IQR = IQR(edad)) %\>% pull(IQR)
+
+# Calcular el IQR para mujeres
+
+iqr_mujeres_age \<- mdata %\>% filter(sexo == "female") %\>% summarise(IQR = IQR(edad)) %\>% pull(IQR)
+
+############################################################################### 
+
+\`\`{r} library(dplyr) library(kableExtra)
+
+table_1 \<- read.csv("tabla_1.csv") colnames(table_1) \<- c("", "Overall (n=78)", "Female (n=59)", "Male (n=19)", "p Test")
+
+table_1\[4, 5\] \<- "" \# Cambiar valor específico table_1\[5, 5\] \<- "" table_1\[6, 5\] \<- "" \# Cambiar valor específico table_1\[7, 5\] \<- "" table_1\[8, 5\] \<- "" \# Cambiar valor específico table_1\[9, 5\] \<- "" table_1\[11, 5\] \<- "" \# Cambiar valor específico table_1\[12, 5\] \<- "" table_1\[13, 5\] \<- "" table_1\[14, 5\] \<- "" table_1\[16, 5\] \<- "" table_1\[17, 5\] \<- "" table_1\[18, 5\] \<- "" table_1\[20, 5\] \<- "" table_1\[21, 5\] \<- "" table_1\[22, 5\] \<- "" table_1\[23, 5\] \<- "" table_1\[25, 5\] \<- "" table_1\[26, 5\] \<- "" table_1\[28, 5\] \<- "" table_1\[29, 5\] \<- "" table_1\[31, 5\] \<- "" table_1\[32, 5\] \<- ""
+
+# knitr::kable(table_1)
+
+table_1 %\>% kable(caption = "Tabla descriptiva de variables") %\>% kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+
+## MicroRNA Quantification
+
+```{r, message=FALSE, echo=FALSE}
+library("isomiRs")
+library("readr")
+library("tibble")
+library("pheatmap")
+library("dplyr")
+library("ggplot2")
+library("DESeq2")
+library("kableExtra")
+library("ggpubr")
+library("compareGroups")
+library("tidyr")
+library("org.Mm.eg.db")
+library("clusterProfiler")
+
+library(dplyr)
+library(readr)
+library(tibble)
+library(knitr)
+library(kableExtra) 
+
+
+```
+
+```{r, message=FALSE, echo=FALSE}
+# Usar IsomirDataSeqFromMirtop
+# Steatosis 
+# Count matrix
+countdata_complete <- read_csv("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105-countdata.csv")
+
+# Metadata matrix
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/20241105_metadata_steatosis.Rdata")
+
+mirna_data_steatosis <- IsomirDataSeqFromMirtop(mirtop = countdata_complete, coldata = mdata_steatosis)
+
+# Filtrar isomiRs poco expresados (crudos) con el resumen de los isomirs 
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/input/21112024_mirna_data_steatosis.Rdata")
+```
+
+```{r}
+# Cuentas con los miRNA de referencia
+ids_counts <- isoCounts(mirna_data_steatosis, minc = 20, mins = 40)
+
+# Plot
+#| fig-cap: "isomiRs Abundance"
+#| out-width: "15cm"
+isoPlot(ids_counts,type="all")
+```
+
+```{r}
+# Obtener conteos crudos
+#raw_counts <- counts(ids_counts)
+#dim(raw_counts)
+
+# Table with kable
+##| tbl-cap: "Description of the Samples Used in the Study"
+##| label: "tbl-description"
+
+# Crear la tabla con kable
+#knitr::kable(raw_counts) |>
+#  kable_styling("striped")
+
+```
+
+```{r}
+# Ajustar el Modelo Completo
+dds <- DESeqDataSetFromMatrix(countData = counts(ids_counts),
+                              colData = colData(ids_counts),
+                              design = ~ sexo + Esteatosis)
+
+# Ajustar modelo reducido (sin 'steatosis')
+dds <- DESeq(dds, test = "LRT", reduced = ~ sexo)
+
+# Obtener los Resultados
+resultsLRT <- results(dds, tidy=T)
+
+# Filtrar resultados significativos
+
+significant_isomiRs <- resultsLRT[resultsLRT$padj < 0.05 & abs(resultsLRT$log2FoldChange) > 1, ]  # Estricto
+
+# Visualizar resultados
+#| fig-cap: "tres"
+#| out-width: "15cm"
+plot(resultsLRT$log2FoldChange, -log10(resultsLRT$pvalue), 
+     col = ifelse(resultsLRT$padj < 0.05, "red", "black"),
+     pch = 20, xlab = "Log2 Fold Change", ylab = "-Log10 p-value")
+```
+
+```{r}
+#| fig-cap: "cuatro"
+#| out-width: "15cm"
+plotDispEsts(dds)
+```
+
+```{r}
+# table(colData(dds)$Esteatosis)
+# Visualizar resultados
+#| fig-cap: "www"
+#| out-width: "15cm"
+hist(resultsLRT$pvalue, breaks = 50, col = "blue", main = "Distribución de valores p")
+
+```
+
+```{r}
+# TOP
+top <- resultsLRT|> 
+  filter(padj <  0.05) |>
+  pull(row)
+
+#| tbl-cap: "hola"
+#| label: "tbl-top_miRNAs"
+# Crear la tabla con kable
+knitr::kable(top)
+```
+
+```{r}
+gg_decor <- function(){list(
+  geom_boxplot(width=0.6),
+  labs(x="Steatosis", y="Normalized counts (log2)"),
+  theme_minimal(),
+  theme(axis.title = element_text(size = 13),
+        strip.text = element_text(size = 14)),
+  facet_wrap(~ name, scales = "free_y")
+)}
+```
+
+```{r}
+normalized_ids <-isoNorm(ids_counts, formula = ~ sexo + Esteatosis)
+
+cuentas0 <- counts(normalized_ids, norm=T) |>
+  t() |> as.data.frame()
+
+cuentas <- dplyr::select(cuentas0, any_of(top)) |>
+  bind_cols(colData(normalized_ids) |> as.data.frame()) |>
+  pivot_longer(1:length(top))
+
+ggplot(cuentas, aes(x=Esteatosis, y=value)) + gg_decor()
+```
+
+################################################################################# 
+
+```{r join ,fig.width=20, fig.height=20}
+# Visualizar resultados
+#| label: fig-join
+#| fig-cap: "miRTrace"
+#| fig-subcap: 
+#|   - "Quality control for small RNA sequencing data"
+#|   - "RNA Categories"
+#|   - "Contamination Check"
+#| layout-ncol: 3
+
+library(gridExtra)
+library(cowplot)
+combined_plot <- plot_grid(violin_plot, rnatypes, violin_plot_1, 
+                           ncol = 2, 
+                           nrow = 2,
+                           labels = c("A", "B", "C"), 
+                           rel_widths = c(1, 1, 1),   # Ajustar ancho relativo
+                           rel_heights = c(1, 1, 1))   # Ajustar altura relativa
+# Mostrar el gráfico combinado
+#print(combined_plot)
+
+
+###############################################################################
+
+
+::: {#fig-fstqc_quality_control .figure .layout-ncol-1 .layout-nrow-2 fig-cap="FastQC (v0.12.1) Analysis. A: Mean quality values of sequences across all bases after and before using fastp (v0.23.4); B: Per Sequence Quality Scores across all bases after and before using fastp."}
+  ```{r data qualityhistograms}
+  # Cargar librerías
+  library(ggplot2)
+  library(dplyr)
+  library(tidyr)
+  library(patchwork)
+  ################################################################################
+  
+  ### FastQC: Quality Histograms Raw
+  
+  # Cargar los datos desde un archivo .tsv
+  file_path_sq <- "data/fastqc_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+  data_sq <- read.delim(file_path_sq, header = TRUE, sep = "\t")
+  
+  # Renombrar las columnas
+  colnames(data_sq) <- c("Sample", as.character(1:(ncol(data_sq) - 1))) 
+  
+  # Transformar los datos de formato ancho a formato largo
+  data_long_sq<- pivot_longer(data_sq, cols = -Sample, names_to = "bp", values_to = "Contenido")
+  
+  # Convertir el contenido a porcentajes
+  data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+  
+  # Filtrar solo las posiciones de 1 a 30
+  data_long_sq <- data_long_sq[data_long_sq$bp %in% as.character(1:49), ]
+  
+  ################################################################################
+  
+  ### FastQC: Quality Histograms Trimmed
+  
+  # Cargar los datos desde un archivo .tsv
+  file_path_sqt <- "data/fastqc-1_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+  data_sqt <- read.delim(file_path_sqt, header = TRUE, sep = "\t")
+  
+  # Renombrar las columnas
+  colnames(data_sqt) <- c("Sample", as.character(1:(ncol(data_sqt) - 1))) 
+  
+  # Transformar los datos de formato ancho a formato largo
+  data_long_sqt <- pivot_longer(data_sqt, cols = -Sample, names_to = "bp", values_to = "Contenido")
+  
+  # Convertir el contenido a porcentajes
+  data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+  
+  # Filtrar solo las posiciones de 1 a 30
+  data_long_sqt <- data_long_sqt[data_long_sqt$bp %in% as.character(1:49), ]
+```
+
+```{r PLOT qualityhistograms, fig.width=9, fig.height=6}
+#| fig-subcap: 
+#|   - "raw"
+#|   - "trimmed"
+#| layout-ncol: 2
+
+### FastQC: Quality Histograms Raw
+ggplot(data_long_sq, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  # Agregar líneas horizontales en 20, 30 y 40
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  # Dibujar las líneas de datos
+  geom_line() +
+  labs(title = "A",
+       x = "Position (bp)",
+       y = "Phred Score",
+       subtitle = ) +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 30, face = "bold"),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+
+### FastQC: Quality Histograms (trimmed)
+ggplot(data_long_sqt, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  # Agregar líneas horizontales en 20, 30 y 40
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  # Dibujar las líneas de datos
+  geom_line() +
+  labs(x = "Position (bp)",
+       y = "") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20, ),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+```
+
+```{r data per_sequence_quality_score}
+library(tidyverse)
+library(scales) # Asegúrate de tener esta librería cargada
+
+# Cargar los datos desde un archivo .tsv
+file_path_psq <- "data/fastqc_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psq <- read.delim(file_path_psq, header = TRUE, sep = "\t")
+
+file_path_psqs <- "data/fastqc-1_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psqs <- read.delim(file_path_psqs, header = TRUE, sep = "\t")
+
+################################################################################
+
+long_data_psq <- data_psq %>%
+  pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+  mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+  separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+
+long_data_psqs <- data_psqs %>%
+  pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+  mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+  separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+```
+
+```{r PLOT per_sequence_quality_score, fig.width=9, fig.height=6}
+#| fig-subcap: 
+#|   - "raw"
+#|   - "trimmed"
+#| layout-ncol: 2
+
+library(scales)
+ggplot(long_data_psq, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  geom_line() +
+  labs(title = "B",
+       x = "Mean Sequence Quality (Phred Score)",
+       y = "Count"
+  ) +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 30, face = "bold"),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )# Eliminar la leyenda
+################################################################################
+
+ggplot(long_data_psqs, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(
+    x = "Mean Sequence Quality (Phred Score)",
+    y = ""
+  ) +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20),  # Tamaño del título del gráfico
+    legend.position = "none"
+  ) # Eliminar la leyenda
+
+```
+
+:::
+
+################################################################################# 
+
+\# Gráfico 2: Tipos de RNA tipos_rna \<- read.table("data/mirtrace_rna_categories.txt", header = TRUE, sep = "\t") tipos_rna_long \<- tipos_rna %\>% pivot_longer(cols = c(miRNA, rRNA, tRNA, Artifact, Unknown), names_to = "Tipo_RNA", values_to = "Conteo") tipos_rna_long \<- tipos_rna_long %\>% mutate(Conteo_millones = Conteo / 1e6) ggplot(tipos_rna_long, aes(x = Tipo_RNA, y = Conteo, fill = Tipo_RNA)) + geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 2) + labs( title = "B", x = " ", y = "Number of reads" ) + theme_minimal(base_size = 14) + scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) + theme( axis.text = element_text(size = 7), axis.title = element_text(size = 9), plot.title = element_text(size = 12,face = "bold"), legend.position = "none", plot.margin = margin(t = 5, r = 5, b = 30, l = 5)
+
+```         
+)
+```
+
+################################################################################ 
+
+\# Gráfico 2: Tipos de RNA tipos_rna \<- read.table("data/mirtrace_rna_categories.txt", header = TRUE, sep = "\t") tipos_rna_long \<- tipos_rna %\>% pivot_longer(cols = c(miRNA, rRNA, tRNA, Artifact, Unknown), names_to = "Tipo_RNA", values_to = "Conteo") tipos_rna_long \<- tipos_rna_long %\>% mutate(Conteo_millones = Conteo / 1e6) \# PLot ggplot(tipos_rna_long, aes(x = Sample, y = Conteo_millones, fill = Tipo_RNA)) + geom_bar(stat = "identity", position = "stack", alpha = 0.9) + labs( title = "B", x = "", y = "Number of reads" ) + scale_y_continuous(labels = scales::label_number(scale = 1, suffix = "M")) + theme_minimal(base_size = 14) + theme( axis.text.x = element_text(angle = 90 , hjust = 1, size = 7), axis.text.y = element_text(angle = 0 , hjust = 1, size = 7), axis.title = element_text(size = 9), plot.title = element_text(size = 12, face = "bold"), legend.title = element_text(size = 10), legend.text = element_text(size = 9), legend.position = "bottom", plot.margin = margin(t = 10, r = 10, b = 30, l = 10) ) ###############################################################################3
+
+```{r data qualityhistograms}
+# Cargar librerías
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(patchwork)
+################################################################################
+
+### FastQC: Quality Histograms Raw
+
+# Cargar los datos desde un archivo .tsv
+file_path_sq <- "data/fastqc_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+data_sq <- read.delim(file_path_sq, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_sq) <- c("Sample", as.character(1:(ncol(data_sq) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_sq<- pivot_longer(data_sq, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Convertir el contenido a porcentajes
+data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_sq <- data_long_sq[data_long_sq$bp %in% as.character(1:49), ]
+
+################################################################################
+
+### FastQC: Quality Histograms Trimmed
+
+# Cargar los datos desde un archivo .tsv
+file_path_sqt <- "data/fastqc-1_per_base_sequence_quality_plot.tsv"  # Cambia esto por la ruta real
+data_sqt <- read.delim(file_path_sqt, header = TRUE, sep = "\t")
+
+# Renombrar las columnas
+colnames(data_sqt) <- c("Sample", as.character(1:(ncol(data_sqt) - 1))) 
+
+# Transformar los datos de formato ancho a formato largo
+data_long_sqt <- pivot_longer(data_sqt, cols = -Sample, names_to = "bp", values_to = "Contenido")
+
+# Convertir el contenido a porcentajes
+data_long_sq$Contenido <- data_long_sq$Contenido  # Convertir a porcentaje
+
+# Filtrar solo las posiciones de 1 a 30
+data_long_sqt <- data_long_sqt[data_long_sqt$bp %in% as.character(1:49), ]
+```
+
+```{r PLOT qualityhistograms, fig.width=10, fig.height=8}
+#| label: fig-qualityhistograms
+#| fig-cap: "FastQC: Mean quality values of sequences across all bases after and before using fastp (version 0.23.4)."
+#| fig-subcap: 
+#|   - "raw"
+#|   - "trimmed"
+#| layout-ncol: 2
+
+### FastQC: Quality Histograms Raw
+ggplot(data_long_sq, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  # Agregar líneas horizontales en 20, 30 y 40
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  # Dibujar las líneas de datos
+  geom_line() +
+  labs(x = "Position (bp)",
+       y = "Phred Score") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+
+### FastQC: Quality Histograms (trimmed)
+ggplot(data_long_sqt, aes(x = as.numeric(bp), y = Contenido, color = Sample, group = Sample)) +
+  # Agregar líneas horizontales en 20, 30 y 40
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_hline(yintercept = 28, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_hline(yintercept = 38, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  # Dibujar las líneas de datos
+  geom_line() +
+  labs(x = "Position (bp)",
+       y = "") +
+  theme_minimal() +
+  scale_y_continuous(limits = c(0, 38)) +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )
+```
+
+################################################################################ 
+
+```{r data per_sequence_quality_score}
+library(tidyverse)
+library(scales) # Asegúrate de tener esta librería cargada
+
+# Cargar los datos desde un archivo .tsv
+file_path_psq <- "data/fastqc_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psq <- read.delim(file_path_psq, header = TRUE, sep = "\t")
+
+file_path_psqs <- "data/fastqc-1_per_sequence_quality_scores_plot.txt"  # Cambia esto por la ruta real
+data_psqs <- read.delim(file_path_psqs, header = TRUE, sep = "\t")
+
+################################################################################
+
+long_data_psq <- data_psq %>%
+  pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+  mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+  separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+
+long_data_psqs <- data_psqs %>%
+  pivot_longer(cols = -Sample, names_to = "Index", values_to = "Pair") %>%
+  mutate(Pair = str_remove_all(Pair, "[()]")) %>% # Eliminar paréntesis
+  separate(Pair, into = c("X", "Y"), sep = ",", convert = TRUE) # Dividir en X e Y
+```
+
+```{r PLOT per_sequence_quality_score, fig.width=10, fig.height=8}
+#| label: fig-per_sequence_quality_score
+#| fig-cap: "FastQC: Per Sequence Quality Scores across all bases after and before using fastp (version 0.23.4)."
+#| fig-subcap: 
+#|   - "raw"
+#|   - "trimmed"
+#| layout-ncol: 2
+
+library(scales)
+ggplot(long_data_psq, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  
+  geom_line() +
+  labs(
+    x = "Mean Sequence Quality (Phred Score)",
+    y = "Count"
+  ) +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20),  # Tamaño del título del gráfico
+    legend.position = "none"
+  )# Eliminar la leyenda
+################################################################################
+
+ggplot(long_data_psqs, aes(x = as.numeric(X), y = as.numeric(Y), color = Sample)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red", alpha = 0.8) +
+  geom_vline(xintercept = 20, linetype = "dashed", color = "orange", alpha = 0.8) +
+  geom_vline(xintercept = 27, linetype = "dashed", color = "green", alpha = 0.8) +
+  geom_line() +
+  labs(
+    x = "Mean Sequence Quality (Phred Score)",
+    y = ""
+  ) +
+  scale_y_continuous(labels = label_number(scale = 1e-6, suffix = "M")) + # Escalar a millones
+  theme_minimal() +
+  theme(
+    axis.text = element_text(size = 14),  # Tamaño del texto en los ejes
+    axis.title = element_text(size = 18),  # Tamaño de los títulos de los ejes
+    plot.title = element_text(size = 20),  # Tamaño del título del gráfico
+    legend.position = "none"
+  ) # Eliminar la leyenda
+
+```
+
+```{r}
+gg_decor <- function(){list(
+  geom_boxplot(width=0.6),
+  labs(x="Steatosis", y="Normalized counts (log2)"),
+  theme_minimal(),
+  theme(axis.title = element_text(size = 13),
+        strip.text = element_text(size = 14)),
+  facet_wrap(~ name, scales = "free_y")
+)}
+```
+
+```{r fig-mirnasselected,fig.width=8, fig.height=4, fig.pos="H",fig.cap="Steatosis levels of miRNAs selected"}
+
+normalized_ids <-isoNorm(ids_counts, formula = ~ sexo + Esteatosis)
+
+cuentas0 <- counts(normalized_ids, norm=T) |>
+  t() |> as.data.frame()
+
+cuentas <- dplyr::select(cuentas0, any_of(table_mirnas$row)) |>
+  bind_cols(colData(normalized_ids) |> as.data.frame()) |>
+  pivot_longer(1:length(table_mirnas$row))
+
+p1 <- ggplot(cuentas, aes(x=Esteatosis, y=value)) + 
+  gg_decor() +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 0 , hjust = 1, size = 5),
+    axis.text.y = element_text(angle = 0 , hjust = 1, size = 7),
+    axis.title = element_text(size = 8),
+    plot.title = element_text(size = 12, face = "bold"),
+    legend.title = element_blank(),
+    legend.text = element_text(size = 6),
+    legend.position = "none",
+    legend.margin = margin(t = -20),  # Ajusta el margen superior de la leyenda
+#    plot.margin = margin(t = 10, r = 10, b = 30, l = 10)
+)
+```
+
+```{r multimir, echo=FALSE, warning=FALSE, message=FALSE}
+library("multiMiR")
+library("kableExtra")
+library("dplyr")
+library("ggplot2") # Para visualización (opcional)
+library("clusterProfiler") # Para análisis funcional (opcional)
+library("org.Hs.eg.db") # Base de datos de genes humanos
+library("rentrez")
+library("KEGGREST")
+# The default is to search validated interactions in human
+# Redirigir mensajes y salida estándar
+#val_hsa_miR_372_3p <- get_multimir(
+#  org = "hsa",
+#  mirna = 'hsa-miR-372-3p',
+#  table = "validated",
+#  add.link = TRUE,
+#  use.tibble = TRUE,
+#  summary = TRUE
+#  )
+
+# Check which types of associations were returned
+#table(val_hsa_miR_372_3p@data$type)
+#dim(val_hsa_miR_372_3p@data)
+
+# Detailed information of the validated miRNA-target interaction
+#head(val_hsa_miR_372_3p@data)
+
+
+# Extraer los datos como un data.frame o tibble
+#val_hsa_miR_372_3p_df <- as_tibble(val_hsa_miR_372_3p@data)
+
+# Guardar el data.frame en un archivo .RData
+# save(val_hsa_miR_372_3p_df, file = "data/val_hsa_miR_372_3p.RData")
+```
+
+```{r,  echo=FALSE, warning=FALSE}
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA/TFM/data/val_hsa_miR_372_3p.RData")
+
+# Filtrar los datos con las condiciones especificadas
+filter_val_hsa_miR_372_3p <- val_hsa_miR_372_3p_df[
+  val_hsa_miR_372_3p_df[["database"]] %in% c("mirtarbase", "tarbase") & 
+  grepl("Luciferase|Western blot|qRT-PCR", val_hsa_miR_372_3p_df[["experiment"]], ignore.case = TRUE) &  # Filtro por experimentos específicos
+  val_hsa_miR_372_3p_df[["support_type"]] %in% c("Functional MTI","Functional MTI (Weak)","") &  # Filtro por soporte funcional
+  val_hsa_miR_372_3p_df[["type"]] == "validated", # Filtro por tipo validado
+]
+
+# "Functional MTI (Weak)")
+```
+
+```{r tbl-hsa-miR-372-3p}
+#| tbl-cap: "Selected interactions after filtering by database, experiment type (including luciferase assays, Western blot, or qRT-PCR), functional support (Functional MTI) and validated type for *hsa-miR-372-3p*"
+#| label: "tbl-hsa-miR-372-3p"
+#print(filter_val_hsa_miR_372_3p)
+# Table with kable
+#filter_val_hsa_miR_520d_5p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+filter_val_hsa_miR_372_3p <- as.data.frame(filter_val_hsa_miR_372_3p) %>%
+  dplyr::select(-mature_mirna_acc,-DB.link,-target_entrez,-experiment,-support_type)
+
+
+knitr::kable(filter_val_hsa_miR_372_3p)%>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"), # Escala automáticamente
+    font_size = 10.5   # Ajustar tamaño de fuente
+  ) %>%
+  row_spec(0, bold = TRUE) # Encabezado en negrita
+
+```
+
+```{r, fig.width=8, fig.height=6, fig.pos="H"}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_hsa_miR_372_3p_validated <- filter_val_hsa_miR_372_3p$target_symbol %>% unique()
+
+go_results_hsa_miR_372_3p_validated <- enrichGO(
+  gene = gene_symbols_hsa_miR_372_3p_validated,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "ALL",  # BP Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+head(go_results_hsa_miR_372_3p_validated@result,20)
+#go_results_miR_520d_5p_validated@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+ENSG00000150457 ENSG00000163513 ENSG00000147862 ENSG00000124762 ENSG00000112715 ENSG00000109079 ENSG00000104447 ENSG00000139793 ENSG00000155366 ENSG00000153234 ENSG00000178568 ENSG00000123374 ENSG00000243709 ENSG00000133639 ENSG00000166483 ENSG00000133101 ENSG00000107984 ENSG00000040199 ENSG00000156802 ENSG00000163638 ENSG00000175161 ENSG00000178951 ENSG00000265972 ENSG00000275746
+
+```{r fig-enrichmenthsamiR_372_3p,  fig.width=8, fig.height=6, fig.pos="H",fig.cap="Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-372-3p*"}
+# Visualizar resultados
+#| label: fig-enrichmenthsamiR_372_3p
+#| fig-cap: "Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-372-3p* "
+
+# Visualización del análisis funcional
+barplot(go_results_hsa_miR_372_3p_validated, showCategory = 10,)
+```
+
+```{r, fig.width=8, fig.height=7, fig.pos="H"}
+#dotplot(go_results_hsa_miR_372_3p_validated, showCategory=10)
+```
+
+In [@fig-cnetplot], two networks are displayed. The first illustrates the interactions between proteins involved in neurobiology, while the second shows the expression correlation among genes associated with cellular regulation. The absence of shared genes between both networks suggests that the biological processes they represent are distinct and do not interact directly.
+
+```{r fig-cnetplot, fig.width=8, fig.height=4, fig.pos="H", fig.cap="cnetplot of the target genes selected for *hsa-miR-372-3p*, in which the relationship between possible target genes and biological processes can be seen."}
+#emapplot(go_results_hsa_miR_372_3p_validated)
+cnetplot(go_results_hsa_miR_372_3p_validated)
+```
+
+### *hsa-miR-144-3p*
+
+In [@tbl-hsa-miR-144-3p], the target genes obtained by the *multiMiR* package after filtering are shown. These genes were used for the enrichment analysis of GO (Gene Ontology) categories, utilizing the clusterProfile library. In [@fig-enrichmenthsamiR_144_3p], the most represented GO categories for the target genes are observed, which relate to processes associated with cell migration, cellular differentiation and developmental biology.
+
+```{r ,  echo=FALSE, warning=FALSE}
+# The default is to search validated interactions in human
+#val_hsa_miR_144_3p <- get_multimir(org = "hsa",
+#                                mirna = 'hsa-miR-144-3p',
+#                                table = "validated",
+#                                add.link = TRUE,
+#                                use.tibble = TRUE,
+#                               summary = TRUE)
+
+# Extraer los datos como un data.frame o tibble
+#val_hsa_miR_144_3p_df <- as_tibble(val_hsa_miR_144_3p@data)
+
+# Guardar el data.frame en un archivo .RData
+#save(val_hsa_miR_144_3p_df, file = "data/val_hsa_miR_144_3p.RData")
+```
+
+```{r, echo=FALSE, warning=FALSE}
+load("/home/joshoacr13/Documentos/TFM/mirna_analysis/miRNA/TFM/data/val_hsa_miR_144_3p.RData")
+
+# Filtrar los datos con las condiciones especificadas
+filter_val_hsa_miR_144_3p <- val_hsa_miR_144_3p_df[
+#  val_hsa_miR_144_3p_df[["database"]] %in% c("mirtarbase", "tarbase") &  # Filtrar por bases de datos específicas
+  grepl("Luciferase|Western blot|qRT-PCR", val_hsa_miR_144_3p_df[["experiment"]], ignore.case = TRUE) &  # Filtro por experimentos específicos
+  val_hsa_miR_144_3p_df[["support_type"]] %in% c("Functional MTI","Functional MTI (Weak)") &  # Filtro por soporte funcional
+  val_hsa_miR_144_3p_df[["type"]] == "validated", # Filtro por tipo validado
+]
+```
+
+```{r, fig.width=8, fig.height=5, fig.pos="H"}
+# Gene Ontology (GO) para todos los genes combinados
+gene_symbols_miR_144_3p_validated <- filter_val_hsa_miR_144_3p$target_symbol %>% unique()
+
+go_results_miR_144_3p_validated <- enrichGO(
+  gene = gene_symbols_miR_144_3p_validated,
+  OrgDb = org.Hs.eg.db,
+  keyType = "SYMBOL",
+  ont = "BP",  # Biological Processes
+  pAdjustMethod = "BH",
+  qvalueCutoff = 0.05, # Relacionada con el control de la tasa de falsos descubrimientos (FDR).
+  pvalueCutoff = 0.05
+)
+
+# head(go_results_miR_144_3p_validated@result,20)
+#go_results_miR_655_3p_validated@result |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+```
+
+```{r tbl-hsa-miR-144-3p}
+#| tbl-cap: "Selected interactions after filtering by database, experiment type (including luciferase assays, Western blot, or qRT-PCR), functional support (Functional MTI) and validated type for *hsa-miR-144-3p*"
+#| label: "tbl-hsa-miR-144-3p"
+#print(filter_val_hsa_miR_372_3p)
+# Table with kable
+#filter_val_hsa_miR_520d_5p |>
+#  kable(format = "html") |> 
+#  kable_styling("striped")
+
+filter_val_hsa_miR_144_3p <- as.data.frame(filter_val_hsa_miR_144_3p) %>%
+  dplyr::select(-mature_mirna_acc,-DB.link,-target_entrez,-experiment,-support_type)
+
+
+knitr::kable(filter_val_hsa_miR_144_3p)%>%
+  kable_styling(
+    latex_options = c("hold_position", "scale_down"), # Escala automáticamente
+    font_size = 10.5   # Ajustar tamaño de fuente
+  ) %>%
+  row_spec(0, bold = TRUE) # Encabezado en negrita
+
+```
+
+```{r fig-enrichmenthsamiR_144_3p,  fig.width=8, fig.height=6, fig.pos="H",fig.cap="Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-144-3p*"}
+# Visualizar resultados
+#| label: fig-enrichmenthsamiR_144_3p
+#| fig-cap: "Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-144-3p* "
+
+# Visualización del análisis funcional
+barplot(go_results_miR_144_3p_validated, showCategory = 10,)
+```
+
+```{r, fig.width=8, fig.height=10, fig.pos="H"}
+#dotplot(go_results_miR_144_3p_validated, showCategory=30)
+```
+
+In [@fig-cnetplot_mir144], network representing several processes related to cell migration, including epithelial cell migration, tissue migration and amoeboid-like migration. The inclusion of 'regulation of epithelial cell migration' indicates that there are regulatory mechanisms affecting all of these processes, suggesting a significant interconnection between them. This network highlights the importance of cell migration in physiological processes such as tissue repair and its potential involvement in disease.
+
+```{r fig-cnetplot_mir144, fig.width=8, fig.height=4, fig.pos="H", fig.cap="cnetplot of the target genes selected for *hsa-miR-144-3p*, in which the relationship between possible target genes and biological processes can be seen."}
+#emapplot(go_results_hsa_miR_372_3p_validated)
+cnetplot(go_results_miR_144_3p_validated)
+```
+
+ENSG00000148400 ENSG00000148400 ENSG00000181690 ENSG00000148516 ENSG00000169554 ENSG00000169047 ENSG00000107968 ENSG00000106462 ENSG00000142192 ENSG00000073756 ENSG00000105976 ENSG00000105976 ENSG00000134954 ENSG00000105329 ENSG00000001626 ENSG00000171557 ENSG00000198793 ENSG00000198793 ENSG00000198793 ENSG00000141646 ENSG00000116044 ENSG00000116044 ENSG00000167081 ENSG00000155657 ENSG00000253352 ENSG00000284792 ENSG00000229807
+
+```{r fig-enrichment_hsamiR_372_3p, fig.width=8, fig.height=6, fig.pos="H", fig.cap="Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-372-3p*"}
+# Visualizar resultados
+#| label: fig-enrichment_hsamiR_372_3p
+#| fig-cap: "Top 10 Validated Enriched Biological Processes Enriquecidos of *hsa-miR-372-3p* "
+
+
+cnetplot(go_results_hsa_miR_372_3p_validated)
+```
+
+In [@fig-cnetplot], two networks are displayed. The first illustrates the interactions between proteins involved in neurobiology, while the second shows the expression correlation among genes associated with cellular regulation. The absence of shared genes between both networks suggests that the biological processes they represent are distinct and do not interact directly.
+
+```{r fig-cnetplot, fig.width=8, fig.height=4, fig.pos="H", fig.cap="cnetplot of the target genes selected for *hsa-miR-372-3p*, in which the relationship between possible target genes and biological processes can be seen."}
+# emapplot(go_results_hsa_miR_372_3p_validated)
+cnetplot(go_results_hsa_miR_372_3p_validated)
+```
+
+In [@fig-cnetplot_mir144], network representing several processes related to cell migration, including epithelial cell migration, tissue migration and amoeboid-like migration. The inclusion of 'regulation of epithelial cell migration' indicates that there are regulatory mechanisms affecting all of these processes, suggesting a significant interconnection between them. This network highlights the importance of cell migration in physiological processes such as tissue repair and its potential involvement in disease.
+
+```{r fig-cnetplot_mir144, fig.width=8, fig.height=4, fig.pos="H", fig.cap="cnetplot of the target genes selected for *hsa-miR-144-3p*, in which the relationship between possible target genes and biological processes can be seen."}
+#emapplot(go_results_hsa_miR_372_3p_validated)
+cnetplot(go_results_miR_144_3p_validated)
+```
